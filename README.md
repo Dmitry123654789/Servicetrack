@@ -2,7 +2,9 @@
 
 ## Предварительные требования
 
-- Python 3.12
+- [Python 3.12](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/install/)
+- [Gettext](https://launchpad.net/gettext/+download)
 
 ## Установка и запуск
 
@@ -31,7 +33,61 @@ source venv/bin/activate
 
 ### 3. Установка зависимостей
 
+**Для разработки (dev режим):**
+
 ```bash
-pip install -r requirements.txt
+pip install -r requirements/dev.txt
 ```
 
+*Включает все зависимости для разработки, включая инструменты для тестирования, линтеры и отладку.*
+
+**Для production (prod режим):**
+
+```bash
+pip install -r requirements/prod.txt
+```
+
+*Содержит только минимальный набор пакетов, необходимых для работы приложения.*
+
+**Для запуска тестов (test режим):**
+
+```bash
+pip install -r requirements/test.txt
+```
+
+*Включает зависимости для тестирования и проверки качества кода.*
+
+### 4. Настройка переменных окружения
+
+Создайте файл `.env` необходимые переменные.  
+Пример заполнения можно увидеть в файле `template.env`
+
+**Для копирования настроек из template.env в .env:**
+
+**Windows:**
+
+```bash
+copy template.env .env
+```
+
+**Mac/Linux:**
+
+```bash
+cp template.env .env
+```
+
+**После создания файла `.env` обязательно отредактируйте его, заполнив реальные значения переменных вместо placeholder'ов.**
+
+### 5. Переход в корнень проекта
+
+```bash
+cd servicetrack
+```
+
+### 6. Создание базы данных
+
+```bash
+python manage.py migrate
+```
+
+**Создается файл db.sqlite3 в корне проекта.**
