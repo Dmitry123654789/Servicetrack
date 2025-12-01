@@ -7,18 +7,18 @@ flake8:
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
     - pip install -r requirements/flake8.txt
-    - flake8 lyceum
+    - flake8 servicetrack
 
 black:
   stage: lint
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black lyceum
+    - black servicetrack
 
 django:
   stage: test
   image: python:3.12
   script:
     - pip install -r requirements/test.txt
-    - cd lyceum
+    - cd servicetrack
     - python3 manage.py test
