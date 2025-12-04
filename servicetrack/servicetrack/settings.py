@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Created app
+    "users.apps.UsersConfig",
+    # Other
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -92,6 +96,8 @@ ROOT_URLCONF = "servicetrack.urls"
 WSGI_APPLICATION = "servicetrack.wsgi.application"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.CustomUser"
 
 # Time
 LANGUAGE_CODE = "ru-RU"
