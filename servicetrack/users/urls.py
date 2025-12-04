@@ -1,0 +1,48 @@
+__all__ = ()
+
+import django.urls
+
+from users import views
+
+app_name = "users"
+
+urlpatterns = [
+    django.urls.path("login/", views.LoginView.as_view(), name="login"),
+    django.urls.path("logout/", views.LogoutView.as_view(), name="logout"),
+    django.urls.path(
+        "register/",
+        views.RegisterView.as_view(),
+        name="register",
+    ),
+    django.urls.path(
+        "password_change/",
+        views.PasswordChangeView.as_view(),
+        name="password_change",
+    ),
+    django.urls.path(
+        "password_change/done/",
+        views.PasswordChangeDoneView.as_view(),
+        name="password_change_done",
+    ),
+    django.urls.path(
+        "password_reset/",
+        views.PasswordResetView.as_view(),
+        name="password_reset",
+    ),
+    django.urls.path(
+        "password_reset/done/",
+        views.PasswordResetDoneView.as_view(),
+        name="password_reset_done",
+    ),
+    django.urls.path(
+        "reset/<uidb64>/<token>/",
+        views.PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
+    django.urls.path(
+        "reset/done/",
+        views.PasswordResetCompleteView.as_view(),
+        name="password_reset_complete",
+    ),
+    django.urls.path("profile/", views.ProfileView.as_view(), name="profile"),
+]

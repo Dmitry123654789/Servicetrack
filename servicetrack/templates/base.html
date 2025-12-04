@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ServiceTrack{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'pages:home' %}" class="logo">
+                ServiceTrack
+            </a>
+
+            <nav class="nav">
+                <a href="{% url 'pages:home' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                    Главная
+                </a>
+                <a href="{% url 'pages:about' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                    О проекте
+                </a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+                    Профиль
+                </a>
+                {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="nav-link">
+                    Админка
+                </a>
+                {% endif %}
+                {% endif %}
+            </nav>
+
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    <span class="user-greeting">Привет, {{ user.username }}!</span>
+                    <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-logout">Выйти</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:login' %}" class="btn btn-secondary">Войти</a>
+                    <a href="{% url 'users:register' %}" class="btn btn-primary">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ServiceTrack</h3>
+                <p>Система управления сервисными заявками для малого и среднего бизнеса.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Навигация</h3>
+                <ul>
+                    <li><a href="{% url 'pages:home' %}">Главная</a></li>
+                    <li><a href="{% url 'pages:about' %}">О проекте</a></li>
+                    <li><a href="{% url 'pages:contact' %}">Контакты</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:profile' %}">Профиль</a></li>
+                    <li><a href="{% url 'users:password_change' %}">Сменить пароль</a></li>
+                    {% else %}
+                    <li><a href="{% url 'users:login' %}">Вход</a></li>
+                    <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2025 ServiceTrack. Все права защищены.
+        </div>
+    </footer>
+</body>
+</html>

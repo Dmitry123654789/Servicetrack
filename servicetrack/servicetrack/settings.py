@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Created app
     "users.apps.UsersConfig",
+    "pages.apps.PagesConfig",
     # Other
     "phonenumber_field",
 ]
@@ -56,7 +57,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -98,6 +99,13 @@ WSGI_APPLICATION = "servicetrack.wsgi.application"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.CustomUser"
+
+LOGIN_URL = "users:login"
+LOGIN_REDIRECT_URL = "users:profile"
+LOGOUT_REDIRECT_URL = "users:login"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 # Time
 LANGUAGE_CODE = "ru-RU"
