@@ -99,6 +99,12 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+### 8. Создание многоязычности
+
+```bash
+django-admin compilemessages
+```
+
 ### 9. Сборка статическх файлов
 
 ```bash
@@ -113,4 +119,3 @@ python manage.py collectstatic
 ```bash
 python manage.py runserver
 ```
-

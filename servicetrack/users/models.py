@@ -1,5 +1,6 @@
 __all__ = ()
 
+import django.conf
 import django.contrib.auth.models as auth_models
 import django.db.models
 from django.utils.translation import gettext_lazy as _
@@ -25,7 +26,7 @@ class Profile(django.db.models.Model):
         WORKER = "worker", _("работник")
 
     user = django.db.models.OneToOneField(
-        CustomUser,
+        django.conf.settings.AUTH_USER_MODEL,
         on_delete=django.db.models.CASCADE,
         related_name="profile",
         verbose_name=_("пользователь"),
@@ -66,7 +67,7 @@ class WorkerGroup(django.db.models.Model):
     )
 
     workers = django.db.models.ManyToManyField(
-        CustomUser,
+        django.conf.settings.AUTH_USER_MODEL,
         verbose_name=_("работники"),
         related_name="work_groups",
         blank=True,
@@ -74,10 +75,10 @@ class WorkerGroup(django.db.models.Model):
     )
 
     manager = django.db.models.ForeignKey(
-        CustomUser,
+        django.conf.settings.AUTH_USER_MODEL,
         verbose_name=_("руководитель_группы"),
         related_name="managed_groups",
-        on_delete=django.db.models.SET_NULL,
+        on_delete=django.db.models.CASCADE,
         null=True,
         blank=True,
         limit_choices_to={"profile__role": Profile.Role.GROUP_MANAGER},

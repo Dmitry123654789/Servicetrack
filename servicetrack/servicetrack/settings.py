@@ -1,5 +1,6 @@
 import pathlib
 
+from django.utils.translation import gettext_lazy as _
 import environ
 
 
@@ -40,15 +41,19 @@ INSTALLED_APPS = [
     # Created app
     "users.apps.UsersConfig",
     "pages.apps.PagesConfig",
+    "tickets.apps.TicketsConfig",
     # Other
     "phonenumber_field",
+    "sorl.thumbnail",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -122,6 +127,16 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
+# Lang
+LANGUAGES = [
+    ("ru", _("Русский")),
+    ("en", _("English")),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 if DEBUG:
     INSTALLED_APPS = [

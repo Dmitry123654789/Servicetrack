@@ -10,7 +10,7 @@ import users.models
 
 class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
     email = django.forms.EmailField(
-        label=_("Электронная почта"),
+        label=_("Электронная_почта"),
         max_length=254,
         widget=django.forms.EmailInput(attrs={"autocomplete": "email"}),
     )
@@ -26,14 +26,14 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].label = _("Имя пользователя")
+        self.fields["username"].label = _("Имя_пользователя")
         self.fields["password1"].label = _("Пароль")
-        self.fields["password2"].label = _("Подтверждение пароля")
+        self.fields["password2"].label = _("Подтверждение_пароля")
 
 
 class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
     username = django.forms.CharField(
-        label=_("Имя пользователя"),
+        label=_("Имя_пользователя"),
         widget=django.forms.TextInput(attrs={"autofocus": True}),
     )
     password = django.forms.CharField(
@@ -46,30 +46,30 @@ class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
 
     error_messages = {
         "invalid_login": _(
-            "Пожалуйста, введите правильные имя пользователя и пароль. ",
-            "Оба поля могут быть чувствительны к регистру.",
+            "Пожалуйста,_введите_правильные имя_пользователя_и_пароль."
+            "Оба_поля_могут_быть_чувствительны_к_регистру.",
         ),
-        "inactive": _("Этот аккаунт неактивен"),
+        "inactive": _("Этот_аккаунт_неактивен"),
     }
 
 
 class CustomPasswordChangeForm(django.contrib.auth.forms.PasswordChangeForm):
     old_password = django.forms.CharField(
-        label=_("Старый пароль"),
+        label=_("Старый_пароль"),
         strip=False,
         widget=django.forms.PasswordInput(
             attrs={"autocomplete": "current-password", "autofocus": True},
         ),
     )
     new_password1 = django.forms.CharField(
-        label=_("Новый пароль"),
+        label=_("Новый_пароль"),
         widget=django.forms.PasswordInput(
             attrs={"autocomplete": "new-password"},
         ),
         strip=False,
     )
     new_password2 = django.forms.CharField(
-        label=_("Подтверждение нового пароля"),
+        label=_("Подтверждение_нового_пароля"),
         strip=False,
         widget=django.forms.PasswordInput(
             attrs={"autocomplete": "new-password"},
@@ -79,7 +79,7 @@ class CustomPasswordChangeForm(django.contrib.auth.forms.PasswordChangeForm):
 
 class CustomPasswordResetForm(django.contrib.auth.forms.PasswordResetForm):
     email = django.forms.EmailField(
-        label=_("Электронная почта"),
+        label=_("Электронная_почта"),
         max_length=254,
         widget=django.forms.EmailInput(attrs={"autocomplete": "email"}),
     )
@@ -87,14 +87,14 @@ class CustomPasswordResetForm(django.contrib.auth.forms.PasswordResetForm):
 
 class CustomSetPasswordForm(django.contrib.auth.forms.SetPasswordForm):
     new_password1 = django.forms.CharField(
-        label=_("Новый пароль"),
+        label=_("Новый_пароль"),
         widget=django.forms.PasswordInput(
             attrs={"autocomplete": "new-password"},
         ),
         strip=False,
     )
     new_password2 = django.forms.CharField(
-        label=_("Подтверждение нового пароля"),
+        label=_("Подтверждение_нового_пароля"),
         strip=False,
         widget=django.forms.PasswordInput(
             attrs={"autocomplete": "new-password"},

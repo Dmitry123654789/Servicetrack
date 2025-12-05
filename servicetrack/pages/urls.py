@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.urls
+
 import pages.views
 
 app_name = "pages"

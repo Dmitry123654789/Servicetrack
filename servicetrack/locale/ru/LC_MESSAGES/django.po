@@ -1,0 +1,226 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-05 17:06+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: .\pages\apps.py:10 .\tickets\apps.py:10
+msgid "страницы"
+msgstr ""
+
+#: .\pages\views.py:12
+msgid "Главная_страница"
+msgstr ""
+
+#: .\pages\views.py:21
+msgid "О_проекте"
+msgstr ""
+
+#: .\pages\views.py:30
+msgid "Контакты"
+msgstr ""
+
+#: .\servicetrack\settings.py:133
+msgid "Русский"
+msgstr ""
+
+#: .\servicetrack\settings.py:134
+msgid "English"
+msgstr ""
+
+#: .\tickets\models.py:14
+msgid "открыта"
+msgstr ""
+
+#: .\tickets\models.py:15
+msgid "в_работе"
+msgstr ""
+
+#: .\tickets\models.py:16
+msgid "закрыта"
+msgstr ""
+
+#: .\tickets\models.py:17
+msgid "отменена"
+msgstr ""
+
+#: .\tickets\models.py:20
+msgid "низкий"
+msgstr ""
+
+#: .\tickets\models.py:21
+msgid "средний"
+msgstr ""
+
+#: .\tickets\models.py:22
+msgid "высокий"
+msgstr ""
+
+#: .\tickets\models.py:23
+msgid "критический"
+msgstr ""
+
+#: .\tickets\models.py:26
+msgid "название"
+msgstr ""
+
+#: .\tickets\models.py:30 .\users\models.py:64
+msgid "описание"
+msgstr ""
+
+#: .\tickets\models.py:34
+msgid "статус"
+msgstr ""
+
+#: .\tickets\models.py:40
+msgid "приоритет"
+msgstr ""
+
+#: .\tickets\models.py:47
+msgid "рабочая группа"
+msgstr ""
+
+#: .\tickets\models.py:54
+msgid "создатель"
+msgstr ""
+
+#: .\tickets\models.py:61
+msgid "исполнитель"
+msgstr ""
+
+#: .\tickets\models.py:69
+msgid "фото_до"
+msgstr ""
+
+#: .\tickets\models.py:76
+msgid "фото_после"
+msgstr ""
+
+#: .\tickets\models.py:83 .\users\models.py:88
+msgid "дата_создания"
+msgstr ""
+
+#: .\tickets\models.py:88 .\users\models.py:93
+msgid "дата_обновления"
+msgstr ""
+
+#: .\tickets\models.py:93
+msgid "заявка"
+msgstr ""
+
+#: .\tickets\models.py:94
+msgid "заявки"
+msgstr ""
+
+#: .\users\apps.py:11
+msgid "пользователи"
+msgstr ""
+
+#: .\users\forms.py:13 .\users\forms.py:82
+msgid "Электронная_почта"
+msgstr ""
+
+#: .\users\forms.py:18
+msgid "Телефон"
+msgstr ""
+
+#: .\users\forms.py:29 .\users\forms.py:36
+msgid "Имя_пользователя"
+msgstr ""
+
+#: .\users\forms.py:30 .\users\forms.py:40
+msgid "Пароль"
+msgstr ""
+
+#: .\users\forms.py:31
+msgid "Подтверждение_пароля"
+msgstr ""
+
+#: .\users\forms.py:49
+msgid ""
+"Пожалуйста,_введите_правильные "
+"имя_пользователя_и_пароль.Оба_поля_могут_быть_чувствительны_к_регистру."
+msgstr ""
+
+#: .\users\forms.py:52
+msgid "Этот_аккаунт_неактивен"
+msgstr ""
+
+#: .\users\forms.py:58
+msgid "Старый_пароль"
+msgstr ""
+
+#: .\users\forms.py:65 .\users\forms.py:90
+msgid "Новый_пароль"
+msgstr ""
+
+#: .\users\forms.py:72 .\users\forms.py:97
+msgid "Подтверждение_нового_пароля"
+msgstr ""
+
+#: .\users\models.py:12
+msgid "электронная_почта"
+msgstr ""
+
+#: .\users\models.py:24
+msgid "директор"
+msgstr ""
+
+#: .\users\models.py:25 .\users\models.py:79
+msgid "руководитель_группы"
+msgstr ""
+
+#: .\users\models.py:26
+msgid "работник"
+msgstr ""
+
+#: .\users\models.py:32
+msgid "пользователь"
+msgstr ""
+
+#: .\users\models.py:36
+msgid "роль"
+msgstr ""
+
+#: .\users\models.py:42
+msgid "телефон"
+msgstr ""
+
+#: .\users\models.py:49
+msgid "данные_пользователя"
+msgstr ""
+
+#: .\users\models.py:50
+msgid "данные_пользователей"
+msgstr ""
+
+#: .\users\models.py:58
+msgid "название_группы"
+msgstr ""
+
+#: .\users\models.py:71
+msgid "работники"
+msgstr ""
+
+#: .\users\models.py:98
+msgid "рабочая_группа"
+msgstr ""
+
+#: .\users\models.py:99
+msgid "рабочие_группы"
+msgstr ""

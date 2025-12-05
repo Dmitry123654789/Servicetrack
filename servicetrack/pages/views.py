@@ -9,7 +9,7 @@ class HomePageView(django.views.generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Главная страница")
+        context["title"] = _("Главная_страница")
         return context
 
 
@@ -18,7 +18,7 @@ class AboutPageView(django.views.generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = _("О проекте")
+        context["title"] = _("О_проекте")
         return context
 
 
