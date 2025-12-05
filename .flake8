@@ -1,7 +1,7 @@
 [flake8]
 inline-quotes = double
 import-order-style = google
-application-import-names = servicetrack, users
+application-import-names = servicetrack, users, pages
 extend-ignore = FNE003
 
 exclude =
