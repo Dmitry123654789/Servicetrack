@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Заявка - ServiceTrack{% endblock %}
+
+{% block content %}
+<h2>Заявка "{{ ticket.title }}"</h2>
+<div class="profile-info">
+    <p><strong>Описание:</strong> {{ ticket.description }}</p>
+    <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Приоритет:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Рабочая_группа:</strong> {{ ticket.group }}</p>
+    <p><strong>Создатель:</strong> {{ ticket.creator }}</p>
+    <p><strong>Исполнитель:</strong> {{ ticket.assignee|default:"Не указан" }}</p>
+    <p><strong>Дата_создания:</strong> {{ ticket.created_at|date:"d.m.Y H:i" }}</p>
+    <p><strong>Дата последнего изменения:</strong> {{ ticket.updated_at|date:"d.m.Y H:i" }}</p>
+</div>
+<br>
+<h2>История изменений</h2>
+<p>№ | Изменил | Из статуса | В статус | Время</p>
+{% for log in logs %}
+    <p>{{ forloop.counter }} | {{ log.user }} | {{ log.from_status }} | {{ log.to_status }} | {{ log.timestamp|date:"d.m.Y H:i" }}</p>
+    <p>Комментарий: {{ log.comment }}</p>
+{% endfor %}
+{% endblock %}

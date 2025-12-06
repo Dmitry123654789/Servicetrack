@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Мои заявки - ServiceTrack{% endblock %}
+
+{% block content %}
+    {% for item in groups %}
+        <h1>Заявки группы: {{ item.group.name }}</h1>
+        {% for ticket in item.tickets %}
+            <a href="{% url 'tickets:ticket_detail' ticket.pk %}">{{ forloop.counter }} | {{ ticket.title }} | {{ ticket.get_status_display }} | {{ ticket.created_at }} | {{ ticket.assignee.username }} | {{ ticket.get_priority_display }}</a>
+            <br>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
