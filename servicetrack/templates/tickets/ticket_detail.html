@@ -7,7 +7,7 @@
 <div class="profile-info">
     <p><strong>Описание:</strong> {{ ticket.description }}</p>
     <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
-    <p><strong>Приоритет:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Приоритет:</strong> {{ ticket.get_priority_display }}</p>
     <p><strong>Рабочая_группа:</strong> {{ ticket.group }}</p>
     <p><strong>Создатель:</strong> {{ ticket.creator }}</p>
     <p><strong>Исполнитель:</strong> {{ ticket.assignee|default:"Не указан" }}</p>
@@ -18,7 +18,7 @@
 <h2>История изменений</h2>
 <p>№ | Изменил | Из статуса | В статус | Время</p>
 {% for log in logs %}
-    <p>{{ forloop.counter }} | {{ log.user }} | {{ log.from_status }} | {{ log.to_status }} | {{ log.timestamp|date:"d.m.Y H:i" }}</p>
+    <p>{{ forloop.counter }} | {{ log.user }} | {{ log.get_from_status_display }} | {{ log.get_to_status_display }} | {{ log.timestamp|date:"d.m.Y H:i" }}</p>
     <p>Комментарий: {{ log.comment }}</p>
 {% endfor %}
 {% endblock %}

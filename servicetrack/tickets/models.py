@@ -2,6 +2,7 @@ __all__ = ()
 
 import django.conf
 import django.db.models
+import django.urls
 from django.utils.translation import gettext_lazy as _
 import sorl.thumbnail
 
@@ -14,16 +15,20 @@ class TicketQuerySet(django.db.models.QuerySet):
         return self.annotate(
             priority_weight=django.db.models.Case(
                 django.db.models.When(
-                    priority="low", then=django.db.models.Value(1),
+                    priority="low",
+                    then=django.db.models.Value(1),
                 ),
                 django.db.models.When(
-                    priority="medium", then=django.db.models.Value(2),
+                    priority="medium",
+                    then=django.db.models.Value(2),
                 ),
                 django.db.models.When(
-                    priority="high", then=django.db.models.Value(3),
+                    priority="high",
+                    then=django.db.models.Value(3),
                 ),
                 django.db.models.When(
-                    priority="critical", then=django.db.models.Value(4),
+                    priority="critical",
+                    then=django.db.models.Value(4),
                 ),
                 default=django.db.models.Value(5),
                 output_field=django.db.models.IntegerField(),
@@ -34,16 +39,20 @@ class TicketQuerySet(django.db.models.QuerySet):
         return self.annotate(
             status_weight=django.db.models.Case(
                 django.db.models.When(
-                    status="open", then=django.db.models.Value(1),
+                    status="open",
+                    then=django.db.models.Value(1),
                 ),
                 django.db.models.When(
-                    status="in_progress", then=django.db.models.Value(2),
+                    status="in_progress",
+                    then=django.db.models.Value(2),
                 ),
                 django.db.models.When(
-                    status="closed", then=django.db.models.Value(3),
+                    status="closed",
+                    then=django.db.models.Value(3),
                 ),
                 django.db.models.When(
-                    status="cancelled", then=django.db.models.Value(4),
+                    status="cancelled",
+                    then=django.db.models.Value(4),
                 ),
                 default=django.db.models.Value(5),
                 output_field=django.db.models.IntegerField(),
@@ -73,7 +82,6 @@ class TicketQuerySet(django.db.models.QuerySet):
             ordering.append(f"{sign}created_at")
 
         if ordering:
-            print(*ordering)
             return self.order_by(*ordering)
 
         return self
@@ -84,22 +92,17 @@ class TicketManager(django.db.models.Manager):
         return TicketQuerySet(self.model, using=self._db)
 
     def get_list(self):
-        queryset = (
-            self.get_queryset()
-            .select_related(
-                Ticket.assignee.field.name,
-            )
+        queryset = self.get_queryset().select_related(
+            Ticket.assignee.field.name,
         )
 
-        return (
-            queryset.only(
-                Ticket.title.field.name,
-                Ticket.status.field.name,
-                Ticket.priority.field.name,
-                Ticket.created_at.field.name,
-                f"{Ticket.assignee.field.name}_"
-                f"_{users.models.CustomUser.username.field.name}",
-            )
+        return queryset.only(
+            Ticket.title.field.name,
+            Ticket.status.field.name,
+            Ticket.priority.field.name,
+            Ticket.created_at.field.name,
+            f"{Ticket.assignee.field.name}_"
+            f"_{users.models.CustomUser.username.field.name}",
         )
 
 
@@ -191,6 +194,12 @@ class Ticket(django.db.models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return django.urls.reverse(
+            "tickets:ticket_detail",
+            kwargs={"pk": self.pk},
+        )
 
 
 class StatusLog(django.db.models.Model):

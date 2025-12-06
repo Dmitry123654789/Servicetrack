@@ -6,6 +6,12 @@
     <h1>Заявки группы: {{ group.name }}</h1>
     {% for ticket in tickets %}
         <a href="{% url 'tickets:ticket_detail' ticket.pk %}">{{ forloop.counter }} | {{ ticket.title }} | {{ ticket.get_status_display }} | {{ ticket.created_at }} | {{ ticket.assignee.username }} | {{ ticket.get_priority_display }}</a>
+        {% if user.profile.role != 'worker' %}
+            <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}">Редактировать</a>
+        {% endif %}
+        {% if ticket.assignee == user %}
+            <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}">Изменить статус</a>
+        {% endif %}
         <br>
     {% endfor %}
 {% endblock %}

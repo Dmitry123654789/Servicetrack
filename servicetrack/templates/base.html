@@ -28,17 +28,49 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
                            href="{% url 'pages:about' %}">О проекте</a>
                     </li>
-
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-                           href="{% url 'users:profile' %}">Профиль</a>
-                    </li>
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
-                    </li>
-                    {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                            href="{% url 'tickets:ticket_create' %}">Новая заявка</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'my_tickets' %}active{% endif %}"
+                            href="{% url 'tickets:my_tickets' %}">
+                                Мои заявки
+                            </a>
+                        </li>
+
+                        {% if menu_groups %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown">
+                                    Мои группы
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    {% for group in menu_groups %}
+                                        <li>
+                                            <a class="dropdown-item {% if request.resolver_match.url_name == 'tickets_list' and group.id|stringformat:"s" == request.resolver_match.kwargs.pk|stringformat:"s" %}active{% endif %}"
+                                            href="{% url 'tickets:tickets_list' group.pk %}">
+                                                {{ group.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+                            href="{% url 'users:profile' %}">Профиль</a>
+                        </li>
+                        {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
 
