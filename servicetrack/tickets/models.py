@@ -13,28 +13,50 @@ class TicketQuerySet(django.db.models.QuerySet):
     def with_priority_weight(self):
         return self.annotate(
             priority_weight=django.db.models.Case(
-                django.db.models.When(priority="low", then=django.db.models.Value(1)),
-                django.db.models.When(priority="medium", then=django.db.models.Value(2)),
-                django.db.models.When(priority="high", then=django.db.models.Value(3)),
-                django.db.models.When(priority="critical", then=django.db.models.Value(4)),
+                django.db.models.When(
+                    priority="low", then=django.db.models.Value(1),
+                ),
+                django.db.models.When(
+                    priority="medium", then=django.db.models.Value(2),
+                ),
+                django.db.models.When(
+                    priority="high", then=django.db.models.Value(3),
+                ),
+                django.db.models.When(
+                    priority="critical", then=django.db.models.Value(4),
+                ),
                 default=django.db.models.Value(5),
                 output_field=django.db.models.IntegerField(),
-            )
+            ),
         )
 
     def with_status_weight(self):
         return self.annotate(
             status_weight=django.db.models.Case(
-                django.db.models.When(status="open", then=django.db.models.Value(1)),
-                django.db.models.When(status="in_progress", then=django.db.models.Value(2)),
-                django.db.models.When(status="closed", then=django.db.models.Value(3)),
-                django.db.models.When(status="cancelled", then=django.db.models.Value(4)),
+                django.db.models.When(
+                    status="open", then=django.db.models.Value(1),
+                ),
+                django.db.models.When(
+                    status="in_progress", then=django.db.models.Value(2),
+                ),
+                django.db.models.When(
+                    status="closed", then=django.db.models.Value(3),
+                ),
+                django.db.models.When(
+                    status="cancelled", then=django.db.models.Value(4),
+                ),
                 default=django.db.models.Value(5),
                 output_field=django.db.models.IntegerField(),
-            )
+            ),
         )
 
-    def sort(self, status=None, priority=None, created=None):   # "asc"(возростание) или "desc"(убывание) или None
+    def sort(
+        self,
+        status=None,
+        priority=None,
+        created=None,
+    ):
+        # "asc"(возростание) или "desc"(убывание) или None
 
         ordering = []
 
@@ -63,12 +85,14 @@ class TicketManager(django.db.models.Manager):
 
     def get_list(self):
         queryset = (
-            self
-            .get_queryset()
+            self.get_queryset()
             .select_related(
                 Ticket.assignee.field.name,
             )
-            .only(
+        )
+
+        return (
+            queryset.only(
                 Ticket.title.field.name,
                 Ticket.status.field.name,
                 Ticket.priority.field.name,
@@ -77,8 +101,6 @@ class TicketManager(django.db.models.Manager):
                 f"_{users.models.CustomUser.username.field.name}",
             )
         )
-
-        return queryset
 
 
 class Ticket(django.db.models.Model):
@@ -171,7 +193,7 @@ class Ticket(django.db.models.Model):
         return self.title
 
 
-class StatusLog(django.db.models.Model):    
+class StatusLog(django.db.models.Model):
     ticket = django.db.models.ForeignKey(
         Ticket,
         verbose_name=_("заявка"),

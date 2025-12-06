@@ -1,13 +1,13 @@
 __all__ = ()
 
-import django.contrib.admin
 import django.conf
 import django.contrib
+import django.contrib.admin
 import django.urls
 
 import pages.urls
-import users.urls
 import tickets.urls
+import users.urls
 
 
 urlpatterns = [
