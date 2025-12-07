@@ -65,6 +65,7 @@ class TicketQuerySet(django.db.models.QuerySet):
         priority=None,
         created=None,
     ):
+        # "asc"(возростание) или "desc"(убывание) или None
 
         ordering = []
 
