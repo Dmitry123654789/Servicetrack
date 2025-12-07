@@ -50,7 +50,7 @@ class TicketDetailView(django.views.generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["logs"] = self.object.status_logs.all()
-        context["logs"].order_by(
+        context["logs"].order_by(  # noqa: ECE001
             f"-{tickets.models.StatusLog.timestamp.field.name}",
         )
         return context

@@ -100,3 +100,63 @@ class CustomSetPasswordForm(django.contrib.auth.forms.SetPasswordForm):
             attrs={"autocomplete": "new-password"},
         ),
     )
+
+
+class UserCreateForm(django.forms.ModelForm):
+    password1 = django.forms.CharField(
+        label=_("Пароль"),
+        widget=django.forms.PasswordInput,
+    )
+    password2 = django.forms.CharField(
+        label=_("Подтверждение пароля"),
+        widget=django.forms.PasswordInput,
+    )
+
+    class Meta:
+        model = users.models.CustomUser
+        fields = ["username", "email", "first_name", "last_name"]
+
+    def __init__(self, *args, **kwargs):
+        self.creator = kwargs.pop("creator", None)
+        super().__init__(*args, **kwargs)
+
+        if (
+            self.creator
+            and self.creator.profile.role
+            == users.models.Profile.Role.MAIN_MANAGER
+        ):
+            self.fields["role"] = django.forms.ChoiceField(
+                label=_("Роль"),
+                choices=[
+                    (
+                        users.models.Profile.Role.GROUP_MANAGER,
+                        _("Руководитель группы"),
+                    ),
+                    (users.models.Profile.Role.WORKER, _("Работник")),
+                ],
+                initial=users.models.Profile.Role.WORKER,
+            )
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise django.forms.ValidationError(_("Пароли не совпадают"))
+
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+
+        if commit:
+            user.save()
+            profile, created = users.models.Profile.objects.get_or_create(
+                user=user,
+                defaults={"role": users.models.Profile.Role.WORKER},
+            )
+            if "role" in self.cleaned_data:
+                profile.role = self.cleaned_data.get("role")
+                profile.save()
+
+        return user

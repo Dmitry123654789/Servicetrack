@@ -1,11 +1,14 @@
 __all__ = ()
 
+from django.contrib import messages
 import django.contrib.auth.mixins
+from django.contrib.auth.mixins import UserPassesTestMixin
 import django.contrib.auth.views
 import django.urls
+from django.utils.translation import gettext_lazy as _
 import django.views.generic
 
-from users import forms
+from users import forms, models
 
 
 class RegisterView(django.views.generic.CreateView):
@@ -82,3 +85,64 @@ class ProfileView(
         context["user"] = self.request.user
         context["profile"] = self.request.user.profile
         return context
+
+
+class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
+    form_class = forms.UserCreateForm
+    template_name = "users/user_create.html"
+
+    def test_func(self):
+        if not self.request.user.is_authenticated:
+            return False
+
+        profile = self.request.user.profile
+        return profile.role in [
+            models.Profile.Role.MAIN_MANAGER,
+            models.Profile.Role.GROUP_MANAGER,
+        ]
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["creator"] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Пользователь успешно создан"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return django.urls.reverse_lazy("users:user_list")
+
+
+class UserListView(UserPassesTestMixin, django.views.generic.ListView):
+    model = models.CustomUser
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+    def test_func(self):
+        if not self.request.user.is_authenticated:
+            return False
+
+        profile = self.request.user.profile
+        return profile.role in [
+            models.Profile.Role.MAIN_MANAGER,
+            models.Profile.Role.GROUP_MANAGER,
+        ]
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related("profile")
+
+        if self.request.user.profile.role == models.Profile.Role.GROUP_MANAGER:
+            managed_groups = models.WorkerGroup.objects.filter(
+                manager=self.request.user,
+            )
+            worker_ids = set()
+            for group in managed_groups:
+                worker_ids.update(group.workers.values_list("id", flat=True))
+
+            queryset = queryset.filter(
+                id__in=worker_ids,
+                profile__role=models.Profile.Role.WORKER,
+            )
+
+        return queryset.exclude(id=self.request.user.id)

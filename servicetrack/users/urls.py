@@ -45,4 +45,14 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     django.urls.path("profile/", views.ProfileView.as_view(), name="profile"),
+    django.urls.path(
+        "create/",
+        views.UserCreateView.as_view(),
+        name="user_create",
+    ),
+    django.urls.path(
+        "list/",
+        views.UserListView.as_view(),
+        name="user_list",
+    ),
 ]

@@ -65,7 +65,6 @@ class TicketQuerySet(django.db.models.QuerySet):
         priority=None,
         created=None,
     ):
-        # "asc"(возростание) или "desc"(убывание) или None
 
         ordering = []
 
@@ -96,7 +95,7 @@ class TicketManager(django.db.models.Manager):
             Ticket.assignee.field.name,
         )
 
-        return queryset.only(
+        return queryset.only(  # noqa: ECE001
             Ticket.title.field.name,
             Ticket.status.field.name,
             Ticket.priority.field.name,
