@@ -46,6 +46,11 @@ urlpatterns = [
     ),
     django.urls.path("profile/", views.ProfileView.as_view(), name="profile"),
     django.urls.path(
+        "profile/edit/",
+        views.ProfileUpdateView.as_view(),
+        name="profile_edit",
+    ),
+    django.urls.path(
         "create/",
         views.UserCreateView.as_view(),
         name="user_create",

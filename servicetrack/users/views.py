@@ -146,3 +146,21 @@ class UserListView(UserPassesTestMixin, django.views.generic.ListView):
             )
 
         return queryset.exclude(id=self.request.user.id)
+
+
+class ProfileUpdateView(
+    django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.UpdateView,
+):
+    form_class = forms.UserProfileUpdateForm
+    template_name = "users/profile_edit.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Профиль успешно обновлен"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return django.urls.reverse_lazy("users:profile")

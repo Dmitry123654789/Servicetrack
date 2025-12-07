@@ -19,16 +19,47 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
         required=False,
         region="RU",
     )
+    first_name = django.forms.CharField(
+        label=_("Имя"),
+        required=False,
+        max_length=150,
+    )
+    last_name = django.forms.CharField(
+        label=_("Фамилия"),
+        required=False,
+        max_length=150,
+    )
 
     class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
         model = users.models.CustomUser
-        fields = ("username", "email", "phone", "password1", "password2")
+        fields = (
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "password1",
+            "password2",
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].label = _("Имя_пользователя")
         self.fields["password1"].label = _("Пароль")
         self.fields["password2"].label = _("Подтверждение_пароля")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.first_name = self.cleaned_data.get("first_name", "")
+        user.last_name = self.cleaned_data.get("last_name", "")
+
+        if commit:
+            user.save()
+            if self.cleaned_data.get("phone"):
+                user.profile.phone = self.cleaned_data["phone"]
+                user.profile.save()
+
+        return user
 
 
 class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
@@ -160,3 +191,44 @@ class UserCreateForm(django.forms.ModelForm):
                 profile.save()
 
         return user
+
+
+class UserProfileUpdateForm(django.forms.ModelForm):
+    phone = phonenumber_field.formfields.PhoneNumberField(
+        label=_("Телефон"),
+        required=False,
+        region="RU",
+    )
+
+    class Meta:
+        model = users.models.CustomUser
+        fields = ["first_name", "last_name", "email"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and hasattr(self.instance, "profile"):
+            self.fields["phone"].initial = self.instance.profile.phone
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        if commit:
+            user.save()
+            if hasattr(user, "profile"):
+                user.profile.phone = self.cleaned_data.get("phone")
+                user.profile.save()
+
+        return user
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if (
+            users.models.CustomUser.objects.filter(email=email)  # noqa: ECE001
+            .exclude(pk=self.instance.pk)
+            .exists()
+        ):
+            raise django.forms.ValidationError(
+                _("Этот email уже используется другим пользователем"),
+            )
+
+        return email
