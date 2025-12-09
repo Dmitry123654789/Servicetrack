@@ -44,6 +44,21 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="{{ form.organization_name.id_for_label }}" class="form-label">
+                        <i class="bi bi-envelope-fill me-2"></i>Название организации
+                    </label>
+                    <input type="tel"
+                           name="{{ form.organization_name.name }}"
+                           id="{{ form.organization_name.id_for_label }}"
+                           class="form-control {% if form.organization_name.errors %}is-invalid{% endif %}"
+                           value="{{ form.organization_name.value|default:'' }}"
+                           placeholder="Луковые колечки">
+                    {% for error in form.organization_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
                     <label for="{{ form.first_name.id_for_label }}" class="form-label">
                         <i class="bi bi-person me-2"></i>Имя (необязательно)
                     </label>

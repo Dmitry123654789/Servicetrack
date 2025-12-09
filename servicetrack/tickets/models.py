@@ -6,6 +6,7 @@ import django.urls
 from django.utils.translation import gettext_lazy as _
 import sorl.thumbnail
 
+import company.models
 import tickets.utils
 import users.models
 
@@ -142,7 +143,7 @@ class Ticket(django.db.models.Model):
     )
 
     group = django.db.models.ForeignKey(
-        users.models.WorkerGroup,
+        company.models.WorkerGroup,
         verbose_name=_("рабочая_группа"),
         on_delete=django.db.models.CASCADE,
         related_name="tickets",

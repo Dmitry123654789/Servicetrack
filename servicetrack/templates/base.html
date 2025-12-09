@@ -29,24 +29,22 @@
                            href="{% url 'pages:about' %}">О проекте</a>
                     </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                            href="{% url 'tickets:ticket_create' %}">Новая заявка</a>
-                        </li>
-                        <li class="nav-item">
+                        {% if not request.user.profile.is_director %}
+                            <li class="nav-item">
                             <a class="nav-link {% if request.resolver_match.url_name == 'my_tickets' %}active{% endif %}"
                             href="{% url 'tickets:my_tickets' %}">
                                 Мои заявки
                             </a>
                         </li>
-
+                        {% endif %}
+                        
                         {% if menu_groups %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle"
                                 href="#"
                                 role="button"
                                 data-bs-toggle="dropdown">
-                                    Мои группы
+                                    Группы
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -61,7 +59,22 @@
                                 </ul>
                             </li>
                         {% endif %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'organization_detail' %}active{% endif %}"
+                            href="{% url 'company:organization_detail' user.profile.organization_id %}">
+                                Организация
+                            </a>
+                        </li>
 
+                        {% if user.profile.is_director or user.profile.is_manager %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}"
+                                href="{% url 'users:user_list' %}">
+                                    Пользователи
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
                             href="{% url 'users:profile' %}">Профиль</a>
@@ -70,14 +83,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
                             </li>
-                        {% endif %}
-                        {% if user.profile.role == 'main_manager' or user.profile.role == 'group_manager' %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}"
-                               href="{% url 'users:user_list' %}">
-                                Пользователи
-                            </a>
-                        </li>
                         {% endif %}
                     {% endif %}
                 </ul>

@@ -5,9 +5,12 @@ def user_groups(request):
     if not request.user.is_authenticated:
         return {}
 
-    user = request.user
+    profile = request.user.profile
 
-    groups = (user.work_groups.all() | user.managed_groups.all()).distinct()
+    if not profile.organization:
+        return {"menu_groups": []}
+
+    groups = profile.organization.groups.all()
 
     return {
         "menu_groups": groups,

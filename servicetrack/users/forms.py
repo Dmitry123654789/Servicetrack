@@ -9,25 +9,16 @@ import users.models
 
 
 class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
-    email = django.forms.EmailField(
-        label=_("Электронная_почта"),
-        max_length=254,
-        widget=django.forms.EmailInput(attrs={"autocomplete": "email"}),
-    )
     phone = phonenumber_field.formfields.PhoneNumberField(
         label=_("Телефон"),
         required=False,
         region="RU",
     )
-    first_name = django.forms.CharField(
-        label=_("Имя"),
-        required=False,
-        max_length=150,
-    )
-    last_name = django.forms.CharField(
-        label=_("Фамилия"),
-        required=False,
-        max_length=150,
+
+    organization_name = django.forms.CharField(
+        label=_("Название организации"),
+        max_length=255,
+        required=True,
     )
 
     class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
@@ -38,6 +29,7 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
             "first_name",
             "last_name",
             "phone",
+            "organization_name",
             "password1",
             "password2",
         )
@@ -47,19 +39,6 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
         self.fields["username"].label = _("Имя_пользователя")
         self.fields["password1"].label = _("Пароль")
         self.fields["password2"].label = _("Подтверждение_пароля")
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.first_name = self.cleaned_data.get("first_name", "")
-        user.last_name = self.cleaned_data.get("last_name", "")
-
-        if commit:
-            user.save()
-            if self.cleaned_data.get("phone"):
-                user.profile.phone = self.cleaned_data["phone"]
-                user.profile.save()
-
-        return user
 
 
 class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
@@ -219,16 +198,3 @@ class UserProfileUpdateForm(django.forms.ModelForm):
                 user.profile.save()
 
         return user
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        if (
-            users.models.CustomUser.objects.filter(email=email)  # noqa: ECE001
-            .exclude(pk=self.instance.pk)
-            .exists()
-        ):
-            raise django.forms.ValidationError(
-                _("Этот email уже используется другим пользователем"),
-            )
-
-        return email

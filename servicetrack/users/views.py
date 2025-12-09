@@ -8,24 +8,36 @@ import django.urls
 from django.utils.translation import gettext_lazy as _
 import django.views.generic
 
-from users import forms, models
+import company.models
+import users.forms
+import users.models
 
 
 class RegisterView(django.views.generic.CreateView):
-    form_class = forms.CustomUserCreationForm
+    form_class = users.forms.CustomUserCreationForm
     template_name = "users/register.html"
     success_url = django.urls.reverse_lazy("users:login")
 
     def form_valid(self, form):
-        if form.cleaned_data.get("phone"):
-            self.object.profile.phone = form.cleaned_data["phone"]
-            self.object.profile.save()
+        user = form.save(commit=False)
+        user.save()
+
+        organization = company.models.Organization.objects.create(
+            name=form.cleaned_data["organization_name"],
+            main_manager=user,
+        )
+
+        user.refresh_from_db()
+        user.profile.phone = form.cleaned_data.get("phone", None)
+        user.profile.organization = organization
+        user.profile.role = users.models.Profile.Role.MAIN_MANAGER
+        user.profile.save()
 
         return super().form_valid(form)
 
 
 class LoginView(django.contrib.auth.views.LoginView):
-    form_class = forms.CustomAuthenticationForm
+    form_class = users.forms.CustomAuthenticationForm
     template_name = "users/login.html"
     redirect_authenticated_user = True
 
@@ -39,7 +51,7 @@ class LogoutView(django.contrib.auth.views.LogoutView):
 
 
 class PasswordChangeView(django.contrib.auth.views.PasswordChangeView):
-    form_class = forms.CustomPasswordChangeForm
+    form_class = users.forms.CustomPasswordChangeForm
     template_name = "users/password_change.html"
     success_url = django.urls.reverse_lazy("users:password_change_done")
 
@@ -49,7 +61,7 @@ class PasswordChangeDoneView(django.contrib.auth.views.PasswordChangeDoneView):
 
 
 class PasswordResetView(django.contrib.auth.views.PasswordResetView):
-    form_class = forms.CustomPasswordResetForm
+    form_class = users.forms.CustomPasswordResetForm
     template_name = "users/password_reset.html"
     email_template_name = "users/password_reset_email.html"
     subject_template_name = "users/password_reset_subject.txt"
@@ -63,7 +75,7 @@ class PasswordResetDoneView(django.contrib.auth.views.PasswordResetDoneView):
 class PasswordResetConfirmView(
     django.contrib.auth.views.PasswordResetConfirmView,
 ):
-    form_class = forms.CustomSetPasswordForm
+    form_class = users.forms.CustomSetPasswordForm
     template_name = "users/password_reset_confirm.html"
     success_url = django.urls.reverse_lazy("users:password_reset_complete")
 
@@ -88,7 +100,7 @@ class ProfileView(
 
 
 class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
-    form_class = forms.UserCreateForm
+    form_class = users.forms.UserCreateForm
     template_name = "users/user_create.html"
 
     def test_func(self):
@@ -97,8 +109,8 @@ class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
 
         profile = self.request.user.profile
         return profile.role in [
-            models.Profile.Role.MAIN_MANAGER,
-            models.Profile.Role.GROUP_MANAGER,
+            users.models.Profile.Role.MAIN_MANAGER,
+            users.models.Profile.Role.GROUP_MANAGER,
         ]
 
     def get_form_kwargs(self):
@@ -115,7 +127,7 @@ class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
 
 
 class UserListView(UserPassesTestMixin, django.views.generic.ListView):
-    model = models.CustomUser
+    model = users.models.CustomUser
     template_name = "users/user_list.html"
     context_object_name = "users"
 
@@ -125,41 +137,40 @@ class UserListView(UserPassesTestMixin, django.views.generic.ListView):
 
         profile = self.request.user.profile
         return profile.role in [
-            models.Profile.Role.MAIN_MANAGER,
-            models.Profile.Role.GROUP_MANAGER,
+            users.models.Profile.Role.MAIN_MANAGER,
+            users.models.Profile.Role.GROUP_MANAGER,
         ]
 
     def get_queryset(self):
-        queryset = super().get_queryset().select_related("profile")
+        user = self.request.user
 
-        if self.request.user.profile.role == models.Profile.Role.GROUP_MANAGER:
-            managed_groups = models.WorkerGroup.objects.filter(
-                manager=self.request.user,
-            )
-            worker_ids = set()
-            for group in managed_groups:
-                worker_ids.update(group.workers.values_list("id", flat=True))
+        queryset = (
+            super()
+            .get_queryset()
+            .select_related("profile")
+            .filter(profile__organization=user.profile.organization)
+        )
 
+        if user.profile.is_manager:
             queryset = queryset.filter(
-                id__in=worker_ids,
-                profile__role=models.Profile.Role.WORKER,
-            )
+                work_groups__manager=user,
+            ).distinct()
 
-        return queryset.exclude(id=self.request.user.id)
+        return queryset.exclude(id=user.id)
 
 
 class ProfileUpdateView(
     django.contrib.auth.mixins.LoginRequiredMixin,
     django.views.generic.UpdateView,
 ):
-    form_class = forms.UserProfileUpdateForm
+    form_class = users.forms.UserProfileUpdateForm
     template_name = "users/profile_edit.html"
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, _("Профиль успешно обновлен"))
+        messages.success(self.request, _("Профиль_успешно_обновлен"))
         return super().form_valid(form)
 
     def get_success_url(self):

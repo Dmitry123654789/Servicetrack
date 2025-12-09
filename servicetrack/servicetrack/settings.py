@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Created app
+    "company.apps.CompanyConfig",
     "users.apps.UsersConfig",
     "pages.apps.PagesConfig",
     "tickets.apps.TicketsConfig",

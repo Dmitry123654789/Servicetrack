@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Организация - ServiceTrack{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">
+    <i class="bi bi-building me-2"></i>
+    {{ organization.name }}
+</h2>
+
+<div class="mb-4">
+    <h5 class="mb-2">
+        <i class="bi bi-info-circle me-2"></i>Информация
+    </h5>
+
+    <p class="mb-1">
+        <strong>Описание:</strong><br>
+        {% if organization.description %}
+            {{ organization.description }}
+        {% else %}
+            <span class="text-muted">Описание не указано</span>
+        {% endif %}
+    </p>
+</div>
+
+<hr>
+
+<div class="mb-4">
+    <h5 class="mb-2">
+        <i class="bi bi-person-badge me-2"></i>Руководитель организации
+    </h5>
+
+    <p class="mb-0">
+        {{ organization.main_manager.get_full_name|default:organization.main_manager.username }}
+        <br>
+        <span class="text-muted">@{{ organization.main_manager.username }}</span>
+    </p>
+</div>
+
+<hr>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <small class="text-muted">
+            <i class="bi bi-calendar-plus me-1"></i>
+            Создана: {{ organization.created_at|date:"d.m.Y H:i" }}
+        </small>
+    </div>
+    <div class="col-md-6 text-md-end">
+        <small class="text-muted">
+            <i class="bi bi-calendar-check me-1"></i>
+            Обновлена: {{ organization.updated_at|date:"d.m.Y H:i" }}
+        </small>
+    </div>
+</div>
+
+{% if user.profile.is_director %}
+<div class="d-flex justify-content-end gap-2">
+    <a href="{% url 'company:organization_edit' organization.pk %}"
+        class="btn btn-outline-primary">
+        <i class="bi bi-pencil-square me-1"></i>
+        Редактировать
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

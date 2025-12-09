@@ -2,9 +2,9 @@ __all__ = ()
 
 import django.views.generic
 
+import company.models
 import tickets.forms
 import tickets.models
-import users.models
 
 
 class TicketListView(django.views.generic.ListView):
@@ -25,7 +25,7 @@ class TicketListView(django.views.generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["group"] = users.models.WorkerGroup.objects.get(
+        context["group"] = company.models.WorkerGroup.objects.get(
             pk=self.kwargs["pk"],
         )
         return context
@@ -75,7 +75,7 @@ class MyTicketListView(django.views.generic.TemplateView):
 
         groups = []
 
-        for group in users.models.WorkerGroup.objects.filter(
+        for group in company.models.WorkerGroup.objects.filter(
             tickets__assignee=user,
         ).distinct():
             groups.append(

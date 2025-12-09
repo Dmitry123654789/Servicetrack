@@ -56,7 +56,7 @@ urlpatterns = [
         name="user_create",
     ),
     django.urls.path(
-        "list/",
+        "user-list/",
         views.UserListView.as_view(),
         name="user_list",
     ),
