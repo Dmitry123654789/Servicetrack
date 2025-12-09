@@ -1,24 +1,257 @@
 {% extends "base.html" %}
 
-{% block title %}Заявка - ServiceTrack{% endblock %}
+{% block title %}{{ ticket.title }} - ServiceTrack{% endblock %}
 
 {% block content %}
-<h2>Заявка "{{ ticket.title }}"</h2>
-<div class="profile-info">
-    <p><strong>Описание:</strong> {{ ticket.description }}</p>
-    <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
-    <p><strong>Приоритет:</strong> {{ ticket.get_priority_display }}</p>
-    <p><strong>Рабочая_группа:</strong> {{ ticket.group }}</p>
-    <p><strong>Создатель:</strong> {{ ticket.creator }}</p>
-    <p><strong>Исполнитель:</strong> {{ ticket.assignee|default:"Не указан" }}</p>
-    <p><strong>Дата_создания:</strong> {{ ticket.created_at|date:"d.m.Y H:i" }}</p>
-    <p><strong>Дата последнего изменения:</strong> {{ ticket.updated_at|date:"d.m.Y H:i" }}</p>
+<div class="ticket-detail-container">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'tickets:tickets_list' ticket.group.pk %}">
+                            {{ ticket.group.name }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Заявка #{{ ticket.pk }}
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="mb-2">{{ ticket.title }}</h1>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                {% if ticket.status == 'open' %}
+                    <span class="badge bg-primary fs-6">Открыта</span>
+                {% elif ticket.status == 'in_progress' %}
+                    <span class="badge bg-warning text-dark fs-6">В работе</span>
+                {% elif ticket.status == 'closed' %}
+                    <span class="badge bg-success fs-6">Закрыта</span>
+                {% elif ticket.status == 'cancelled' %}
+                    <span class="badge bg-secondary fs-6">Отменена</span>
+                {% endif %}
+
+                {% if ticket.priority == 'low' %}
+                    <span class="badge bg-secondary fs-6">Низкий</span>
+                {% elif ticket.priority == 'medium' %}
+                    <span class="badge bg-primary fs-6">Средний</span>
+                {% elif ticket.priority == 'high' %}
+                    <span class="badge bg-warning text-dark fs-6">Высокий</span>
+                {% elif ticket.priority == 'critical' %}
+                    <span class="badge bg-danger fs-6">Критический</span>
+                {% endif %}
+
+                <span class="text-muted">•</span>
+                <span class="text-muted">
+                    Создано: {{ ticket.created_at|date:"d.m.Y H:i" }}
+                </span>
+            </div>
+        </div>
+        <div class="btn-group" role="group">
+            {% if user.profile.role != 'worker' %}
+                <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}"
+                   class="btn btn-outline-primary">
+                    <i class="bi bi-pencil me-2"></i>Редактировать
+                </a>
+            {% endif %}
+            {% if ticket.assignee == user %}
+                <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}"
+                   class="btn btn-success">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Изменить статус
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-light border-0 py-3">
+                    <h5 class="mb-0"><i class="bi bi-card-text me-2"></i>Описание</h5>
+                </div>
+                <div class="card-body">
+                    <div class="ticket-description">
+                        {{ ticket.description|linebreaks }}
+                    </div>
+
+                    {% if ticket.photo_before %}
+                        <div class="mt-4">
+                            <h6 class="mb-3"><i class="bi bi-image me-2"></i>Фото до</h6>
+                            <img src="{{ ticket.photo_before.url }}"
+                                 alt="Фото до"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 300px;">
+                        </div>
+                    {% endif %}
+
+                    {% if ticket.photo_after %}
+                        <div class="mt-4">
+                            <h6 class="mb-3"><i class="bi bi-image me-2"></i>Фото после</h6>
+                            <img src="{{ ticket.photo_after.url }}"
+                                 alt="Фото после"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 300px;">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-light border-0 py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history me-2"></i>История изменений
+                        <span class="badge bg-secondary ms-2">{{ logs|length }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if logs %}
+                        <div class="list-group list-group-flush">
+                            {% for log in logs %}
+                                <div class="list-group-item border-0 py-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                <small>{{ log.user.username|first|upper|default:"S" }}</small>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">
+                                                    {{ log.user.username|default:"Система" }}
+                                                </h6>
+                                                <p class="text-muted small mb-0">
+                                                    {{ log.timestamp|date:"d.m.Y H:i" }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end gap-2">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="badge bg-light text-dark border">
+                                                    {{ log.get_from_status_display }}
+                                                </span>
+                                                <i class="bi bi-arrow-right text-muted"></i>
+                                                {% if log.to_status == 'open' %}
+                                                    <span class="badge bg-primary">{{ log.get_to_status_display }}</span>
+                                                {% elif log.to_status == 'in_progress' %}
+                                                    <span class="badge bg-warning text-dark">{{ log.get_to_status_display }}</span>
+                                                {% elif log.to_status == 'closed' %}
+                                                    <span class="badge bg-success">{{ log.get_to_status_display }}</span>
+                                                {% elif log.to_status == 'cancelled' %}
+                                                    <span class="badge bg-secondary">{{ log.get_to_status_display }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if log.comment %}
+                                        <div class="mt-3 p-3 bg-light rounded">
+                                            <p class="mb-0 small">{{ log.comment|linebreaks }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-info-circle display-4 text-muted mb-3"></i>
+                            <p class="text-muted mb-0">История изменений отсутствует</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-light border-0 py-3">
+                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Информация</h5>
+                </div>
+                <div class="card-body">
+                    <div class="info-item mb-3">
+                        <div class="small text-muted mb-1">Рабочая группа</div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-people me-2"></i>
+                            <strong>{{ ticket.group.name }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-item mb-3">
+                        <div class="small text-muted mb-1">Создатель</div>
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                <span>{{ ticket.creator.username|first|upper }}</span>
+                            </div>
+                            <div>
+                                <strong>{{ ticket.creator.username }}</strong>
+                                <div class="small text-muted">
+                                    {{ ticket.creator.email }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-item mb-3">
+                        <div class="small text-muted mb-1">Исполнитель</div>
+                        {% if ticket.assignee %}
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                    <span>{{ ticket.assignee.username|first|upper }}</span>
+                                </div>
+                                <div>
+                                    <strong>{{ ticket.assignee.username }}</strong>
+                                    <div class="small text-muted">
+                                        {{ ticket.assignee.email }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <span class="text-muted">Не назначен</span>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+
+                    <div class="info-item mb-2">
+                        <div class="small text-muted mb-1">Дата создания</div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-plus me-2"></i>
+                            {{ ticket.created_at|date:"d.m.Y H:i" }}
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="small text-muted mb-1">Последнее обновление</div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-check me-2"></i>
+                            {{ ticket.updated_at|date:"d.m.Y H:i" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-light border-0 py-3">
+                    <h5 class="mb-0"><i class="bi bi-lightning-charge me-2"></i>Быстрые действия</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if ticket.assignee == user %}
+                            <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}"
+                               class="btn btn-success">
+                                <i class="bi bi-arrow-clockwise me-2"></i>Обновить статус
+                            </a>
+                        {% endif %}
+                        {% if user.profile.role != 'worker' %}
+                            <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}"
+                               class="btn btn-outline-primary">
+                                <i class="bi bi-pencil me-2"></i>Редактировать заявку
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'tickets:tickets_list' ticket.group.pk %}"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Вернуться к списку
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<br>
-<h2>История изменений</h2>
-<p>№ | Изменил | Из статуса | В статус | Время</p>
-{% for log in logs %}
-    <p>{{ forloop.counter }} | {{ log.user }} | {{ log.get_from_status_display }} | {{ log.get_to_status_display }} | {{ log.timestamp|date:"d.m.Y H:i" }}</p>
-    <p>Комментарий: {{ log.comment }}</p>
-{% endfor %}
 {% endblock %}
