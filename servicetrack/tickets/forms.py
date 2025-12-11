@@ -25,9 +25,9 @@ class TicketCreateForm(django.forms.ModelForm):
 
         user_organization = current_user.profile.organization
         self.fields["group"].queryset = self.fields["group"].queryset.filter(
-                organization=user_organization,
-                workers=current_user,
-            )
+            organization=user_organization,
+            workers=current_user,
+        )
 
 
 class TicketWorkerForm(django.forms.ModelForm):
@@ -80,16 +80,16 @@ class TicketManagerForm(django.forms.ModelForm):
 
         user_organization = current_user.profile.organization
         self.fields["group"].queryset = self.fields["group"].queryset.filter(
-                organization=user_organization,
-            )
+            organization=user_organization,
+        )
 
         if self.instance and self.instance.pk:
             group = self.instance.group
             user_model = django.contrib.auth.get_user_model()
 
             self.fields["assignee"].queryset = user_model.objects.filter(
-                django.db.models.Q(work_groups=group) |
-                django.db.models.Q(pk=group.manager_id),
+                django.db.models.Q(work_groups=group)
+                | django.db.models.Q(pk=group.manager_id),
             )
 
             if not current_user.profile.is_director:

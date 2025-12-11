@@ -32,18 +32,14 @@ class WorkerGroupEditForm(django.forms.ModelForm):
         organization = self.request.user.profile.organization
         user_model = django.contrib.auth.get_user_model()
 
-        self.fields["manager"].queryset = (
-            user_model.objects.filter(
-                profile__organization=organization,
-                profile__role=users.models.Profile.Role.GROUP_MANAGER,
-            )
+        self.fields["manager"].queryset = user_model.objects.filter(
+            profile__organization=organization,
+            profile__role=users.models.Profile.Role.GROUP_MANAGER,
         )
 
-        self.fields["workers"].queryset = (
-            user_model.objects.filter(
-                profile__organization=organization,
-                profile__role=users.models.Profile.Role.WORKER,
-            )
+        self.fields["workers"].queryset = user_model.objects.filter(
+            profile__organization=organization,
+            profile__role=users.models.Profile.Role.WORKER,
         )
 
         self.fields["workers"].widget = django.forms.CheckboxSelectMultiple()
@@ -70,18 +66,14 @@ class WorkerGroupCreationForm(django.forms.ModelForm):
         organization = self.request.user.profile.organization
         user_model = django.contrib.auth.get_user_model()
 
-        self.fields["manager"].queryset = (
-            user_model.objects.filter(
-                profile__organization=organization,
-                profile__role=users.models.Profile.Role.GROUP_MANAGER,
-            )
+        self.fields["manager"].queryset = user_model.objects.filter(
+            profile__organization=organization,
+            profile__role=users.models.Profile.Role.GROUP_MANAGER,
         )
 
-        self.fields["workers"].queryset = (
-            user_model.objects.filter(
-                profile__organization=organization,
-                profile__role=users.models.Profile.Role.WORKER,
-            )
+        self.fields["workers"].queryset = user_model.objects.filter(
+            profile__organization=organization,
+            profile__role=users.models.Profile.Role.WORKER,
         )
 
         self.fields["workers"].widget = django.forms.CheckboxSelectMultiple()

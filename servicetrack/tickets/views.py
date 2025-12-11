@@ -149,8 +149,8 @@ class TicketManagerUpdateView(django.views.generic.UpdateView):
         user = self.request.user
 
         return self.model.objects.filter(
-            django.db.models.Q(group__manager=user) |
-            django.db.models.Q(group__organization__main_manager=user),
+            django.db.models.Q(group__manager=user)
+            | django.db.models.Q(group__organization__main_manager=user),
         )
 
     def get_form_kwargs(self):
