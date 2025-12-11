@@ -5,6 +5,7 @@ import django.forms
 from django.utils.translation import gettext_lazy as _
 import phonenumber_field.formfields
 
+import company.models
 import users.models
 
 
@@ -39,6 +40,23 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
         self.fields["username"].label = _("Имя_пользователя")
         self.fields["password1"].label = _("Пароль")
         self.fields["password2"].label = _("Подтверждение_пароля")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        if commit:
+            organization = company.models.Organization.objects.create(
+                name=self.cleaned_data["organization_name"],
+                main_manager=user,
+            )
+
+            user.refresh_from_db()
+            user.profile.phone = self.cleaned_data.get("phone", None)
+            user.profile.organization = organization
+            user.profile.role = users.models.Profile.Role.MAIN_MANAGER
+            user.profile.save()
+
+        return user
 
 
 class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
@@ -124,50 +142,52 @@ class UserCreateForm(django.forms.ModelForm):
 
     class Meta:
         model = users.models.CustomUser
-        fields = ["username", "email", "first_name", "last_name"]
+        fields = ("username", "email", "first_name", "last_name")
 
     def __init__(self, *args, **kwargs):
-        self.creator = kwargs.pop("creator", None)
+        self.creator = kwargs.pop("creator")
         super().__init__(*args, **kwargs)
 
-        if (
-            self.creator
-            and self.creator.profile.role
-            == users.models.Profile.Role.MAIN_MANAGER
-        ):
-            self.fields["role"] = django.forms.ChoiceField(
-                label=_("Роль"),
-                choices=[
-                    (
-                        users.models.Profile.Role.GROUP_MANAGER,
-                        _("Руководитель группы"),
-                    ),
-                    (users.models.Profile.Role.WORKER, _("Работник")),
-                ],
-                initial=users.models.Profile.Role.WORKER,
+        choices = [(users.models.Profile.Role.WORKER, _("Работник"))]
+
+        if self.creator.profile.is_director:
+            choices.append(
+                (
+                    users.models.Profile.Role.GROUP_MANAGER,
+                    _("Руководитель_группы"),
+                ),
             )
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise django.forms.ValidationError(_("Пароли не совпадают"))
+        self.fields["role"] = django.forms.ChoiceField(
+            label=_("Роль"),
+            choices=choices,
+            required=True,
+        )
 
-        return password2
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get("password1") != cleaned_data.get("password2"):
+            raise django.forms.ValidationError(_("Пароли_не_совпадают"))
+
+        return cleaned_data
 
     def save(self, commit=True):
+        creator = self.creator
+
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        user.save()
 
-        if commit:
-            user.save()
-            profile, created = users.models.Profile.objects.get_or_create(
-                user=user,
-                defaults={"role": users.models.Profile.Role.WORKER},
-            )
-            if "role" in self.cleaned_data:
-                profile.role = self.cleaned_data.get("role")
-                profile.save()
+        user.refresh_from_db()
+        user.profile.organization_id = creator.profile.organization_id
+        user.profile.role = self.cleaned_data["role"]
+        user.profile.save()
+
+        if creator.profile.is_manager:
+            group = creator.managed_groups.first()
+            if group:
+                group.workers.add(user)
 
         return user
 

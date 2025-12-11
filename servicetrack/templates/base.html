@@ -31,42 +31,46 @@
                     {% if user.is_authenticated %}
                         {% if not request.user.profile.is_director %}
                             <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'my_tickets' %}active{% endif %}"
-                            href="{% url 'tickets:my_tickets' %}">
-                                Мои заявки
-                            </a>
-                        </li>
-                        {% endif %}
-                        
-                        {% if menu_groups %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown">
-                                    Группы
+                                <a class="nav-link {% if request.resolver_match.url_name == 'my_tickets' %}active{% endif %}"
+                                href="{% url 'tickets:my_tickets' %}">
+                                    Мои заявки
                                 </a>
-
-                                <ul class="dropdown-menu">
-                                    {% for group in menu_groups %}
-                                        <li>
-                                            <a class="dropdown-item {% if request.resolver_match.url_name == 'tickets_list' and group.id|stringformat:"s" == request.resolver_match.kwargs.pk|stringformat:"s" %}active{% endif %}"
-                                            href="{% url 'tickets:tickets_list' group.pk %}">
-                                                {{ group.name }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
                             </li>
                         {% endif %}
-                        
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'organization_detail' %}active{% endif %}"
-                            href="{% url 'company:organization_detail' user.profile.organization_id %}">
-                                Организация
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown">
+                                Группы
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'group_list' %}active{% endif %}"
+                                    href="{% url 'company:group_list' %}">
+                                        Информация
+                                    </a>
+                                </li>
+                            {% if menu_groups %}
+                                {% for group in menu_groups %}
+                                    <li>
+                                        <a class="dropdown-item {% if request.resolver_match.url_name == 'tickets_list' and group.id|stringformat:"s" == request.resolver_match.kwargs.pk|stringformat:"s" %}active{% endif %}"
+                                        href="{% url 'tickets:tickets_list' group.pk %}">
+                                            {{ group.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            </ul>
                         </li>
-
+                        {% if user.profile.organization_id %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'organization_detail' %}active{% endif %}"
+                                href="{% url 'company:organization_detail' user.profile.organization_id %}">
+                                    Организация
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if user.profile.is_director or user.profile.is_manager %}
                             <li class="nav-item">
                                 <a class="nav-link {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}"

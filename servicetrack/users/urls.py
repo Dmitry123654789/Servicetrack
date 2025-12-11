@@ -15,22 +15,22 @@ urlpatterns = [
         name="register",
     ),
     django.urls.path(
-        "password_change/",
+        "password-change/",
         views.PasswordChangeView.as_view(),
         name="password_change",
     ),
     django.urls.path(
-        "password_change/done/",
+        "password-change/done/",
         views.PasswordChangeDoneView.as_view(),
         name="password_change_done",
     ),
     django.urls.path(
-        "password_reset/",
+        "password-reset/",
         views.PasswordResetView.as_view(),
         name="password_reset",
     ),
     django.urls.path(
-        "password_reset/done/",
+        "password-reset/done/",
         views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),

@@ -18,8 +18,23 @@ urlpatterns = [
         name="organization_edit",
     ),
     django.urls.path(
+        "group-detail/<int:pk>/",
+        views.GroupDetailView.as_view(),
+        name="group_detail",
+    ),
+    django.urls.path(
         "group-edit/<int:pk>/",
         views.GroupEditView.as_view(),
         name="group_edit",
+    ),
+    django.urls.path(
+        "group-list/",
+        views.GroupListView.as_view(),
+        name="group_list",
+    ),
+    django.urls.path(
+        "group-create/",
+        views.GroupCreateView.as_view(),
+        name="group_create",
     ),
 ]

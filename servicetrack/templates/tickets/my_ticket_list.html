@@ -3,5 +3,17 @@
 {% block title %}Мои заявки - ServiceTrack{% endblock %}
 
 {% block content %}
+    {% for item in groups %}
+        <h1>Заявки группы: {{ item.group.name }}</h1>
+        {% for ticket in item.tickets %}
+            <a href="{% url 'tickets:ticket_detail' ticket.pk %}">{{ forloop.counter }} | {{ ticket.title }} | {{ ticket.get_status_display }} | {{ ticket.created_at }} | {{ ticket.assignee.username }} | {{ ticket.get_priority_display }}</a>
+            {% if user.profile.is_director or user.profile.is_manager %}
+                <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}">Редактировать</a>
+            {% endif %}
             {% if ticket.assignee == user %}
+                <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}">Изменить статус</a>
+            {% endif %}
+            <br>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

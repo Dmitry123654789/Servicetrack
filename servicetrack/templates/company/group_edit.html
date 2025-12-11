@@ -1,16 +1,119 @@
 {% extends "base.html" %}
 
-{% block title %}Группы - ServiceTrack{% endblock %}
+{% block title %}Редактирование группы – ServiceTrack{% endblock %}
 
 {% block content %}
 
-<h1>{{ group.name }}</h1>
+<div class="row justify-content-center fade-in">
+    <div class="col-md-8 col-lg-6">
+        <div class="content-container p-4 p-md-5">
 
-<h2>Редактирование группы</h2>
+            <h2 class="text-center mb-4">
+                <i class="bi bi-people-fill me-2"></i>
+                Редактирование группы
+            </h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Название -->
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                        <i class="bi bi-fonts me-2"></i>Название группы
+                    </label>
+                    <input type="text"
+                           name="{{ form.name.name }}"
+                           id="{{ form.name.id_for_label }}"
+                           class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                           value="{{ form.name.value|default:'' }}"
+                           placeholder="Введите название группы"
+                           required>
+                    {% for error in form.name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- Описание -->
+                <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                        <i class="bi bi-card-text me-2"></i>Описание
+                    </label>
+                    <textarea name="{{ form.description.name }}"
+                              id="{{ form.description.id_for_label }}"
+                              class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                              rows="3"
+                              placeholder="Описание группы (необязательно)">{{ form.description.value|default:'' }}</textarea>
+                    {% for error in form.description.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.manager.id_for_label }}" class="form-label">
+                        <i class="bi bi-person-badge me-2"></i>Руководитель группы
+                    </label>
+                    {% comment %} {{ form.manager   }} {% endcomment %}
+                    <select name="{{ form.manager.name }}"
+                            id="{{ form.manager.id_for_label }}"
+                            class="form-select {% if form.manager.errors %}is-invalid{% endif %}"
+                            {% if not user.profile.is_director %}disabled{% endif %}>
+                        <option value="">— Не назначен —</option>
+                        {% for manager in form.manager.field.queryset %}
+                            <option value="{{ manager.pk }}" selected>
+                                {{ manager.get_full_name|default:manager.username }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% for error in form.manager.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="bi bi-people me-2"></i>Работники группы
+                    </label>
+
+                    <div class="border rounded p-3">
+                        {% if form.workers.field.queryset %}
+                            {% for worker in form.workers.field.queryset %}
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="{{ form.workers.name }}"
+                                           id="worker_{{ worker.pk }}"
+                                           value="{{ worker.pk }}"
+                                           {% if worker in form.instance.workers.all %}checked{% endif %}>
+                                    <label class="form-check-label" for="worker_{{ worker.pk }}">
+                                        {{ worker.get_full_name|default:worker.username }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted">Нет доступных работников</span>
+                        {% endif %}
+                    </div>
+
+                    {% for error in form.workers.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save me-1"></i>
+                        Сохранить изменения
+                    </button>
+
+                    <a href="{% url 'company:group_detail' group.pk %}"
+                       class="btn btn-secondary">
+                        Назад к группе
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

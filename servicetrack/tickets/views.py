@@ -132,7 +132,12 @@ class TicketManagerUpdateView(django.views.generic.UpdateView):
     template_name = "tickets/ticket_manager_update.html"
 
     def get_queryset(self):
-        return self.model.objects.filter(group__manager=self.request.user)
+        user = self.request.user
+
+        return self.model.objects.filter(
+            django.db.models.Q(group__manager=user) |
+            django.db.models.Q(group__organization__main_manager=user),
+        )
 
     def form_valid(self, form):
         ticket = self.get_object()

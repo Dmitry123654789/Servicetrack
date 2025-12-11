@@ -1,48 +1,33 @@
 __all__ = ()
 
 from django.contrib import messages
-import django.contrib.auth.mixins
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import django.contrib.auth.views
 import django.urls
 from django.utils.translation import gettext_lazy as _
 import django.views.generic
 
-import company.models
 import users.forms
 import users.models
 
 
-class RegisterView(django.views.generic.CreateView):
+class RegisterView(UserPassesTestMixin, django.views.generic.CreateView):
     form_class = users.forms.CustomUserCreationForm
     template_name = "users/register.html"
     success_url = django.urls.reverse_lazy("users:login")
 
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.save()
-
-        organization = company.models.Organization.objects.create(
-            name=form.cleaned_data["organization_name"],
-            main_manager=user,
-        )
-
-        user.refresh_from_db()
-        user.profile.phone = form.cleaned_data.get("phone", None)
-        user.profile.organization = organization
-        user.profile.role = users.models.Profile.Role.MAIN_MANAGER
-        user.profile.save()
-
-        return super().form_valid(form)
+    def test_func(self):
+        return not self.request.user.is_authenticated
 
 
-class LoginView(django.contrib.auth.views.LoginView):
+class LoginView(UserPassesTestMixin, django.contrib.auth.views.LoginView):
     form_class = users.forms.CustomAuthenticationForm
     template_name = "users/login.html"
     redirect_authenticated_user = True
+    success_url = django.urls.reverse_lazy("users:profile")
 
-    def get_success_url(self):
-        return django.urls.reverse_lazy("users:profile")
+    def test_func(self):
+        return not self.request.user.is_authenticated
 
 
 class LogoutView(django.contrib.auth.views.LogoutView):
@@ -87,7 +72,7 @@ class PasswordResetCompleteView(
 
 
 class ProfileView(
-    django.contrib.auth.mixins.LoginRequiredMixin,
+    LoginRequiredMixin,
     django.views.generic.TemplateView,
 ):
     template_name = "users/profile.html"
@@ -99,16 +84,14 @@ class ProfileView(
         return context
 
 
-class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
+class UserCreateView(LoginRequiredMixin, django.views.generic.CreateView):
     form_class = users.forms.UserCreateForm
     template_name = "users/user_create.html"
+    success_url = django.urls.reverse_lazy("users:user_list")
 
     def test_func(self):
-        if not self.request.user.is_authenticated:
-            return False
-
-        profile = self.request.user.profile
-        return profile.role in [
+        user = self.request.user
+        return user.profile.role in [
             users.models.Profile.Role.MAIN_MANAGER,
             users.models.Profile.Role.GROUP_MANAGER,
         ]
@@ -119,14 +102,11 @@ class UserCreateView(UserPassesTestMixin, django.views.generic.CreateView):
         return kwargs
 
     def form_valid(self, form):
-        messages.success(self.request, _("Пользователь успешно создан"))
+        messages.success(self.request, _("Пользователь_успешно_создан"))
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return django.urls.reverse_lazy("users:user_list")
 
-
-class UserListView(UserPassesTestMixin, django.views.generic.ListView):
+class UserListView(LoginRequiredMixin, django.views.generic.ListView):
     model = users.models.CustomUser
     template_name = "users/user_list.html"
     context_object_name = "users"
@@ -160,11 +140,12 @@ class UserListView(UserPassesTestMixin, django.views.generic.ListView):
 
 
 class ProfileUpdateView(
-    django.contrib.auth.mixins.LoginRequiredMixin,
+    LoginRequiredMixin,
     django.views.generic.UpdateView,
 ):
     form_class = users.forms.UserProfileUpdateForm
     template_name = "users/profile_edit.html"
+    success_url = django.urls.reverse_lazy("users:profile")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -172,6 +153,3 @@ class ProfileUpdateView(
     def form_valid(self, form):
         messages.success(self.request, _("Профиль_успешно_обновлен"))
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return django.urls.reverse_lazy("users:profile")
