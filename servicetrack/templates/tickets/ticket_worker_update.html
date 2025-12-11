@@ -1,40 +1,79 @@
 {% extends "base.html" %}
 
-{% block title %}Работа с заявкой - ServiceTrack{% endblock %}
+{% block title %}В работе: {{ form.instance.title }} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Работа с заявкой</h2>
+            <h2 class="text-center mb-4">Выполнение заявки</h2>
 
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 {% csrf_token %}
 
-                {% for field in form %}
+                {# --- (Read Only) --- #}
+                <div class="alert alert-light border mb-4">
+                    <h5 class="alert-heading h6 text-muted mb-3">Информация о задаче</h5>
+                    
                     <div class="mb-3">
-                        <label for="{{ field.id_for_label }}" class="form-label">
-                            {{ field.label }}
-                        </label>
-
-                        {{ field }}
-
-                        {% if field.errors %}
-                            <div class="text-danger small">{{ field.errors }}</div>
-                        {% endif %}
+                        <label class="form-label small text-uppercase text-muted fw-bold">Название</label>
+                        <input type="text" class="form-control-plaintext fw-bold" value="{{ form.instance.title }}" readonly>
                     </div>
-                {% endfor %}
 
+                    <div class="mb-3">
+                        <label class="form-label small text-uppercase text-muted fw-bold">Описание</label>
+                        <div class="form-control bg-light text-break" style="min-height: 80px;">
+                            {{ form.instance.description|linebreaksbr }}
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                {# --- (Editable) --- #}
+                <h5 class="mb-3">Отчет о работе</h5>
+
+                <div class="mb-3">
+                    <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
+                    <select name="{{ form.status.name }}" 
+                            id="{{ form.status.id_for_label }}" 
+                            class="form-select {% if form.status.errors %}is-invalid{% endif %}">
+                        {% for value, label in form.status.field.choices %}
+                            <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% for error in form.status.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.photo_after.id_for_label }}" class="form-label">{{ form.photo_after.label }}</label>
+                    <input type="file" 
+                           name="{{ form.photo_after.name }}" 
+                           id="{{ form.photo_after.id_for_label }}" 
+                           class="form-control {% if form.photo_after.errors %}is-invalid{% endif %}">
+                    {% for error in form.photo_after.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="{{ form.comment.id_for_label }}" class="form-label">{{ form.comment.label }}</label>
+                    <textarea name="{{ form.comment.name }}" 
+                              id="{{ form.comment.id_for_label }}" 
+                              class="form-control {% if form.comment.errors %}is-invalid{% endif %}" 
+                              rows="3" 
+                              placeholder="Ваш комментарий о проделанной работе">{{ form.comment.value|default:'' }}</textarea>
+                    {% for error in form.comment.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-success btn-lg">
-                        Сохранить изменения
-                    </button>
-                    <a href="{% url 'tickets:ticket_list' %}" class="btn btn-secondary">
-                        Назад
-                    </a>
+                    <button type="submit" class="btn btn-success btn-lg">Сохранить отчет</button>
+                    <a href="{% url 'tickets:my_tickets' %}" class="btn btn-secondary">Отмена</a>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

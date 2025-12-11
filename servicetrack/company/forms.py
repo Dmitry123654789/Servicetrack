@@ -30,16 +30,17 @@ class WorkerGroupEditForm(django.forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         organization = self.request.user.profile.organization
+        user_model = django.contrib.auth.get_user_model()
 
         self.fields["manager"].queryset = (
-            users.models.CustomUser.objects.filter(
+            user_model.objects.filter(
                 profile__organization=organization,
                 profile__role=users.models.Profile.Role.GROUP_MANAGER,
             )
         )
 
         self.fields["workers"].queryset = (
-            users.models.CustomUser.objects.filter(
+            user_model.objects.filter(
                 profile__organization=organization,
                 profile__role=users.models.Profile.Role.WORKER,
             )
@@ -67,16 +68,17 @@ class WorkerGroupCreationForm(django.forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         organization = self.request.user.profile.organization
+        user_model = django.contrib.auth.get_user_model()
 
         self.fields["manager"].queryset = (
-            users.models.CustomUser.objects.filter(
+            user_model.objects.filter(
                 profile__organization=organization,
                 profile__role=users.models.Profile.Role.GROUP_MANAGER,
             )
         )
 
         self.fields["workers"].queryset = (
-            users.models.CustomUser.objects.filter(
+            user_model.objects.filter(
                 profile__organization=organization,
                 profile__role=users.models.Profile.Role.WORKER,
             )

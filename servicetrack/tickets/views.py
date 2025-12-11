@@ -1,13 +1,15 @@
 __all__ = ()
 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import django.views.generic
 
 import company.models
 import tickets.forms
 import tickets.models
+import users.models
 
 
-class TicketListView(django.views.generic.ListView):
+class TicketListView(LoginRequiredMixin, django.views.generic.ListView):
     model = tickets.models.Ticket
     template_name = "tickets/ticket_list.html"
     context_object_name = "tickets"
@@ -31,7 +33,7 @@ class TicketListView(django.views.generic.ListView):
         return context
 
 
-class TicketDetailView(django.views.generic.DetailView):
+class TicketDetailView(LoginRequiredMixin, django.views.generic.DetailView):
     model = tickets.models.Ticket
     template_name = "tickets/ticket_detail.html"
     context_object_name = "ticket"
@@ -56,7 +58,7 @@ class TicketDetailView(django.views.generic.DetailView):
         return context
 
 
-class MyTicketListView(django.views.generic.TemplateView):
+class MyTicketListView(LoginRequiredMixin, django.views.generic.TemplateView):
     model = tickets.models.Ticket
     template_name = "tickets/my_ticket_list.html"
 
@@ -89,10 +91,22 @@ class MyTicketListView(django.views.generic.TemplateView):
         return context
 
 
-class TicketCreateView(django.views.generic.CreateView):
+class TicketCreateView(UserPassesTestMixin, django.views.generic.CreateView):
     model = tickets.models.Ticket
     form_class = tickets.forms.TicketCreateForm
     template_name = "tickets/ticket_create.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def test_func(self):
+        user = self.request.user
+        return user.profile.role in [
+            users.models.Profile.Role.GROUP_MANAGER,
+            users.models.Profile.Role.WORKER,
+        ]
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -138,6 +152,11 @@ class TicketManagerUpdateView(django.views.generic.UpdateView):
             django.db.models.Q(group__manager=user) |
             django.db.models.Q(group__organization__main_manager=user),
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         ticket = self.get_object()
