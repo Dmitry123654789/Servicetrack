@@ -1,0 +1,479 @@
+[
+{
+  "model": "company.organization",
+  "pk": 1,
+  "fields": {
+    "name": "Organization A",
+    "description": null,
+    "main_manager": 5,
+    "created_at": "2025-12-12T18:47:45.320Z",
+    "updated_at": "2025-12-12T18:47:45.320Z"
+  }
+},
+{
+  "model": "company.organization",
+  "pk": 2,
+  "fields": {
+    "name": "Organization B",
+    "description": null,
+    "main_manager": 9,
+    "created_at": "2025-12-12T18:47:50.039Z",
+    "updated_at": "2025-12-12T18:47:50.039Z"
+  }
+},
+{
+  "model": "company.workergroup",
+  "pk": 1,
+  "fields": {
+    "name": "Group A1 (Support)",
+    "description": null,
+    "manager": 5,
+    "organization": 1,
+    "created_at": "2025-12-12T18:47:48.718Z",
+    "updated_at": "2025-12-12T18:47:48.718Z",
+    "workers": [
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "company.workergroup",
+  "pk": 2,
+  "fields": {
+    "name": "Group A2 (IT)",
+    "description": null,
+    "manager": 8,
+    "organization": 1,
+    "created_at": "2025-12-12T18:47:48.890Z",
+    "updated_at": "2025-12-12T18:47:48.890Z",
+    "workers": [
+      7
+    ]
+  }
+},
+{
+  "model": "company.workergroup",
+  "pk": 3,
+  "fields": {
+    "name": "Group B1 (Sales)",
+    "description": null,
+    "manager": 10,
+    "organization": 2,
+    "created_at": "2025-12-12T18:47:52.209Z",
+    "updated_at": "2025-12-12T18:47:52.209Z",
+    "workers": [
+      11
+    ]
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 1,
+  "fields": {
+    "title": "A1: Критический сбой сети",
+    "description": "Детальное описание заявки 'A1: Критический сбой сети'.",
+    "status": "in_progress",
+    "priority": "critical",
+    "group": 1,
+    "creator": 5,
+    "assignee": 7,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:52.385Z",
+    "updated_at": "2025-12-12T18:47:52.385Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 2,
+  "fields": {
+    "title": "A1: Запрос на новую гарнитуру",
+    "description": "Детальное описание заявки 'A1: Запрос на новую гарнитуру'.",
+    "status": "open",
+    "priority": "low",
+    "group": 1,
+    "creator": 7,
+    "assignee": 7,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:52.598Z",
+    "updated_at": "2025-12-12T18:47:52.598Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 3,
+  "fields": {
+    "title": "A1: Замена монитора (закрыта)",
+    "description": "Детальное описание заявки 'A1: Замена монитора (закрыта)'.",
+    "status": "closed",
+    "priority": "medium",
+    "group": 1,
+    "creator": 8,
+    "assignee": 6,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:52.686Z",
+    "updated_at": "2025-12-12T18:47:52.686Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 4,
+  "fields": {
+    "title": "A2: Настройка VPN (отменена)",
+    "description": "Детальное описание заявки 'A2: Настройка VPN (отменена)'.",
+    "status": "cancelled",
+    "priority": "high",
+    "group": 2,
+    "creator": 5,
+    "assignee": 8,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:52.836Z",
+    "updated_at": "2025-12-12T18:47:52.836Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 5,
+  "fields": {
+    "title": "A2: Доступ к новому репозиторию",
+    "description": "Детальное описание заявки 'A2: Доступ к новому репозиторию'.",
+    "status": "open",
+    "priority": "medium",
+    "group": 2,
+    "creator": 7,
+    "assignee": 7,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:53.006Z",
+    "updated_at": "2025-12-12T18:47:53.006Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 6,
+  "fields": {
+    "title": "A2: Обновление корпоративного ПО",
+    "description": "Детальное описание заявки 'A2: Обновление корпоративного ПО'.",
+    "status": "open",
+    "priority": "low",
+    "group": 2,
+    "creator": 6,
+    "assignee": null,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:53.093Z",
+    "updated_at": "2025-12-12T18:47:53.093Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 7,
+  "fields": {
+    "title": "B1: Проверка контактов в CRM",
+    "description": "Детальное описание заявки 'B1: Проверка контактов в CRM'.",
+    "status": "in_progress",
+    "priority": "medium",
+    "group": 3,
+    "creator": 9,
+    "assignee": 11,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:53.189Z",
+    "updated_at": "2025-12-12T18:47:53.189Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 8,
+  "fields": {
+    "title": "B1: Невозможность сохранить отчет",
+    "description": "Детальное описание заявки 'B1: Невозможность сохранить отчет'.",
+    "status": "open",
+    "priority": "high",
+    "group": 3,
+    "creator": 10,
+    "assignee": 11,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:53.379Z",
+    "updated_at": "2025-12-12T18:47:53.379Z"
+  }
+},
+{
+  "model": "tickets.ticket",
+  "pk": 9,
+  "fields": {
+    "title": "B1: Запрос на удаление данных",
+    "description": "Детальное описание заявки 'B1: Запрос на удаление данных'.",
+    "status": "closed",
+    "priority": "critical",
+    "group": 3,
+    "creator": 11,
+    "assignee": 10,
+    "photo_before": "",
+    "photo_after": "",
+    "created_at": "2025-12-12T18:47:53.457Z",
+    "updated_at": "2025-12-12T18:47:53.457Z"
+  }
+},
+{
+  "model": "tickets.statuslog",
+  "pk": 1,
+  "fields": {
+    "ticket": 1,
+    "user": 5,
+    "from_status": "open",
+    "to_status": "in_progress",
+    "timestamp": "2025-12-12T18:47:52.497Z",
+    "comment": "Статус изменен на in_progress для инициализации."
+  }
+},
+{
+  "model": "tickets.statuslog",
+  "pk": 2,
+  "fields": {
+    "ticket": 3,
+    "user": 8,
+    "from_status": "open",
+    "to_status": "closed",
+    "timestamp": "2025-12-12T18:47:52.772Z",
+    "comment": "Статус изменен на closed для инициализации."
+  }
+},
+{
+  "model": "tickets.statuslog",
+  "pk": 3,
+  "fields": {
+    "ticket": 4,
+    "user": 5,
+    "from_status": "open",
+    "to_status": "cancelled",
+    "timestamp": "2025-12-12T18:47:52.925Z",
+    "comment": "Статус изменен на cancelled для инициализации."
+  }
+},
+{
+  "model": "tickets.statuslog",
+  "pk": 4,
+  "fields": {
+    "ticket": 7,
+    "user": 9,
+    "from_status": "open",
+    "to_status": "in_progress",
+    "timestamp": "2025-12-12T18:47:53.267Z",
+    "comment": "Статус изменен на in_progress для инициализации."
+  }
+},
+{
+  "model": "tickets.statuslog",
+  "pk": 5,
+  "fields": {
+    "ticket": 9,
+    "user": 11,
+    "from_status": "open",
+    "to_status": "closed",
+    "timestamp": "2025-12-12T18:47:53.527Z",
+    "comment": "Статус изменен на closed для инициализации."
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$dru4slmN69E5QWpMKTYuvX$KjN3qDBmyLYZFKj30JlUCtEDuRS5Ye8bwScOld12Rxs=",
+    "last_login": "2025-12-12T19:05:25.964Z",
+    "is_superuser": false,
+    "username": "director_a",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:44.268Z",
+    "email": "director_a@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$jDDoAdsAryaym4CUgy8yA4$qyR/+2GRLI9EBRSi9US25dsoVgxl/zSRFY8jLpBm58I=",
+    "last_login": "2025-12-12T19:10:10.458Z",
+    "is_superuser": false,
+    "username": "manager_a1",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:45.487Z",
+    "email": "manager_a1@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$RIc7MVMsdWug2vTawotxfe$8D8JQUgcE9anb3Y4ORzo7ZusgEVCpKJPPa8TWCR9MRE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "worker_a1",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:46.468Z",
+    "email": "worker_a1@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$uRPLuBUXMQnDkPc1xaSn3P$nFzFy/Oo4MDcMgsjIb9bs9jJZ2jv9PsX3Y3O1L+XU6I=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manager_a2",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:47.759Z",
+    "email": "manager_a2@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$1TXMdHPgPViaYuMl7hJgbG$w2HlSEO5vDqOdiKwDWAowPRVAN/Oem4ny/drLTwFQ0M=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "director_b",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:49.043Z",
+    "email": "director_b@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$bNko4mpagmcy87uyDNyltv$l0vFy4SLA6mqSvlqG5oGn0NpQ3YC9OaUW0GjyUdI5VY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "manager_b1",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:50.205Z",
+    "email": "manager_b1@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$qlfz8Gnq0IihnwqYOTwieX$KlukO2eeTBlziE7nqWH+Db45+9bPid+cw/n/ESa7Roo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "worker_b1",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-12T18:47:51.205Z",
+    "email": "worker_b1@test.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 5,
+  "fields": {
+    "user": 5,
+    "role": "main_manager",
+    "phone": null,
+    "organization": 1
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 6,
+  "fields": {
+    "user": 6,
+    "role": "group_manager",
+    "phone": null,
+    "organization": 1
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 7,
+  "fields": {
+    "user": 7,
+    "role": "worker",
+    "phone": null,
+    "organization": 1
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 8,
+  "fields": {
+    "user": 8,
+    "role": "worker",
+    "phone": null,
+    "organization": 1
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 9,
+  "fields": {
+    "user": 9,
+    "role": "main_manager",
+    "phone": null,
+    "organization": 2
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 10,
+  "fields": {
+    "user": 10,
+    "role": "group_manager",
+    "phone": null,
+    "organization": 2
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 11,
+  "fields": {
+    "user": 11,
+    "role": "worker",
+    "phone": null,
+    "organization": 2
+  }
+}
+]

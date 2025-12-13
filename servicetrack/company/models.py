@@ -9,7 +9,7 @@ import users.models
 
 class Organization(django.db.models.Model):
     name = django.db.models.CharField(
-        _("название_органзации"),
+        _("название_организации"),
         max_length=255,
     )
 

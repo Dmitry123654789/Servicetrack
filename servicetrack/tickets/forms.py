@@ -1,5 +1,6 @@
 __all__ = ()
 
+import django.contrib.auth
 import django.db.models
 import django.forms
 

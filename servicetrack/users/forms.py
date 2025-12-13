@@ -43,6 +43,7 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        user.save()
 
         if commit:
             organization = company.models.Organization.objects.create(
@@ -51,10 +52,12 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
             )
 
             user.refresh_from_db()
-            user.profile.phone = self.cleaned_data.get("phone", None)
-            user.profile.organization = organization
-            user.profile.role = users.models.Profile.Role.MAIN_MANAGER
-            user.profile.save()
+            profile = user.profile
+
+            profile.phone = self.cleaned_data.get("phone", None)
+            profile.organization = organization
+            profile.role = users.models.Profile.Role.MAIN_MANAGER
+            profile.save()
 
         return user
 
