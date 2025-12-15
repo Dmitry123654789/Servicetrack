@@ -48,7 +48,6 @@ class WorkerGroup(django.db.models.Model):
     name = django.db.models.CharField(
         _("название_группы"),
         max_length=100,
-        unique=True,
     )
 
     description = django.db.models.TextField(
@@ -69,7 +68,7 @@ class WorkerGroup(django.db.models.Model):
         django.conf.settings.AUTH_USER_MODEL,
         verbose_name=_("руководитель_группы"),
         related_name="managed_groups",
-        on_delete=django.db.models.CASCADE,
+        on_delete=django.db.models.SET_NULL,
         null=True,
         blank=True,
         limit_choices_to={

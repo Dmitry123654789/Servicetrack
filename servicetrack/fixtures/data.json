@@ -76,7 +76,7 @@
     "status": "in_progress",
     "priority": "critical",
     "group": 1,
-    "creator": 5,
+    "creator": 7,
     "assignee": 7,
     "photo_before": "",
     "photo_after": "",
@@ -127,7 +127,7 @@
     "status": "cancelled",
     "priority": "high",
     "group": 2,
-    "creator": 5,
+    "creator": 8,
     "assignee": 8,
     "photo_before": "",
     "photo_after": "",
@@ -178,7 +178,7 @@
     "status": "in_progress",
     "priority": "medium",
     "group": 3,
-    "creator": 9,
+    "creator": 11,
     "assignee": 11,
     "photo_before": "",
     "photo_after": "",
@@ -441,7 +441,7 @@
   "pk": 8,
   "fields": {
     "user": 8,
-    "role": "worker",
+    "role": "group_manager",
     "phone": null,
     "organization": 1
   }

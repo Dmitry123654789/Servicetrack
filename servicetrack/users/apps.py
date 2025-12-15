@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 class UsersConfig(django.apps.AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "users"
-    verbose_name = _("пользователи")
+    verbose_name = _("Пользователи")
 
     def ready(self):
         from django.contrib.auth import get_user_model

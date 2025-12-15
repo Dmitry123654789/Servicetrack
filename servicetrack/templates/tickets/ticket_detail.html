@@ -76,7 +76,7 @@
                     {% if ticket.photo_before %}
                         <div class="mt-4">
                             <h6 class="mb-3"><i class="bi bi-image me-2"></i>Фото до</h6>
-                            <img src="{{ ticket.photo_before.url }}"
+                            <img src="{{ ticket.show_photo_before }}"
                                  alt="Фото до"
                                  class="img-fluid rounded shadow-sm"
                                  style="max-height: 300px;">
@@ -86,12 +86,13 @@
                     {% if ticket.photo_after %}
                         <div class="mt-4">
                             <h6 class="mb-3"><i class="bi bi-image me-2"></i>Фото после</h6>
-                            <img src="{{ ticket.photo_after.url }}"
+                            <img src="{{ ticket.show_photo_after }}"
                                  alt="Фото после"
                                  class="img-fluid rounded shadow-sm"
                                  style="max-height: 300px;">
                         </div>
                     {% endif %}
+                    
                 </div>
             </div>
 

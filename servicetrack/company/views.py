@@ -1,30 +1,55 @@
 __all__ = ()
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+import django.contrib.auth.mixins
 import django.urls
 import django.views.generic
 
 import company.forms
 import company.models
+import core.mixins
 
 
-class OrganizationView(django.views.generic.DetailView):
+class OrganizationView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.DetailView,
+):
     model = company.models.Organization
     template_name = "company/organization_detail.html"
     context_object_name = "organization"
 
+    def test_func(self):
+        organization = self.get_object()
+        user_profile = self.request.user.profile
 
-class OrganizationEditView(django.views.generic.UpdateView):
+        return user_profile.organization.pk == organization.pk
+
+
+class OrganizationEditView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.UpdateView,
+):
     model = company.models.Organization
     form_class = company.forms.OrganizationForm
     template_name = "company/organization_edit.html"
     context_object_name = "organization"
 
+    def test_func(self):
+        organization = self.get_object()
+        user = self.request.user
+
+        return (
+            user.profile.organization.pk == organization.pk
+            and user.profile.is_director
+        )
+
     def get_success_url(self):
         return self.request.path
 
 
-class GroupListView(LoginRequiredMixin, django.views.generic.ListView):
+class GroupListView(
+    django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.ListView,
+):
     model = company.models.WorkerGroup
     template_name = "company/group_list.html"
     context_object_name = "groups"
@@ -35,17 +60,46 @@ class GroupListView(LoginRequiredMixin, django.views.generic.ListView):
         ).select_related("manager")
 
 
-class GroupDetailView(django.views.generic.DetailView):
+class GroupDetailView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.DetailView,
+):
     model = company.models.WorkerGroup
     template_name = "company/group_detail.html"
     context_object_name = "group"
 
+    def test_func(self):
+        group = self.get_object()
+        profile = self.request.user.profile
+        return profile.organization.pk == group.organization.pk
 
-class GroupEditView(LoginRequiredMixin, django.views.generic.UpdateView):
+    def get_queryset(self):
+        return company.models.WorkerGroup.objects.filter(
+            organization=self.request.user.profile.organization,
+        ).select_related("manager")
+
+
+class GroupEditView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.UpdateView,
+):
     model = company.models.WorkerGroup
     form_class = company.forms.WorkerGroupEditForm
     template_name = "company/group_edit.html"
     context_object_name = "group"
+
+    def test_func(self):
+        group = self.get_object()
+        user = self.request.user
+
+        if user.profile.organization.pk != group.organization.pk:
+            return False
+
+        is_group_manager = (
+            user.profile.is_manager and group.manager.pk == user.pk
+        )
+
+        return user.profile.is_director or is_group_manager
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -53,10 +107,16 @@ class GroupEditView(LoginRequiredMixin, django.views.generic.UpdateView):
         return kwargs
 
     def get_success_url(self):
-        return self.request.path
+        return django.urls.reverse(
+            "company:group_detail",
+            kwargs={"pk": self.object.pk},
+        )
 
 
-class GroupCreateView(LoginRequiredMixin, django.views.generic.CreateView):
+class GroupCreateView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.CreateView,
+):
     model = company.models.WorkerGroup
     form_class = company.forms.WorkerGroupCreationForm
     template_name = "company/group_create.html"

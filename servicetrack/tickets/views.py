@@ -1,19 +1,41 @@
 __all__ = ()
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+import collections
+
+import django.db.models
 import django.views.generic
 
 import company.models
+import core.mixins
 import tickets.forms
 import tickets.models
 import users.models
 
 
-class TicketListView(LoginRequiredMixin, django.views.generic.ListView):
+class TicketListView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.ListView,
+):
     model = tickets.models.Ticket
     template_name = "tickets/ticket_list.html"
     context_object_name = "tickets"
     paginate_by = 20
+
+    def test_func(self):
+        user = self.request.user
+        group_pk = self.kwargs.get("pk")
+
+        try:
+            target_group = company.models.WorkerGroup.objects.get(pk=group_pk)
+        except company.models.WorkerGroup.DoesNotExist:
+            return False
+
+        if user.profile.organization != target_group.organization:
+            return False
+
+        is_manager = target_group.manager == user
+        is_worker = target_group.workers.filter(pk=user.pk)
+        return is_manager or is_worker or user.profile.is_director
 
     def get_queryset(self):
         group_id = self.kwargs["pk"]
@@ -33,10 +55,24 @@ class TicketListView(LoginRequiredMixin, django.views.generic.ListView):
         return context
 
 
-class TicketDetailView(LoginRequiredMixin, django.views.generic.DetailView):
+class TicketDetailView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.DetailView,
+):
     model = tickets.models.Ticket
     template_name = "tickets/ticket_detail.html"
     context_object_name = "ticket"
+
+    def test_func(self):
+        user = self.request.user
+        target_group = self.get_object().group
+
+        if user.profile.organization != target_group.organization:
+            return False
+
+        is_manager = target_group.manager == user
+        is_worker = target_group.workers.filter(pk=user.pk)
+        return is_manager or is_worker or user.profile.is_director
 
     def get_queryset(self):
         return self.model.objects.select_related(
@@ -51,16 +87,25 @@ class TicketDetailView(LoginRequiredMixin, django.views.generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["logs"] = self.object.status_logs.all()
-        context["logs"].order_by(  # noqa: ECE001
+        context["logs"] = self.object.status_logs.order_by(
             f"-{tickets.models.StatusLog.timestamp.field.name}",
         )
         return context
 
 
-class MyTicketListView(LoginRequiredMixin, django.views.generic.TemplateView):
+class MyTicketListView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.TemplateView,
+):
     model = tickets.models.Ticket
     template_name = "tickets/my_ticket_list.html"
+
+    def test_func(self):
+        user = self.request.user
+        return user.profile.role in [
+            users.models.Profile.Role.WORKER,
+            users.models.Profile.Role.GROUP_MANAGER,
+        ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,6 +113,7 @@ class MyTicketListView(LoginRequiredMixin, django.views.generic.TemplateView):
         user = self.request.user
         tickets_qs = self.model.objects.filter(assignee=user).select_related(
             self.model.group.field.name,
+            self.model.assignee.field.name,
         )
         tickets_qs_sort = (
             tickets_qs.with_priority_weight()
@@ -75,23 +121,27 @@ class MyTicketListView(LoginRequiredMixin, django.views.generic.TemplateView):
             .sort(status="asc", priority="asc", created="asc")
         )
 
-        groups = []
+        grouped_tickets = collections.defaultdict(list)
+        for ticket in tickets_qs_sort:
+            grouped_tickets[ticket.group].append(ticket)
 
-        for group in company.models.WorkerGroup.objects.filter(
-            tickets__assignee=user,
-        ).distinct():
-            groups.append(
+        groups_list = []
+        for group, ticket_list in grouped_tickets.items():
+            groups_list.append(
                 {
                     "group": group,
-                    "tickets": tickets_qs_sort.filter(group=group),
+                    "tickets": ticket_list,
                 },
             )
 
-        context["groups"] = groups
+        context["groups"] = groups_list
         return context
 
 
-class TicketCreateView(UserPassesTestMixin, django.views.generic.CreateView):
+class TicketCreateView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.CreateView,
+):
     model = tickets.models.Ticket
     form_class = tickets.forms.TicketCreateForm
     template_name = "tickets/ticket_create.html"
@@ -113,10 +163,17 @@ class TicketCreateView(UserPassesTestMixin, django.views.generic.CreateView):
         return super().form_valid(form)
 
 
-class TicketWorkerUpdateView(django.views.generic.UpdateView):
+class TicketWorkerUpdateView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.UpdateView,
+):
     model = tickets.models.Ticket
     form_class = tickets.forms.TicketWorkerForm
     template_name = "tickets/ticket_worker_update.html"
+
+    def test_func(self):
+        ticket = self.get_object()
+        return ticket in self.model.objects.filter(assignee=self.request.user)
 
     def get_queryset(self):
         return self.model.objects.filter(assignee=self.request.user)
@@ -140,10 +197,20 @@ class TicketWorkerUpdateView(django.views.generic.UpdateView):
         return super().form_valid(form)
 
 
-class TicketManagerUpdateView(django.views.generic.UpdateView):
+class TicketManagerUpdateView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.UpdateView,
+):
     model = tickets.models.Ticket
     form_class = tickets.forms.TicketManagerForm
     template_name = "tickets/ticket_manager_update.html"
+
+    def test_func(self):
+        user = self.request.user
+        return self.model.objects.filter(
+            django.db.models.Q(group__manager=user)
+            | django.db.models.Q(group__organization__main_manager=user),
+        )
 
     def get_queryset(self):
         user = self.request.user

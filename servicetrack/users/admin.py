@@ -18,7 +18,7 @@ class ProfileInline(django.contrib.admin.StackedInline):
 
 class UserAdmin(django.contrib.auth.admin.UserAdmin):
     model = users.models.CustomUser
-    add_fieldsets = (  # noqa: ECE001
+    add_fieldsets = (
         (
             None,
             {

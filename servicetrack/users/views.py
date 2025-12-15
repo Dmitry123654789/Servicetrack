@@ -1,17 +1,21 @@
 __all__ = ()
 
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+import django.contrib
+import django.contrib.auth.mixins
 import django.contrib.auth.views
 import django.urls
 from django.utils.translation import gettext_lazy as _
 import django.views.generic
 
+import core.mixins
 import users.forms
 import users.models
 
 
-class RegisterView(UserPassesTestMixin, django.views.generic.CreateView):
+class RegisterView(
+    django.contrib.auth.mixins.UserPassesTestMixin,
+    django.views.generic.CreateView,
+):
     form_class = users.forms.CustomUserCreationForm
     template_name = "users/register.html"
     success_url = django.urls.reverse_lazy("users:login")
@@ -20,14 +24,11 @@ class RegisterView(UserPassesTestMixin, django.views.generic.CreateView):
         return not self.request.user.is_authenticated
 
 
-class LoginView(UserPassesTestMixin, django.contrib.auth.views.LoginView):
+class LoginView(django.contrib.auth.views.LoginView):
     form_class = users.forms.CustomAuthenticationForm
     template_name = "users/login.html"
     redirect_authenticated_user = True
     success_url = django.urls.reverse_lazy("users:profile")
-
-    def test_func(self):
-        return not self.request.user.is_authenticated
 
 
 class LogoutView(django.contrib.auth.views.LogoutView):
@@ -72,7 +73,7 @@ class PasswordResetCompleteView(
 
 
 class ProfileView(
-    LoginRequiredMixin,
+    django.contrib.auth.mixins.LoginRequiredMixin,
     django.views.generic.TemplateView,
 ):
     template_name = "users/profile.html"
@@ -84,7 +85,10 @@ class ProfileView(
         return context
 
 
-class UserCreateView(LoginRequiredMixin, django.views.generic.CreateView):
+class UserCreateView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.CreateView,
+):
     form_class = users.forms.UserCreateForm
     template_name = "users/user_create.html"
     success_url = django.urls.reverse_lazy("users:user_list")
@@ -102,21 +106,24 @@ class UserCreateView(LoginRequiredMixin, django.views.generic.CreateView):
         return kwargs
 
     def form_valid(self, form):
-        messages.success(self.request, _("Пользователь_успешно_создан"))
+        django.contrib.messages.success(
+            self.request,
+            _("Пользователь_успешно_создан"),
+        )
         return super().form_valid(form)
 
 
-class UserListView(LoginRequiredMixin, django.views.generic.ListView):
+class UserListView(
+    core.mixins.ForbiddenMixin,
+    django.views.generic.ListView,
+):
     model = users.models.CustomUser
     template_name = "users/user_list.html"
     context_object_name = "users"
 
     def test_func(self):
-        if not self.request.user.is_authenticated:
-            return False
-
-        profile = self.request.user.profile
-        return profile.role in [
+        user = self.request.user
+        return user.profile.role in [
             users.models.Profile.Role.MAIN_MANAGER,
             users.models.Profile.Role.GROUP_MANAGER,
         ]
@@ -140,7 +147,7 @@ class UserListView(LoginRequiredMixin, django.views.generic.ListView):
 
 
 class ProfileUpdateView(
-    LoginRequiredMixin,
+    django.contrib.auth.mixins.LoginRequiredMixin,
     django.views.generic.UpdateView,
 ):
     form_class = users.forms.UserProfileUpdateForm
@@ -151,5 +158,8 @@ class ProfileUpdateView(
         return self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, _("Профиль_успешно_обновлен"))
+        django.contrib.messages.success(
+            self.request,
+            _("Профиль_успешно_обновлен"),
+        )
         return super().form_valid(form)

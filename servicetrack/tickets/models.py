@@ -7,7 +7,9 @@ from django.utils.translation import gettext_lazy as _
 import sorl.thumbnail
 
 import company.models
+import core.mixins
 import tickets.utils
+import tickets.validators
 import users.models
 
 
@@ -97,7 +99,7 @@ class TicketManager(django.db.models.Manager):
             Ticket.assignee.field.name,
         )
 
-        return queryset.only(  # noqa: ECE001
+        return queryset.only(
             Ticket.title.field.name,
             Ticket.status.field.name,
             Ticket.priority.field.name,
@@ -107,8 +109,12 @@ class TicketManager(django.db.models.Manager):
         )
 
 
-class Ticket(django.db.models.Model):
+class Ticket(
+    core.mixins.ImageCleanupMixin,
+    django.db.models.Model,
+):
     objects = TicketManager()
+    IMAGE_FIELDS = ["photo_before", "photo_after"]
 
     class Status(django.db.models.TextChoices):
         OPEN = "open", _("открыта")
@@ -170,6 +176,9 @@ class Ticket(django.db.models.Model):
         upload_to=tickets.utils.get_photo_before_path,
         blank=True,
         null=True,
+        validators=[
+            tickets.validators.FileValidator(max_size=10 * 1024 * 1024),
+        ],
     )
 
     photo_after = sorl.thumbnail.ImageField(
@@ -177,6 +186,9 @@ class Ticket(django.db.models.Model):
         upload_to=tickets.utils.get_photo_after_path,
         blank=True,
         null=True,
+        validators=[
+            tickets.validators.FileValidator(max_size=10 * 1024 * 1024),
+        ],
     )
 
     created_at = django.db.models.DateTimeField(
@@ -201,6 +213,24 @@ class Ticket(django.db.models.Model):
             "tickets:ticket_detail",
             kwargs={"pk": self.pk},
         )
+
+    def show_photo_before(self):
+        img = sorl.thumbnail.get_thumbnail(
+            self.photo_before,
+            "400x300",
+            crop="center",
+            quality=50,
+        )
+        return img.url
+
+    def show_photo_after(self):
+        img = sorl.thumbnail.get_thumbnail(
+            self.photo_after,
+            "400x300",
+            crop="center",
+            quality=50,
+        )
+        return img.url
 
 
 class StatusLog(django.db.models.Model):

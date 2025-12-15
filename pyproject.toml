@@ -1,5 +1,7 @@
 [tool.black]
 line-length = 79
+check = true
+diff = true
 extend-exclude = '''
 migrations/
 '''
