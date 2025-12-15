@@ -214,7 +214,7 @@ class Ticket(
             kwargs={"pk": self.pk},
         )
 
-    def show_photo_before(self):
+    def url_photo_before(self):
         img = sorl.thumbnail.get_thumbnail(
             self.photo_before,
             "400x300",
@@ -223,7 +223,7 @@ class Ticket(
         )
         return img.url
 
-    def show_photo_after(self):
+    def url_photo_after(self):
         img = sorl.thumbnail.get_thumbnail(
             self.photo_after,
             "400x300",

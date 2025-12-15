@@ -25,6 +25,12 @@ class WorkerGroupAdmin(django.contrib.admin.ModelAdmin):
 
     filter_horizontal = (model.workers.field.name,)
 
+    list_display = (
+        model.name.field.name,
+        model.manager.field.name,
+        model.organization.field.name,
+    )
+
 
 @django.contrib.admin.register(company.models.Organization)
 class OrganizationAdmin(django.contrib.admin.ModelAdmin):
@@ -40,4 +46,9 @@ class OrganizationAdmin(django.contrib.admin.ModelAdmin):
     readonly_fields = (
         model.created_at.field.name,
         model.updated_at.field.name,
+    )
+
+    list_display = (
+        model.name.field.name,
+        model.main_manager.field.name,
     )
