@@ -3,7 +3,16 @@
 {% block title %}Главная страница - ServiceTrack{% endblock %}
 
 {% block content %}
-<div>
-    <h1>Добро пожаловать! Это главная страница</h1>
+<div class="text-center">
+    <h1>ServiceTrack</h1>
+    <p class="lead">Система управления заявками и рабочими группами</p>
+    <p>Платформа для организации работы с заявками, управления группами и отслеживания задач.</p>
+
+    {% if not user.is_authenticated %}
+    <div class="mt-4">
+        <a href="{% url 'users:register' %}" class="btn btn-primary me-2">Регистрация</a>
+        <a href="{% url 'users:login' %}" class="btn btn-outline-primary">Войти</a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
