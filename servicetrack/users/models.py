@@ -13,10 +13,10 @@ class CustomUser(auth_models.AbstractUser):
         unique=True,
     )
 
+    REQUIRED_FIELDS = ["email"]
+
     def __str__(self):
         return self.username
-
-    REQUIRED_FIELDS = ["email"]
 
 
 class Profile(django.db.models.Model):

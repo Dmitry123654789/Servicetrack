@@ -112,16 +112,16 @@ class GroupEditView(
 
         return user.profile.is_director or is_group_manager
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
-
     def get_success_url(self):
         return django.urls.reverse(
             "company:group_detail",
             kwargs={"pk": self.object.pk},
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
 
 class GroupCreateView(

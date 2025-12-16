@@ -92,7 +92,8 @@ class TicketWorkerForm(django.forms.ModelForm):
     def _get_allowed_status(self):
         old_status = self.instance.status
         allowed_statuses = self.transitions.get(
-            old_status, None,
+            old_status,
+            None,
         )
 
         choices = [(old_status, self.instance.get_status_display())]

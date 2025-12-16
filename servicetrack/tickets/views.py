@@ -146,17 +146,17 @@ class TicketCreateView(
     form_class = tickets.forms.TicketCreateForm
     template_name = "tickets/ticket_create.html"
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["user"] = self.request.user
-        return kwargs
-
     def test_func(self):
         user = self.request.user
         return user.profile.role in [
             users.models.Profile.Role.GROUP_MANAGER,
             users.models.Profile.Role.WORKER,
         ]
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.creator = self.request.user

@@ -114,9 +114,6 @@ class Ticket(
     core.mixins.ImageCleanupMixin,
     django.db.models.Model,
 ):
-    objects = TicketManager()
-    IMAGE_FIELDS = ["photo_before", "photo_after"]
-
     class Status(django.db.models.TextChoices):
         OPEN = "open", _("открыта")
         IN_PROGRESS = "in_progress", _("в_работе")
@@ -201,6 +198,9 @@ class Ticket(
         _("дата_обновления"),
         auto_now=True,
     )
+
+    objects = TicketManager()
+    IMAGE_FIELDS = ["photo_before", "photo_after"]
 
     class Meta:
         verbose_name = _("заявка")
