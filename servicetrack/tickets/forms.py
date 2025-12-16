@@ -3,6 +3,7 @@ __all__ = ()
 import django.contrib.auth
 import django.db.models
 import django.forms
+from django.utils.translation import gettext_lazy as _
 
 import tickets.models
 
@@ -30,8 +31,23 @@ class TicketCreateForm(django.forms.ModelForm):
             workers=current_user,
         )
 
+        self.fields["status"].disabled = True
+
 
 class TicketWorkerForm(django.forms.ModelForm):
+    transitions = {
+        tickets.models.Ticket.Status.OPEN: [
+            tickets.models.Ticket.Status.IN_PROGRESS,
+            tickets.models.Ticket.Status.CANCELLED,
+        ],
+        tickets.models.Ticket.Status.IN_PROGRESS: [
+            tickets.models.Ticket.Status.CLOSED,
+            tickets.models.Ticket.Status.CANCELLED,
+        ],
+        tickets.models.Ticket.Status.CLOSED: [],
+        tickets.models.Ticket.Status.CANCELLED: [],
+    }
+
     comment = django.forms.CharField(
         label="Комментарий",
         required=False,
@@ -57,7 +73,35 @@ class TicketWorkerForm(django.forms.ModelForm):
 
         for field in readonly:
             self.fields[field].disabled = True
-            self.fields[field].readonly = True
+
+        self.fields["status"].choices = self._get_allowed_status()
+
+    def clean_status(self):
+        new_status = self.cleaned_data.get("status")
+
+        if not self.instance or new_status == self.instance.status:
+            return new_status
+
+        old_status = self.instance.status
+        if new_status not in self.transitions.get(old_status, None):
+            error_message = _("Недопустимый_переход_статуса.")
+            raise django.forms.ValidationError(error_message)
+
+        return new_status
+
+    def _get_allowed_status(self):
+        old_status = self.instance.status
+        allowed_statuses = self.transitions.get(
+            old_status, None,
+        )
+
+        choices = [(old_status, self.instance.get_status_display())]
+        all_choices = tickets.models.Ticket.Status.choices
+
+        choices += [
+            choice for choice in all_choices if choice[0] in allowed_statuses
+        ]
+        return choices
 
 
 class TicketManagerForm(django.forms.ModelForm):
@@ -77,7 +121,6 @@ class TicketManagerForm(django.forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["creator"].disabled = True
-        self.fields["creator"].readonly = True
 
         user_organization = current_user.profile.organization
         self.fields["group"].queryset = self.fields["group"].queryset.filter(

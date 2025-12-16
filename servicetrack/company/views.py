@@ -38,7 +38,7 @@ class OrganizationEditView(
         user = self.request.user
 
         return (
-            user.profile.organization.pk == organization.pk
+            user.profile.organization == organization
             and user.profile.is_director
         )
 
@@ -71,12 +71,23 @@ class GroupDetailView(
     def test_func(self):
         group = self.get_object()
         profile = self.request.user.profile
-        return profile.organization.pk == group.organization.pk
+        return profile.organization == group.organization
 
     def get_queryset(self):
         return company.models.WorkerGroup.objects.filter(
             organization=self.request.user.profile.organization,
         ).select_related("manager")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        group = self.get_object()
+        user = self.request.user
+
+        can_edit = user.profile.is_director or group.manager == user
+
+        context["can_edit_group"] = can_edit
+        return context
 
 
 class GroupEditView(

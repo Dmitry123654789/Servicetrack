@@ -61,7 +61,12 @@ class WorkerGroup(django.db.models.Model):
         verbose_name=_("работники"),
         related_name="work_groups",
         blank=True,
-        limit_choices_to={"profile__role": users.models.Profile.Role.WORKER},
+        limit_choices_to=django.db.models.Q(
+            profile__role=users.models.Profile.Role.WORKER,
+        )
+        | django.db.models.Q(
+            profile__role=users.models.Profile.Role.GROUP_MANAGER,
+        ),
     )
 
     manager = django.db.models.ForeignKey(

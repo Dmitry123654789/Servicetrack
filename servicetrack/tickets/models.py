@@ -3,6 +3,7 @@ __all__ = ()
 import django.conf
 import django.db.models
 import django.urls
+import django.utils.safestring
 from django.utils.translation import gettext_lazy as _
 import sorl.thumbnail
 
@@ -214,23 +215,29 @@ class Ticket(
             kwargs={"pk": self.pk},
         )
 
-    def url_photo_before(self):
+    def show_photo_before(self):
         img = sorl.thumbnail.get_thumbnail(
             self.photo_before,
             "400x300",
             crop="center",
             quality=50,
         )
-        return img.url
+        return django.utils.safestring.mark_safe(
+            f'<img src="{img.url}" alt="Фото до" width="400" height="300"'
+            'class="img-fluid rounded shadow-sm">',
+        )
 
-    def url_photo_after(self):
+    def show_photo_after(self):
         img = sorl.thumbnail.get_thumbnail(
             self.photo_after,
             "400x300",
             crop="center",
             quality=50,
         )
-        return img.url
+        return django.utils.safestring.mark_safe(
+            f'<img src="{img.url}" alt="Фото до" width="400" height="300"'
+            'class="img-fluid rounded shadow-sm">',
+        )
 
 
 class StatusLog(django.db.models.Model):

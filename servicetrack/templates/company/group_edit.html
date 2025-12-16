@@ -52,7 +52,6 @@
                     <label for="{{ form.manager.id_for_label }}" class="form-label">
                         <i class="bi bi-person-badge me-2"></i>Руководитель группы
                     </label>
-                    {% comment %} {{ form.manager   }} {% endcomment %}
                     <select name="{{ form.manager.name }}"
                             id="{{ form.manager.id_for_label }}"
                             class="form-select {% if form.manager.errors %}is-invalid{% endif %}"

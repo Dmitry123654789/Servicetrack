@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.contrib.auth
+import django.db.models
 import django.forms
 
 import company.models
@@ -22,10 +23,27 @@ class WorkerGroupForm(django.forms.ModelForm):
 
         self.fields["workers"].queryset = user_model.objects.filter(
             profile__organization=organization,
-            profile__role=users.models.Profile.Role.WORKER,
+        ).filter(
+            django.db.models.Q(
+                profile__role=users.models.Profile.Role.WORKER,
+            )
+            | django.db.models.Q(
+                profile__role=users.models.Profile.Role.GROUP_MANAGER,
+            ),
         )
 
         self.fields["workers"].widget = django.forms.CheckboxSelectMultiple()
+
+    def clean_workers(self):
+        workers_queryset = self.cleaned_data.get("workers")
+        manager = self.cleaned_data.get("manager")
+
+        if workers_queryset and manager and manager in workers_queryset:
+            workers_list = list(workers_queryset)
+            workers_list.remove(manager)
+            return workers_list
+
+        return workers_queryset
 
 
 class OrganizationForm(WorkerGroupForm):
@@ -52,7 +70,6 @@ class WorkerGroupEditForm(WorkerGroupForm):
 
         if not self.request.user.profile.is_director:
             self.fields["manager"].disabled = True
-            self.fields["manager"].readonly = True
 
 
 class WorkerGroupCreationForm(WorkerGroupForm):

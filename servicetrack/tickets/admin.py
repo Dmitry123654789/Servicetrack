@@ -19,15 +19,15 @@ class TicketAdmin(django.contrib.admin.ModelAdmin):
         model.assignee.field.name,
         model.photo_before.field.name,
         model.photo_after.field.name,
-        # model.show_photo_before,
-        # model.show_photo_after,
+        model.show_photo_before,
+        model.show_photo_after,
         model.created_at.field.name,
         model.updated_at.field.name,
     )
 
     readonly_fields = (
-        # model.show_photo_before,
-        # model.show_photo_after,
+        model.show_photo_before,
+        model.show_photo_after,
         model.created_at.field.name,
         model.updated_at.field.name,
     )

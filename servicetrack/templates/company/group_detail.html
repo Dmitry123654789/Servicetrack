@@ -92,7 +92,7 @@
     </div>
 </div>
 
-{% if user.profile.is_director or user.profile.is_manager %}
+{% if can_edit_group %}
 <div class="d-flex justify-content-end gap-2">
     <a href="{% url 'company:group_edit' group.pk %}"
        class="btn btn-outline-primary">
