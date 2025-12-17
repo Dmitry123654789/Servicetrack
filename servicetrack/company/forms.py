@@ -33,7 +33,9 @@ class WorkerGroupForm(django.forms.ModelForm):
                 ),
             )
 
-            self.fields["workers"].widget = django.forms.CheckboxSelectMultiple()
+            self.fields["workers"].widget = (
+                django.forms.CheckboxSelectMultiple()
+            )
 
     def clean_workers(self):
         workers_queryset = self.cleaned_data.get("workers")
