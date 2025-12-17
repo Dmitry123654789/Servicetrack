@@ -34,6 +34,7 @@ class Profile(django.db.models.Model):
 
     role = django.db.models.CharField(
         _("роль"),
+        max_length=100,
         choices=Role.choices,
         default=Role.WORKER,
     )

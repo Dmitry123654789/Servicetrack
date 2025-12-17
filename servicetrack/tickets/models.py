@@ -69,8 +69,6 @@ class TicketQuerySet(django.db.models.QuerySet):
         priority=None,
         created=None,
     ):
-        # "asc"(возростание) или "desc"(убывание) или None
-
         ordering = []
 
         if status:
@@ -128,6 +126,7 @@ class Ticket(
 
     title = django.db.models.CharField(
         _("название"),
+        max_length=100,
     )
 
     description = django.db.models.TextField(
@@ -136,12 +135,14 @@ class Ticket(
 
     status = django.db.models.CharField(
         _("статус"),
+        max_length=100,
         choices=Status.choices,
         default=Status.OPEN,
     )
 
     priority = django.db.models.CharField(
         _("приоритет"),
+        max_length=100,
         choices=Priority.choices,
         default=Priority.MEDIUM,
     )
@@ -259,11 +260,13 @@ class StatusLog(django.db.models.Model):
 
     from_status = django.db.models.CharField(
         _("из_статуса"),
+        max_length=100,
         choices=Ticket.Status.choices,
     )
 
     to_status = django.db.models.CharField(
         _("в_статус"),
+        max_length=100,
         choices=Ticket.Status.choices,
     )
 

@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.contrib.auth.mixins
+import django.db.models
 import django.urls
 import django.views.generic
 
@@ -57,7 +58,11 @@ class GroupListView(
     def get_queryset(self):
         return company.models.WorkerGroup.objects.filter(
             organization=self.request.user.profile.organization,
-        ).select_related("manager")
+        ).select_related(
+            "manager",
+        ).annotate(
+            workers_count=django.db.models.Count("workers"),
+        )
 
 
 class GroupDetailView(

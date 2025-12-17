@@ -34,7 +34,7 @@ class TicketListView(
             return False
 
         is_manager = target_group.manager == user
-        is_worker = target_group.workers.filter(pk=user.pk)
+        is_worker = target_group.workers.filter(pk=user.pk).exists()
         return is_manager or is_worker or user.profile.is_director
 
     def get_queryset(self):
@@ -71,7 +71,7 @@ class TicketDetailView(
             return False
 
         is_manager = target_group.manager == user
-        is_worker = target_group.workers.filter(pk=user.pk)
+        is_worker = target_group.workers.filter(pk=user.pk).exists()
         return is_manager or is_worker or user.profile.is_director
 
     def get_queryset(self):
@@ -210,7 +210,7 @@ class TicketManagerUpdateView(
         return self.model.objects.filter(
             django.db.models.Q(group__manager=user)
             | django.db.models.Q(group__organization__main_manager=user),
-        )
+        ).exists()
 
     def get_queryset(self):
         user = self.request.user

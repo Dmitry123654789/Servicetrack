@@ -1,4 +1,4 @@
-﻿__all__ = ()
+__all__ = ()
 
 import django.contrib.auth
 import django.core.exceptions
