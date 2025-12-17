@@ -1,26 +1,27 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Регистрация - ServiceTrack{% endblock %}
+{% block title %}{% trans "Регистрация" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Регистрация</h2>
+            <h2 class="text-center mb-4">{% trans "Регистрация" %}</h2>
 
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
 
                 <div class="mb-3">
                     <label for="{{ form.username.id_for_label }}" class="form-label">
-                        <i class="bi bi-person-fill me-2"></i>Имя пользователя
+                        <i class="bi bi-person-fill me-2"></i>{% trans "Имя_пользователя" %}
                     </label>
                     <input type="text"
                            name="{{ form.username.name }}"
                            id="{{ form.username.id_for_label }}"
                            class="form-control {% if form.username.errors %}is-invalid{% endif %}"
                            value="{{ form.username.value|default:'' }}"
-                           placeholder="Придумайте имя пользователя"
+                           placeholder="{% trans 'Придумайте_имя_пользователя' %}"
                            required>
                     {% for error in form.username.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
@@ -29,7 +30,7 @@
 
                 <div class="mb-3">
                     <label for="{{ form.email.id_for_label }}" class="form-label">
-                        <i class="bi bi-envelope-fill me-2"></i>Электронная почта
+                        <i class="bi bi-envelope-fill me-2"></i>{% trans "Электронная_почта" %}
                     </label>
                     <input type="email"
                            name="{{ form.email.name }}"
@@ -45,14 +46,14 @@
 
                 <div class="mb-3">
                     <label for="{{ form.organization_name.id_for_label }}" class="form-label">
-                        <i class="bi bi-envelope-fill me-2"></i>Название организации
+                        <i class="bi bi-building me-2"></i>{% trans "Название_организации" %}
                     </label>
-                    <input type="tel"
+                    <input type="text"
                            name="{{ form.organization_name.name }}"
                            id="{{ form.organization_name.id_for_label }}"
                            class="form-control {% if form.organization_name.errors %}is-invalid{% endif %}"
                            value="{{ form.organization_name.value|default:'' }}"
-                           placeholder="Луковые колечки">
+                           placeholder="{% trans 'Название_вашей_компании' %}">
                     {% for error in form.organization_name.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -60,14 +61,14 @@
 
                 <div class="mb-3">
                     <label for="{{ form.first_name.id_for_label }}" class="form-label">
-                        <i class="bi bi-person me-2"></i>Имя (необязательно)
+                        <i class="bi bi-person me-2"></i>{% trans "Имя_(необязательно)" %}
                     </label>
                     <input type="text"
                            name="{{ form.first_name.name }}"
                            id="{{ form.first_name.id_for_label }}"
                            class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
                            value="{{ form.first_name.value|default:'' }}"
-                           placeholder="Введите ваше имя">
+                           placeholder="{% trans 'Введите_ваше_имя' %}">
                     {% for error in form.first_name.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -75,14 +76,14 @@
 
                 <div class="mb-3">
                     <label for="{{ form.last_name.id_for_label }}" class="form-label">
-                        <i class="bi bi-person me-2"></i>Фамилия (необязательно)
+                        <i class="bi bi-person me-2"></i>{% trans "Фамилия_(необязательно)" %}
                     </label>
                     <input type="text"
                            name="{{ form.last_name.name }}"
                            id="{{ form.last_name.id_for_label }}"
                            class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
                            value="{{ form.last_name.value|default:'' }}"
-                           placeholder="Введите вашу фамилию">
+                           placeholder="{% trans 'Введите_вашу_фамилию' %}">
                     {% for error in form.last_name.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -90,7 +91,7 @@
 
                 <div class="mb-3">
                     <label for="{{ form.phone.id_for_label }}" class="form-label">
-                        <i class="bi bi-telephone-fill me-2"></i>Телефон (необязательно)
+                        <i class="bi bi-telephone-fill me-2"></i>{% trans "Телефон_(необязательно)" %}
                     </label>
                     <input type="tel"
                            name="{{ form.phone.name }}"
@@ -105,15 +106,15 @@
 
                 <div class="mb-3">
                     <label for="{{ form.password1.id_for_label }}" class="form-label">
-                        <i class="bi bi-key-fill me-2"></i>Пароль
+                        <i class="bi bi-key-fill me-2"></i>{% trans "Пароль" %}
                     </label>
                     <input type="password"
                            name="{{ form.password1.name }}"
                            id="{{ form.password1.id_for_label }}"
                            class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
-                           placeholder="Создайте надежный пароль"
+                           placeholder="{% trans 'Создайте_надежный_пароль' %}"
                            required>
-                    <div class="form-text">Пароль должен содержать как минимум 8 символов.</div>
+                    <div class="form-text">{% trans "Пароль_должен_содержать_как_минимум_8_символов." %}</div>
                     {% for error in form.password1.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -121,13 +122,13 @@
 
                 <div class="mb-4">
                     <label for="{{ form.password2.id_for_label }}" class="form-label">
-                        <i class="bi bi-key me-2"></i>Подтверждение пароля
+                        <i class="bi bi-key me-2"></i>{% trans "Подтверждение_пароля" %}
                     </label>
                     <input type="password"
                            name="{{ form.password2.name }}"
                            id="{{ form.password2.id_for_label }}"
                            class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
-                           placeholder="Повторите пароль"
+                           placeholder="{% trans 'Повторите_пароль' %}"
                            required>
                     {% for error in form.password2.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
@@ -136,14 +137,14 @@
 
                 <div class="d-grid gap-2 mb-3">
                     <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="bi bi-person-plus-fill me-2"></i>Зарегистрироваться
+                        <i class="bi bi-person-plus-fill me-2"></i>{% trans "Зарегистрироваться" %}
                     </button>
                 </div>
 
                 <div class="text-center mt-4 pt-3 border-top">
-                    <p class="mb-2 text-muted">Уже есть аккаунт?</p>
+                    <p class="mb-2 text-muted">{% trans "Уже_есть_аккаунт?" %}</p>
                     <a href="{% url 'users:login' %}" class="btn btn-outline-secondary">
-                        <i class="bi bi-box-arrow-in-right me-2"></i>Войти
+                        <i class="bi bi-box-arrow-in-right me-2"></i>{% trans "Войти" %}
                     </a>
                 </div>
             </form>

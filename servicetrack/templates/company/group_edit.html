@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Редактирование группы – ServiceTrack{% endblock %}
+{% block title %}{% trans "Редактирование_группы" %} – ServiceTrack{% endblock %}
 
 {% block content %}
 
@@ -10,39 +11,37 @@
 
             <h2 class="text-center mb-4">
                 <i class="bi bi-people-fill me-2"></i>
-                Редактирование группы
+                {% trans "Редактирование_группы" %}
             </h2>
 
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
 
-                <!-- Название -->
                 <div class="mb-3">
                     <label for="{{ form.name.id_for_label }}" class="form-label">
-                        <i class="bi bi-fonts me-2"></i>Название группы
+                        <i class="bi bi-fonts me-2"></i>{% trans "Название_группы" %}
                     </label>
                     <input type="text"
                            name="{{ form.name.name }}"
                            id="{{ form.name.id_for_label }}"
                            class="form-control {% if form.name.errors %}is-invalid{% endif %}"
                            value="{{ form.name.value|default:'' }}"
-                           placeholder="Введите название группы"
+                           placeholder="{% trans "Введите_название_группы" %}"
                            required>
                     {% for error in form.name.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
                 </div>
 
-                <!-- Описание -->
                 <div class="mb-3">
                     <label for="{{ form.description.id_for_label }}" class="form-label">
-                        <i class="bi bi-card-text me-2"></i>Описание
+                        <i class="bi bi-card-text me-2"></i>{% trans "Описание" %}
                     </label>
                     <textarea name="{{ form.description.name }}"
                               id="{{ form.description.id_for_label }}"
                               class="form-control {% if form.description.errors %}is-invalid{% endif %}"
                               rows="3"
-                              placeholder="Описание группы (необязательно)">{{ form.description.value|default:'' }}</textarea>
+                              placeholder="{% trans "Описание_группы_(необязательно)" %}">{{ form.description.value|default:'' }}</textarea>
                     {% for error in form.description.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -50,13 +49,13 @@
 
                 <div class="mb-3">
                     <label for="{{ form.manager.id_for_label }}" class="form-label">
-                        <i class="bi bi-person-badge me-2"></i>Руководитель группы
+                        <i class="bi bi-person-badge me-2"></i>{% trans "Руководитель_группы" %}
                     </label>
                     <select name="{{ form.manager.name }}"
                             id="{{ form.manager.id_for_label }}"
                             class="form-select {% if form.manager.errors %}is-invalid{% endif %}"
                             {% if not user.profile.is_director %}disabled{% endif %}>
-                        <option value="">— Не назначен —</option>
+                        <option value="">— {% trans "Не_назначен" %} —</option>
                         {% for manager in form.manager.field.queryset %}
                             <option value="{{ manager.pk }}" selected>
                                 {{ manager.get_full_name|default:manager.username }}
@@ -70,7 +69,7 @@
 
                 <div class="mb-4">
                     <label class="form-label">
-                        <i class="bi bi-people me-2"></i>Работники группы
+                        <i class="bi bi-people me-2"></i>{% trans "Работники_группы" %}
                     </label>
 
                     <div class="border rounded p-3">
@@ -89,7 +88,7 @@
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <span class="text-muted">Нет доступных работников</span>
+                            <span class="text-muted">{% trans "Нет_доступных_работников" %}</span>
                         {% endif %}
                     </div>
 
@@ -101,12 +100,12 @@
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg">
                         <i class="bi bi-save me-1"></i>
-                        Сохранить изменения
+                        {% trans "Сохранить_изменения" %}
                     </button>
 
                     <a href="{% url 'company:group_detail' group.pk %}"
                        class="btn btn-secondary">
-                        Назад к группе
+                        {% trans "Назад_к_группе" %}
                     </a>
                 </div>
 

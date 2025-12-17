@@ -1,47 +1,48 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Профиль — {{ block.super }}{% endblock %}
+{% block title %}{% trans "Профиль" %} — {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Профиль пользователя</h2>
+            <h2 class="text-center mb-4">{% trans "Профиль_пользователя" %}</h2>
 
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Имя пользователя</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Имя_пользователя" %}</label>
                         <p class="form-control-plaintext">{{ user.username }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Email</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Email" %}</label>
                         <p class="form-control-plaintext">{{ user.email }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Имя</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Имя" %}</label>
                         <p class="form-control-plaintext">{{ user.first_name|default:"Не указано" }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Фамилия</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Фамилия" %}</label>
                         <p class="form-control-plaintext">{{ user.last_name|default:"Не указано" }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Роль</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Роль" %}</label>
                         <p class="form-control-plaintext">{{ profile.get_role_display }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Телефон</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Телефон" %}</label>
                         <p class="form-control-plaintext">{{ profile.phone.as_international|default:"Не указан" }}</p>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small mb-1">Дата регистрации</label>
+                        <label class="form-label text-muted small mb-1">{% trans "Дата_регистрации" %}</label>
                         <p class="form-control-plaintext">{{ user.date_joined|date:"d.m.Y H:i" }}</p>
                     </div>
                 </div>
@@ -49,10 +50,10 @@
 
             <div class="d-grid gap-2 mt-4">
                 <a href="{% url 'users:profile_edit' %}" class="btn btn-primary">
-                    Редактировать профиль
+                    <i class="bi bi-pencil-square me-2"></i>{% trans "Редактировать_профиль" %}
                 </a>
                 <a href="{% url 'users:password_change' %}" class="btn btn-outline-primary">
-                    Сменить пароль
+                    <i class="bi bi-shield-lock me-2"></i>{% trans "Сменить_пароль" %}
                 </a>
             </div>
         </div>

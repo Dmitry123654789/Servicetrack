@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Управление заявкой - ServiceTrack{% endblock %}
+{% block title %}{% trans "Управление_заявкой" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Редактирование заявки</h2>
+            <h2 class="text-center mb-4">{% trans "Редактирование_заявки" %}</h2>
             
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 {% csrf_token %}
@@ -23,7 +24,7 @@
                                     class="form-select {% if field.errors %}is-invalid{% endif %}"
                                     {% if field.field.disabled %}disabled{% endif %}>
                                 {% for value, label in field.field.choices %}
-                                    <option value="{{ value }}" {% if field.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                                    <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>
                                         {{ label }}
                                     </option>
                                 {% endfor %}
@@ -38,7 +39,7 @@
                                        {% if field.value %}checked{% endif %}
                                        {% if field.field.disabled %}disabled{% endif %}>
                                 <label class="form-check-label" for="{{ field.id_for_label }}">
-                                    Активировать
+                                    {% trans "Активировать" %}
                                 </label>
                             </div>
 
@@ -52,7 +53,7 @@
                         {% elif field.field.widget.input_type == "file" %}
                             {% if field.value %}
                                 <div class="mb-2">
-                                    <a href="{{ field.value.url }}" target="_blank" class="small">Текущий файл</a>
+                                    <a href="{{ field.value.url }}" target="_blank" class="small">{% trans "Текущий_файл" %}</a>
                                 </div>
                             {% endif %}
                             <input type="file" 
@@ -80,8 +81,8 @@
                 {% endfor %}
 
                 <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Сохранить изменения</button>
-                    <a href="{% url 'tickets:ticket_detail' form.instance.pk %}" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Сохранить_изменения" %}</button>
+                    <a href="{% url 'tickets:ticket_detail' form.instance.pk %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
                 </div>
             </form>
         </div>

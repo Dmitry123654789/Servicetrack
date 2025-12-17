@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Создать заявку - ServiceTrack{% endblock %}
+{% block title %}{% trans "Создать_заявку" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Создать заявку</h2>
+            <h2 class="text-center mb-4">{% trans "Создать_заявку" %}</h2>
 
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 {% csrf_token %}
@@ -20,7 +21,7 @@
                            id="{{ form.title.id_for_label }}"
                            class="form-control {% if form.title.errors %}is-invalid{% endif %}"
                            value="{{ form.title.value|default:'' }}"
-                           placeholder="Краткая суть проблемы"
+                           placeholder="{% trans 'Краткая_суть_проблемы' %}"
                            required>
                     {% for error in form.title.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
@@ -35,7 +36,7 @@
                               id="{{ form.description.id_for_label }}"
                               class="form-control {% if form.description.errors %}is-invalid{% endif %}"
                               rows="4"
-                              placeholder="Подробное описание ситуации"
+                              placeholder="{% trans 'Подробное_описание_ситуации' %}"
                               required>{{ form.description.value|default:'' }}</textarea>
                     {% for error in form.description.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
@@ -49,9 +50,9 @@
                     <select name="{{ form.group.name }}"
                             id="{{ form.group.id_for_label }}"
                             class="form-select {% if form.group.errors %}is-invalid{% endif %}">
-                        <option value="">— Выберите группу —</option>
+                        <option value="">— {% trans "Выберите_группу" %} —</option>
                         {% for option in form.group.field.queryset %}
-                            <option value="{{ option.id }}" {% if form.group.value|stringformat:"s" == option.id|stringformat:"s" %}selected{% endif %}>
+                            <option value="{{ option.id }}" {% if form.group.value == option.id %}selected{% endif %}>
                                 {{ option.name }}
                             </option>
                         {% endfor %}
@@ -94,8 +95,8 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg">Создать заявку</button>
-                    <a href="{% url 'tickets:my_tickets' %}" class="btn btn-secondary">Назад к списку</a>
+                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Создать_заявку" %}</button>
+                    <a href="{% url 'tickets:my_tickets' %}" class="btn btn-secondary">{% trans "Назад_к_списку" %}</a>
                 </div>
             </form>
         </div>

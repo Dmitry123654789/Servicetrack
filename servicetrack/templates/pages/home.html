@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Главная страница - ServiceTrack{% endblock %}
+{% block title %}{% trans "Главная_страница" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="text-center">
     <h1>ServiceTrack</h1>
-    <p class="lead">Система управления заявками и рабочими группами</p>
-    <p>Платформа для организации работы с заявками, управления группами и отслеживания задач.</p>
+    <p class="lead">{% trans "Система_управления_заявками_и_рабочими_группами" %}</p>
+    <p>{% trans "Платформа_для_организации_работы_с_заявками,_управления_группами_и_отслеживания_задач." %}</p>
 
     {% if not user.is_authenticated %}
     <div class="mt-4">
-        <a href="{% url 'users:register' %}" class="btn btn-primary me-2">Регистрация</a>
-        <a href="{% url 'users:login' %}" class="btn btn-outline-primary">Войти</a>
+        <a href="{% url 'users:register' %}" class="btn btn-primary me-2">{% trans "Регистрация" %}</a>
+        <a href="{% url 'users:login' %}" class="btn btn-outline-primary">{% trans "Войти" %}</a>
     </div>
     {% endif %}
 </div>

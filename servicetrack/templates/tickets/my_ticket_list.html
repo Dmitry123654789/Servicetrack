@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Мои заявки - ServiceTrack{% endblock %}
+{% block title %}{% trans "Мои_заявки" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="tickets-container">
@@ -10,7 +11,7 @@
                 <h2 class="mb-0">{{ item.group.name }}</h2>
                 {% if forloop.first %}
                     <a href="{% url 'tickets:ticket_create' %}" class="btn btn-primary">
-                        <i class="bi bi-plus-circle me-2"></i>Новая заявка
+                        <i class="bi bi-plus-circle me-2"></i>{% trans "Новая_заявка" %}
                     </a>
                 {% endif %}
             </div>
@@ -23,12 +24,12 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th style="width: 50px;">#</th>
-                                        <th>Заголовок</th>
-                                        <th style="width: 120px;">Статус</th>
-                                        <th style="width: 120px;">Приоритет</th>
-                                        <th style="width: 150px;">Создано</th>
-                                        <th style="width: 150px;">Исполнитель</th>
-                                        <th style="width: 200px;">Действия</th>
+                                        <th>{% trans "Заголовок" %}</th>
+                                        <th style="width: 120px;">{% trans "Статус" %}</th>
+                                        <th style="width: 120px;">{% trans "Приоритет" %}</th>
+                                        <th style="width: 150px;">{% trans "Создано" %}</th>
+                                        <th style="width: 150px;">{% trans "Исполнитель" %}</th>
+                                        <th style="width: 200px;">{% trans "Действия" %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,19 +78,19 @@
                                                         <span class="small">{{ ticket.assignee.username }}</span>
                                                     </div>
                                                 {% else %}
-                                                    <span class="text-muted small">Не назначен</span>
+                                                    <span class="text-muted small">{% trans "Не_назначен" %}</span>
                                                 {% endif %}
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column flex-md-row gap-2">
                                                     <a href="{% url 'tickets:ticket_detail' ticket.pk %}"
                                                        class="btn btn-outline-primary btn-sm w-100">
-                                                        <i class="bi bi-eye me-1"></i>Просмотр
+                                                        <i class="bi bi-eye me-1"></i>{% trans "Просмотр" %}
                                                     </a>
                                                     {% if ticket.assignee == user %}
                                                         <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}"
                                                            class="btn btn-outline-success btn-sm w-100">
-                                                            <i class="bi bi-arrow-clockwise me-1"></i>Статус
+                                                            <i class="bi bi-arrow-clockwise me-1"></i>{% trans "Статус" %}
                                                         </a>
                                                     {% endif %}
                                                 </div>
@@ -102,8 +103,8 @@
                     {% else %}
                         <div class="text-center py-5">
                             <i class="bi bi-inbox display-1 text-muted"></i>
-                            <h4 class="text-muted">Нет заявок</h4>
-                            <p class="text-muted mb-4">В группе {{ item.group.name }} пока нет заявок</p>
+                            <h4 class="text-muted">{% trans "Нет_заявок" %}</h4>
+                            <p class="text-muted mb-4">{% trans "В_группе" %} {{ item.group.name }} {% trans "пока_нет_заявок" %}</p>
                         </div>
                     {% endif %}
                 </div>
@@ -112,8 +113,8 @@
     {% empty %}
         <div class="text-center py-5">
             <i class="bi bi-people display-1 text-muted"></i>
-            <h4 class="text-muted">Вы не состоите ни в одной рабочей группе</h4>
-            <p class="text-muted mb-4">Для создания или просмотра заявок необходимо быть привязанным к группе.</p>
+            <h4 class="text-muted">{% trans "Вы_не_состоите_ни_в_одной_рабочей_группе" %}</h4>
+            <p class="text-muted mb-4">{% trans "Для_создания_или_просмотра_заявок_необходимо_быть_привязанным_к_группе." %}</p>
         </div>
     {% endfor %}
 </div>

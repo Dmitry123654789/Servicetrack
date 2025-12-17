@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.conf
+import django.conf.urls.i18n
 import django.conf.urls.static
 import django.contrib
 import django.contrib.admin
@@ -18,6 +19,7 @@ urlpatterns = [
     django.urls.path("auth/", django.urls.include(users.urls)),
     django.urls.path("company/", django.urls.include(company.urls)),
     django.urls.path("tickets/", django.urls.include(tickets.urls)),
+    django.urls.path("i18n/", django.urls.include(django.conf.urls.i18n)),
 ]
 
 if django.conf.settings.DEBUG:

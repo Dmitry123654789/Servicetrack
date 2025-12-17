@@ -1,27 +1,28 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}В работе: {{ form.instance.title }} - ServiceTrack{% endblock %}
+{% block title %}{% trans "В_работе" %}: {{ form.instance.title }} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">Выполнение заявки</h2>
+            <h2 class="text-center mb-4">{% trans "Выполнение_заявки" %}</h2>
 
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 {% csrf_token %}
 
                 {# --- (Read Only) --- #}
                 <div class="alert alert-light border mb-4">
-                    <h5 class="alert-heading h6 text-muted mb-3">Информация о задаче</h5>
+                    <h5 class="alert-heading h6 text-muted mb-3">{% trans "Информация_о_задаче" %}</h5>
                     
                     <div class="mb-3">
-                        <label class="form-label small text-uppercase text-muted fw-bold">Название</label>
+                        <label class="form-label small text-uppercase text-muted fw-bold">{% trans "Название" %}</label>
                         <input type="text" class="form-control-plaintext fw-bold" value="{{ form.instance.title }}" readonly>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label small text-uppercase text-muted fw-bold">Описание</label>
+                        <label class="form-label small text-uppercase text-muted fw-bold">{% trans "Описание" %}</label>
                         <div class="form-control bg-light text-break" style="min-height: 80px;">
                             {{ form.instance.description|linebreaksbr }}
                         </div>
@@ -31,7 +32,7 @@
                 <hr class="my-4">
 
                 {# --- (Editable) --- #}
-                <h5 class="mb-3">Отчет о работе</h5>
+                <h5 class="mb-3">{% trans "Отчет_о_работе" %}</h5>
 
                 <div class="mb-3">
                     <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
@@ -64,14 +65,15 @@
                               id="{{ form.comment.id_for_label }}" 
                               class="form-control {% if form.comment.errors %}is-invalid{% endif %}" 
                               rows="3" 
-                              placeholder="Ваш комментарий о проделанной работе">{{ form.comment.value|default:'' }}</textarea>
+                              placeholder="{% trans 'Ваш_комментарий_о_проделанной_работе' %}">{{ form.comment.value|default:'' }}</textarea>
                     {% for error in form.comment.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
                 </div>
+                
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-success btn-lg">Сохранить отчет</button>
-                    <a href="{% url 'tickets:my_tickets' %}" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-success btn-lg">{% trans "Сохранить_отчет" %}</button>
+                    <a href="{% url 'tickets:my_tickets' %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
                 </div>
             </form>
         </div>

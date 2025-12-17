@@ -10,107 +10,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'pages:home' %}">ServiceTrack</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                           href="{% url 'pages:home' %}">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
-                           href="{% url 'pages:about' %}">О проекте</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
-                           href="{% url 'pages:contact' %}">Контакты</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        {% if not request.user.profile.is_director %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'my_tickets' %}active{% endif %}"
-                                href="{% url 'tickets:my_tickets' %}">
-                                    Мои заявки
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown">
-                                Группы
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'group_list' %}active{% endif %}"
-                                    href="{% url 'company:group_list' %}">
-                                        Информация
-                                    </a>
-                                </li>
-                            {% if menu_groups %}
-                                {% for group in menu_groups %}
-                                    <li>
-                                        <a class="dropdown-item {% if request.resolver_match.url_name == 'tickets_list' and group.id|stringformat:"s" == request.resolver_match.kwargs.pk|stringformat:"s" %}active{% endif %}"
-                                        href="{% url 'tickets:tickets_list' group.pk %}">
-                                            {{ group.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            {% endif %}
-                            </ul>
-                        </li>
-                        {% if user.profile.organization_id %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'organization_detail' %}active{% endif %}"
-                                href="{% url 'company:organization_detail' user.profile.organization_id %}">
-                                    Организация
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if user.profile.is_director or user.profile.is_manager %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}"
-                                href="{% url 'users:user_list' %}">
-                                    Пользователи
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-                            href="{% url 'users:profile' %}">Профиль</a>
-                        </li>
-                        {% if user.is_staff %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
-                            </li>
-                        {% endif %}
-                    {% endif %}
-                </ul>
-
-                <div class="d-flex flex-column flex-lg-row align-items-center">
-                    {% if user.is_authenticated %}
-                        <span class="user-greeting me-lg-3 mb-2 mb-lg-0">Привет, {{ user.username }}!</span>
-                        <form action="{% url 'users:logout' %}" method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-light">Выйти</button>
-                        </form>
-                    {% else %}
-                        <a href="{% url 'users:login' %}" class="btn btn-outline-light me-2 mb-2 mb-lg-0">Войти</a>
-                        <a href="{% url 'users:register' %}" class="btn btn-primary">Регистрация</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </nav>
+    {% include "includes/header.html" %}
 
     <main class="main-content">
         <div class="container-fluid">
@@ -135,15 +35,7 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="mb-0">&copy; 2025 ServiceTrack. Все права защищены.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include "includes/footer.html" %}
 
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>

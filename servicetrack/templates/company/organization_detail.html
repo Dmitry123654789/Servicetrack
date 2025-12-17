@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Организация - ServiceTrack{% endblock %}
+{% block title %}{% trans "Организация" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 
@@ -11,15 +12,15 @@
 
 <div class="mb-4">
     <h5 class="mb-2">
-        <i class="bi bi-info-circle me-2"></i>Информация
+        <i class="bi bi-info-circle me-2"></i>{% trans "Информация" %}
     </h5>
 
     <p class="mb-1">
-        <strong>Описание:</strong><br>
+        <strong>{% trans "Описание" %}:</strong><br>
         {% if organization.description %}
             {{ organization.description }}
         {% else %}
-            <span class="text-muted">Описание не указано</span>
+            <span class="text-muted">{% trans "Описание_не_указано" %}</span>
         {% endif %}
     </p>
 </div>
@@ -28,7 +29,7 @@
 
 <div class="mb-4">
     <h5 class="mb-2">
-        <i class="bi bi-person-badge me-2"></i>Руководитель организации
+        <i class="bi bi-person-badge me-2"></i>{% trans "Руководитель_организации" %}
     </h5>
 
     <p class="mb-0">
@@ -44,13 +45,13 @@
     <div class="col-md-6">
         <small class="text-muted">
             <i class="bi bi-calendar-plus me-1"></i>
-            Создана: {{ organization.created_at|date:"d.m.Y H:i" }}
+            {% trans "Создана" %}: {{ organization.created_at|date:"d.m.Y H:i" }}
         </small>
     </div>
     <div class="col-md-6 text-md-end">
         <small class="text-muted">
             <i class="bi bi-calendar-check me-1"></i>
-            Обновлена: {{ organization.updated_at|date:"d.m.Y H:i" }}
+            {% trans "Обновлена" %}: {{ organization.updated_at|date:"d.m.Y H:i" }}
         </small>
     </div>
 </div>
@@ -60,7 +61,7 @@
     <a href="{% url 'company:organization_edit' organization.pk %}"
         class="btn btn-outline-primary">
         <i class="bi bi-pencil-square me-1"></i>
-        Редактировать
+        {% trans "Редактировать" %}
     </a>
 </div>
 {% endif %}

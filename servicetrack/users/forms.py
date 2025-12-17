@@ -145,7 +145,12 @@ class UserCreateForm(django.forms.ModelForm):
 
     class Meta:
         model = users.models.CustomUser
-        fields = ("username", "email", "first_name", "last_name")
+        fields = (
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+        )
 
     def __init__(self, *args, **kwargs):
         self.creator = kwargs.pop("creator")
@@ -204,7 +209,11 @@ class UserProfileUpdateForm(django.forms.ModelForm):
 
     class Meta:
         model = users.models.CustomUser
-        fields = ["first_name", "last_name", "email"]
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Группа – ServiceTrack{% endblock %}
+{% block title %}{% trans "Группа" %} – ServiceTrack{% endblock %}
 
 {% block content %}
 
@@ -11,20 +12,20 @@
 
 <div class="mb-4">
     <h5 class="mb-2">
-        <i class="bi bi-info-circle me-2"></i>Информация
+        <i class="bi bi-info-circle me-2"></i>{% trans "Информация" %}
     </h5>
 
     <p class="mb-1">
-        <strong>Описание:</strong><br>
+        <strong>{% trans "Описание" %}:</strong><br>
         {% if group.description %}
             {{ group.description }}
         {% else %}
-            <span class="text-muted">Описание не указано</span>
+            <span class="text-muted">{% trans "Описание_не_указано" %}</span>
         {% endif %}
     </p>
 
     <p class="mb-0 mt-2">
-        <strong>Организация:</strong>
+        <strong>{% trans "Организация" %}:</strong>
         {{ group.organization.name }}
     </p>
 </div>
@@ -33,16 +34,15 @@
 
 <div class="mb-4">
     <h5 class="mb-2">
-        <i class="bi bi-person-badge-fill me-2"></i>Руководитель группы
+        <i class="bi bi-person-badge-fill me-2"></i>{% trans "Руководитель_группы" %}
     </h5>
-
     {% if group.manager %}
         <p class="mb-0">
             {{ group.manager.get_full_name|default:group.manager.username }}<br>
             <span class="text-muted">@{{ group.manager.username }}</span>
         </p>
     {% else %}
-        <p class="text-muted mb-0">Руководитель не назначен</p>
+        <p class="text-muted mb-0">{% trans "Руководитель_не_назначен" %}</p>
     {% endif %}
 </div>
 
@@ -50,10 +50,10 @@
 
 <div class="mb-4">
     <h5 class="mb-3">
-        <i class="bi bi-people me-2"></i>Работники группы
+        <i class="bi bi-people me-2"></i>{% trans "Работники_группы" %}
     </h5>
 
-    {% if group.workers.exists %}
+    {% if group.workers.count %}
         <ul class="list-group">
             {% for worker in group.workers.all %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -65,13 +65,13 @@
                     </div>
 
                     <span class="badge bg-secondary">
-                        Работник
+                        {% trans "Работник" %}
                     </span>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p class="text-muted">В группе пока нет работников</p>
+        <p class="text-muted">{% trans "В_группе_пока_нет_работников" %}</p>
     {% endif %}
 </div>
 
@@ -81,13 +81,13 @@
     <div class="col-md-6">
         <small class="text-muted">
             <i class="bi bi-calendar-plus me-1"></i>
-            Создана: {{ group.created_at|date:"d.m.Y H:i" }}
+            {% trans "Создана" %}: {{ group.created_at|date:"d.m.Y H:i" }}
         </small>
     </div>
     <div class="col-md-6 text-md-end">
         <small class="text-muted">
             <i class="bi bi-calendar-check me-1"></i>
-            Обновлена: {{ group.updated_at|date:"d.m.Y H:i" }}
+            {% trans "Обновлена" %}: {{ group.updated_at|date:"d.m.Y H:i" }}
         </small>
     </div>
 </div>
@@ -97,7 +97,7 @@
     <a href="{% url 'company:group_edit' group.pk %}"
        class="btn btn-outline-primary">
         <i class="bi bi-pencil-square me-1"></i>
-        Редактировать
+        {% trans "Редактировать" %}
     </a>
 </div>
 {% endif %}

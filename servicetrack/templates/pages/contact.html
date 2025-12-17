@@ -1,12 +1,13 @@
 ﻿{% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Контакты - ServiceTrack{% endblock %}
+{% block title %}{% trans "Контакты" %} - ServiceTrack{% endblock %}
 
 {% block content %}
 <div class="text-center">
-    <h1>Контакты</h1>
+    <h1>{% trans "Контакты" %}</h1>
     <div class="mt-4">
-        <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+        <p><strong>{% trans "Телефон" %}:</strong> +7 (999) 123-45-67</p>
         <p><strong>Email:</strong> support@servicetrack.ru</p>
     </div>
 </div>
