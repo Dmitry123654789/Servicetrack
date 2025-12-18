@@ -51,7 +51,7 @@
                                 <li>
                                     <a class="dropdown-item {% if request.resolver_match.url_name == 'tickets_list' and group.id == request.resolver_match.kwargs.pk %}active{% endif %}"
                                     href="{% url 'tickets:tickets_list' group.pk %}">
-                                        {{ group.name }}
+                                        {{ group.name|truncatechars:15 }}
                                     </a>
                                 </li>
                             {% endfor %}

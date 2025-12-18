@@ -5,6 +5,7 @@ import collections
 import django.contrib
 import django.contrib.auth.mixins
 import django.contrib.auth.views
+import django.db.models
 import django.urls
 from django.utils.translation import gettext_lazy as _
 import django.views.generic
@@ -143,9 +144,14 @@ class UserListView(
             )
         )
 
+        queryset = queryset.exclude(
+            profile__role=users.models.Profile.Role.MAIN_MANAGER,
+        )
+
         if user.profile.is_manager:
             queryset = queryset.filter(
-                work_groups__manager_id=user.id,
+                django.db.models.Q(work_groups__manager_id=user.id)
+                | django.db.models.Q(work_groups__isnull=True)
             ).distinct()
 
         return queryset.exclude(id=user.id)
@@ -155,7 +161,6 @@ class UserListView(
         current_user = self.request.user
 
         grouped_dict = collections.defaultdict(list)
-
         for user in self.object_list:
             user_groups = user.work_groups.all()
 
