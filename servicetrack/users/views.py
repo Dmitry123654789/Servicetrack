@@ -151,7 +151,7 @@ class UserListView(
         if user.profile.is_manager:
             queryset = queryset.filter(
                 django.db.models.Q(work_groups__manager_id=user.id)
-                | django.db.models.Q(work_groups__isnull=True)
+                | django.db.models.Q(work_groups__isnull=True),
             ).distinct()
 
         return queryset.exclude(id=user.id)
