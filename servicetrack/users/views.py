@@ -1,5 +1,7 @@
 __all__ = ()
 
+import collections
+
 import django.contrib
 import django.contrib.auth.mixins
 import django.contrib.auth.views
@@ -135,15 +137,47 @@ class UserListView(
             super()
             .get_queryset()
             .select_related("profile")
-            .filter(profile__organization_id=user.profile.organization_id)
+            .prefetch_related("work_groups")
+            .filter(
+                profile__organization_id=user.profile.organization_id,
+            )
         )
 
         if user.profile.is_manager:
             queryset = queryset.filter(
-                work_groups__manager=user,
+                work_groups__manager_id=user.id,
             ).distinct()
 
         return queryset.exclude(id=user.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+
+        grouped_dict = collections.defaultdict(list)
+
+        for user in self.object_list:
+            user_groups = user.work_groups.all()
+
+            if user_groups:
+                for group in user_groups:
+                    if (
+                        current_user.profile.is_director
+                        or group.manager_id == current_user.id
+                    ):
+                        grouped_dict[group].append(user)
+            else:
+                grouped_dict["_no_group"].append(user)
+
+        context["groups"] = [
+            {
+                "group": group,
+                "users": user_list,
+            }
+            for group, user_list in grouped_dict.items()
+        ]
+
+        return context
 
 
 class ProfileUpdateView(

@@ -47,20 +47,6 @@
                 </span>
             </div>
         </div>
-        <div class="btn-group" role="group">
-            {% if user.profile.role != 'worker' %}
-                <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}"
-                   class="btn btn-outline-primary">
-                    <i class="bi bi-pencil me-2"></i>{% trans "Редактировать" %}
-                </a>
-            {% endif %}
-            {% if ticket.assignee == user %}
-                <a href="{% url 'tickets:ticket_worker_update' ticket.pk %}"
-                   class="btn btn-success">
-                    <i class="bi bi-arrow-clockwise me-2"></i>{% trans "Изменить_статус" %}
-                </a>
-            {% endif %}
-        </div>
     </div>
 
     <div class="row">
@@ -233,7 +219,7 @@
                                 <i class="bi bi-arrow-clockwise me-2"></i>{% trans "Обновить_статус" %}
                             </a>
                         {% endif %}
-                        {% if user.profile.is_director or user.profile.is_manager %}
+                        {% if user.profile.is_director or is_manager %}
                             <a href="{% url 'tickets:ticket_manager_update' ticket.pk %}"
                                class="btn btn-outline-primary">
                                 <i class="bi bi-pencil me-2"></i>{% trans "Редактировать_заявку" %}

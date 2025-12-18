@@ -8,21 +8,26 @@
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">{% trans "Создание_группы" %}</h2>
+
+            <h2 class="text-center mb-4">
+                <i class="bi bi-people-fill me-2"></i>
+                {% trans "Создание_группы" %}
+            </h2>
+
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
 
                 <div class="mb-3">
                     <label for="{{ form.name.id_for_label }}" class="form-label">
-                        {% trans "Название_группы" %}
+                        <i class="bi bi-fonts me-2"></i>{% trans "Название_группы" %}
                     </label>
                     <input type="text"
-                        name="{{ form.name.name }}"
-                        id="{{ form.name.id_for_label }}"
-                        class="form-control {% if form.name.errors %}is-invalid{% endif %}"
-                        value="{{ form.name.value|default:'' }}"
-                        placeholder="{% trans "Например:_Электрики" %}"
-                        required>
+                           name="{{ form.name.name }}"
+                           id="{{ form.name.id_for_label }}"
+                           class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                           value="{{ form.name.value|default:'' }}"
+                           placeholder="{% trans "Введите_название_группы" %}"
+                           required>
                     {% for error in form.name.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
@@ -30,33 +35,30 @@
 
                 <div class="mb-3">
                     <label for="{{ form.description.id_for_label }}" class="form-label">
-                        {% trans "Описание" %}
+                        <i class="bi bi-card-text me-2"></i>{% trans "Описание" %}
                     </label>
                     <textarea name="{{ form.description.name }}"
-                            id="{{ form.description.id_for_label }}"
-                            class="form-control {% if form.description.errors %}is-invalid{% endif %}"
-                            rows="3"
-                            placeholder="{% trans "Описание_группы" %}">{{ form.description.value|default:'' }}</textarea>
+                              id="{{ form.description.id_for_label }}"
+                              class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                              rows="3"
+                              placeholder="{% trans "Описание_группы_(необязательно)" %}">{{ form.description.value|default:'' }}</textarea>
                     {% for error in form.description.errors %}
                         <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-3">
                     <label for="{{ form.manager.id_for_label }}" class="form-label">
-                        {% trans "Руководитель_группы" %}
+                        <i class="bi bi-person-badge me-2"></i>{% trans "Руководитель_группы" %}
                     </label>
                     <select name="{{ form.manager.name }}"
                             id="{{ form.manager.id_for_label }}"
                             class="form-select {% if form.manager.errors %}is-invalid{% endif %}">
+
                         <option value="">— {% trans "Не_назначен" %} —</option>
-                        {% for option in form.manager.field.queryset %}
-                            <option value="{{ option.id }}"
-                                {% if form.manager.value == option.id %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ option.username }}
+                        {% for manager in form.manager.field.queryset %}
+                            <option value="{{ manager.pk }}" selected>
+                                {{ manager.get_full_name|default:manager.username }}
                             </option>
                         {% endfor %}
                     </select>
@@ -67,46 +69,49 @@
 
                 <div class="mb-4">
                     <label class="form-label">
-                        {% trans "Работники_группы" %}
+                        <i class="bi bi-people me-2"></i>{% trans "Работники_группы" %}
                     </label>
-
-                    {% if form.workers.field.queryset %}
-                        <div class="row">
+                    
+                    <div class="border rounded p-3">
+                        {% if form.workers.field.queryset %}
                             {% for worker in form.workers.field.queryset %}
-                                <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                            type="checkbox"
-                                            name="{{ form.workers.name }}"
-                                            value="{{ worker.id }}"
-                                            id="worker_{{ worker.id }}"
-                                            {% if worker.id in form.workers.value %}checked{% endif %}>
-                                        <label class="form-check-label" for="worker_{{ worker.id }}">
-                                            {{ worker.get_full_name|default:worker.username }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="{{ form.workers.name }}"
+                                           id="worker_{{ worker.pk }}"
+                                           value="{{ worker.pk }}"
+                                           {% if worker in form.instance.workers.all %}checked{% endif %}>
+                                    <label class="form-check-label" for="worker_{{ worker.pk }}">
+                                        {{ worker.get_full_name|default:worker.username }}
+                                    </label>
                                 </div>
                             {% endfor %}
-                        </div>
-                    {% else %}
-                        <p class="text-muted">{% trans "Нет_доступных_работников" %}</p>
-                    {% endif %}
+                        {% else %}
+                            <span class="text-muted">{% trans "Нет_доступных_работников" %}</span>
+                        {% endif %}
+                    </div>
 
                     {% for error in form.workers.errors %}
-                        <div class="text-danger small">{{ error }}</div>
+                        <div class="text-danger small mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
 
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save me-1"></i>
                         {% trans "Создать_группу" %}
                     </button>
-                    <a href="{% url 'company:group_list' %}" class="btn btn-secondary">
+
+                    <a href="{% url 'company:group_list' %}"
+                       class="btn btn-secondary">
                         {% trans "Назад_к_списку" %}
                     </a>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
+
 {% endblock %}

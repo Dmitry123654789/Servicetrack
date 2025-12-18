@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+    <link rel="icon" href="{% static 'fav/favicon.png' %}" type="image">
+    <link rel="apple-touch-icon"
+          sizes="180x180"
+          href="{% static 'fav/apple-touch-icon.png' %}">
+    <link rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href="{% static 'fav/favicon-96x96.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <title>{% block title %}ServiceTrack{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">

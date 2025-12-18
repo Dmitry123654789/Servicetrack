@@ -45,7 +45,7 @@ class TicketListView(
 
     def get_queryset(self):
         return (
-            tickets.models.Ticket.objects.get_list()
+            self.model.objects.get_list()
             .filter(group_id=self.kwargs["pk"])
             .select_related("assignee")
             .with_priority_weight()
@@ -56,6 +56,7 @@ class TicketListView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["group"] = self.group
+        context["is_manager"] = self.request.user.id == self.group.manager_id
         return context
 
 
@@ -72,17 +73,21 @@ class TicketDetailView(
         profile = user.profile
 
         ticket = self.get_object()
-        target_group = ticket.group
+        self.target_group = ticket.group
 
-        if profile.organization_id != target_group.organization_id:
+        if profile.organization_id != self.target_group.organization_id:
             return False
 
-        if profile.is_director or target_group.manager_id == user.id:
+        if profile.is_director or self.target_group.manager_id == user.id:
             return True
 
-        return target_group.workers.filter(pk=user.id).exists()
+        return self.target_group.workers.filter(pk=user.id).exists()
 
     def get_queryset(self):
+        logs_queryset = tickets.models.StatusLog.objects.select_related(
+            "user",
+        ).order_by("-timestamp")
+
         return (
             self.model.objects.select_related(
                 self.model.creator.field.name,
@@ -95,6 +100,8 @@ class TicketDetailView(
             .prefetch_related(
                 django.db.models.Prefetch(
                     self.model.status_logs.field._related_name,
+                    queryset=logs_queryset,
+                    to_attr="prefetched_logs",
                 ),
             )
         )
@@ -107,8 +114,10 @@ class TicketDetailView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["logs"] = self.object.status_logs.order_by(
-            f"-{tickets.models.StatusLog.timestamp.field.name}",
+
+        context["logs"] = self.object.prefetched_logs
+        context["is_manager"] = (
+            self.request.user.id == self.target_group.manager_id,
         )
         return context
 
@@ -253,15 +262,15 @@ class TicketManagerUpdateView(
 
     def form_valid(self, form):
         with django.db.transaction.atomic():
-            ticket = self.get_object()
-            old_status = ticket.status
+            old_instance = self.model.objects.get(pk=self.get_object().pk)
+            old_status = old_instance.status
 
-            new_status = form.instance.status
+            new_status = form.cleaned_data.get("status")
             comment = form.cleaned_data.get("comment")
 
             if old_status != new_status:
                 tickets.models.StatusLog.objects.create(
-                    ticket=ticket,
+                    ticket=self.get_object(),
                     user=self.request.user,
                     from_status=old_status,
                     to_status=new_status,
