@@ -83,11 +83,11 @@
                            id="{{ form.phone.id_for_label }}"
                            class="form-control {% if form.phone.errors %}is-invalid{% endif %}"
                            value="{{ form.phone.value.as_international|default:'' }}"
-                           placeholder="+7 (999) 123-45-67">
+                           placeholder="+7 999 123-45-67">
                     {% for error in form.phone.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
-                    <div class="form-text">{% trans "Введите_номер_в_формате_+7_(XXX)_XXX-XX-XX" %}</div>
+                    <div class="form-text">{% trans "Введите_номер_в_формате_+7_XXX_XXX-XX-XX" %}</div>
                 </div>
                 
                 <div class="d-grid gap-2">

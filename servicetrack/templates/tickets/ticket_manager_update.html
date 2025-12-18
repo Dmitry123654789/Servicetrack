@@ -7,80 +7,90 @@
 <div class="row justify-content-center fade-in">
     <div class="col-md-8 col-lg-6">
         <div class="content-container p-4 p-md-5">
-            <h2 class="text-center mb-4">{% trans "Редактирование_заявки" %}</h2>
-            
+            <h2 class="text-center mb-4">{% trans "Управление_заявкой" %}</h2>
+
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 {% csrf_token %}
 
-                {% for field in form %}
-                    <div class="mb-3">
-                        <label for="{{ field.id_for_label }}" class="form-label">
-                            {{ field.label }}
-                        </label>
-
-                        {% if field.field.widget.input_type == "select" %}
-                            <select name="{{ field.name }}" 
-                                    id="{{ field.id_for_label }}" 
-                                    class="form-select {% if field.errors %}is-invalid{% endif %}"
-                                    {% if field.field.disabled %}disabled{% endif %}>
-                                {% for value, label in field.field.choices %}
-                                    <option value="{{ value }}" {% if field.value == value %}selected{% endif %}>
-                                        {{ label }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif field.field.widget.input_type == "checkbox" %}
-                            <div class="form-check">
-                                <input type="checkbox" 
-                                       name="{{ field.name }}" 
-                                       id="{{ field.id_for_label }}" 
-                                       class="form-check-input {% if field.errors %}is-invalid{% endif %}"
-                                       {% if field.value %}checked{% endif %}
-                                       {% if field.field.disabled %}disabled{% endif %}>
-                                <label class="form-check-label" for="{{ field.id_for_label }}">
-                                    {% trans "Активировать" %}
-                                </label>
-                            </div>
-
-                        {% elif field.field.widget.attrs.rows %}
-                             <textarea name="{{ field.name }}" 
-                                       id="{{ field.id_for_label }}"
-                                       class="form-control {% if field.errors %}is-invalid{% endif %}"
-                                       rows="3"
-                                       {% if field.field.disabled %}disabled{% endif %}>{{ field.value|default:'' }}</textarea>
-
-                        {% elif field.field.widget.input_type == "file" %}
-                            {% if field.value %}
-                                <div class="mb-2">
-                                    <a href="{{ field.value.url }}" target="_blank" class="small">{% trans "Текущий_файл" %}</a>
-                                </div>
-                            {% endif %}
-                            <input type="file" 
-                                   name="{{ field.name }}" 
-                                   id="{{ field.id_for_label }}" 
-                                   class="form-control {% if field.errors %}is-invalid{% endif %}">
-
-                        {% else %}
-                            <input type="{{ field.field.widget.input_type|default:'text' }}"
-                                   name="{{ field.name }}"
-                                   id="{{ field.id_for_label }}"
-                                   class="form-control {% if field.errors %}is-invalid{% endif %}"
-                                   value="{{ field.value|default:'' }}"
-                                   {% if field.field.disabled %}disabled readonly{% endif %}>
-                        {% endif %}
-
-                        {% for error in field.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                        {% endfor %}
-                        
-                        {% if field.help_text %}
-                            <div class="form-text text-muted">{{ field.help_text }}</div>
-                        {% endif %}
+                {# --- (Read Only Section) --- #}
+                <div class="alert alert-light border mb-4">
+                    <h5 class="alert-heading h6 text-muted mb-3">{% trans "Информация_о_заявке" %}</h5>
+                    
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label small text-uppercase text-muted fw-bold">{% trans "Создатель" %}</label>
+                            <div class="form-control-plaintext py-0">{{ form.instance.creator.get_full_name|default:form.instance.creator.username }}</div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label small text-uppercase text-muted fw-bold">{% trans "Группа" %}</label>
+                            <div class="form-control-plaintext py-0">{{ form.instance.group.name }}</div>
+                        </div>
                     </div>
-                {% endfor %}
 
-                <div class="d-grid gap-2 mt-4">
+                    <div class="mb-3">
+                        <label class="form-label small text-uppercase text-muted fw-bold">{% trans "Название" %}</label>
+                        <input type="text" class="form-control-plaintext fw-bold py-0" value="{{ form.instance.title }}" readonly>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                {# --- (Editable Section) --- #}
+                <h5 class="mb-3">{% trans "Управление" %}</h5>
+
+                {# Статус и Приоритет в одну строку #}
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="{{ form.status.id_for_label }}" class="form-label">{{ form.status.label }}</label>
+                        <select name="{{ form.status.name }}" 
+                                id="{{ form.status.id_for_label }}" 
+                                class="form-select {% if form.status.errors %}is-invalid{% endif %}">
+                            {% for value, label in form.status.field.choices %}
+                                <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% for error in form.status.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label for="{{ form.priority.id_for_label }}" class="form-label">{{ form.priority.label }}</label>
+                        <select name="{{ form.priority.name }}" 
+                                id="{{ form.priority.id_for_label }}" 
+                                class="form-select {% if form.priority.errors %}is-invalid{% endif %}">
+                            {% for value, label in form.priority.field.choices %}
+                                <option value="{{ value }}" {% if form.priority.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% for error in form.priority.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+                    </div>
+                </div>
+
+                {# Исполнитель #}
+                <div class="mb-3">
+                    <label for="{{ form.assignee.id_for_label }}" class="form-label">{{ form.assignee.label }}</label>
+                    <select name="{{ form.assignee.name }}" 
+                            id="{{ form.assignee.id_for_label }}" 
+                            class="form-select {% if form.assignee.errors %}is-invalid{% endif %}">
+                        {% for value, label in form.assignee.field.choices %}
+                            <option value="{{ value }}" {% if form.assignee.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% for error in form.assignee.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+                    {% if form.assignee.help_text %}<div class="form-text">{{ form.assignee.help_text }}</div>{% endif %}
+                </div>
+
+                {# Комментарий #}
+                <div class="mb-4">
+                    <label for="{{ form.comment.id_for_label }}" class="form-label">{{ form.comment.label }}</label>
+                    <textarea name="{{ form.comment.name }}" 
+                              id="{{ form.comment.id_for_label }}" 
+                              class="form-control {% if form.comment.errors %}is-invalid{% endif %}" 
+                              rows="3" 
+                              placeholder="{% trans 'Ваш_комментарий_к_изменениям' %}">{{ form.comment.value|default:'' }}</textarea>
+                    {% for error in form.comment.errors %}<div class="invalid-feedback">{{ error }}</div>{% endfor %}
+                </div>
+
+                <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg">{% trans "Сохранить_изменения" %}</button>
                     <a href="{% url 'tickets:ticket_detail' form.instance.pk %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
                 </div>

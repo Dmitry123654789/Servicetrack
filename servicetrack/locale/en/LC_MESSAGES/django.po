@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 23:03+0300\n"
+"POT-Creation-Date: 2025-12-18 16:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: .\company\apps.py:10
 msgid "Компания"
 msgstr "Company"
@@ -25,7 +26,7 @@ msgstr "Company"
 msgid "название_организации"
 msgstr "organization name"
 
-#: .\company\models.py:17 .\company\models.py:54 .\tickets\models.py:134
+#: .\company\models.py:17 .\company\models.py:54 .\tickets\models.py:132
 msgid "описание"
 msgstr "description"
 
@@ -33,15 +34,15 @@ msgstr "description"
 msgid "управляющий_организацией"
 msgstr "organization manager"
 
-#: .\company\models.py:30 .\company\models.py:92 .\tickets\models.py:193
+#: .\company\models.py:30 .\company\models.py:92 .\tickets\models.py:197
 msgid "дата_создания"
 msgstr "created date"
 
-#: .\company\models.py:35 .\company\models.py:97 .\tickets\models.py:198
+#: .\company\models.py:35 .\company\models.py:97 .\tickets\models.py:202
 msgid "дата_обновления"
 msgstr "updated date"
 
-#: .\company\models.py:40 .\company\models.py:88 .\users\models.py:50
+#: .\company\models.py:40 .\company\models.py:88 .\users\models.py:51
 msgid "организация"
 msgstr "organization"
 
@@ -116,7 +117,7 @@ msgstr "Group description"
 #: .\templates\company\group_create.html:47
 #: .\templates\company\group_detail.html:37
 #: .\templates\company\group_edit.html:52 .\templates\users\user_list.html:49
-#: .\users\forms.py:165
+#: .\users\forms.py:167
 msgid "Руководитель_группы"
 msgstr "Group leader"
 
@@ -152,6 +153,7 @@ msgid "Назад_к_списку"
 msgstr "Back to list"
 
 #: .\templates\company\group_detail.html:4
+#: .\templates\tickets\ticket_manager_update.html:25
 msgid "Группа"
 msgstr "Group"
 
@@ -178,26 +180,21 @@ msgstr "Organization"
 msgid "Руководитель_не_назначен"
 msgstr "Leader not assigned"
 
-#: .\templates\company\group_detail.html:68 .\templates\users\user_list.html:51
-#: .\users\forms.py:159
-msgid "Работник"
-msgstr "Worker"
-
-#: .\templates\company\group_detail.html:74
+#: .\templates\company\group_detail.html:70
 msgid "В_группе_пока_нет_работников"
 msgstr "There are no workers in the group yet"
 
-#: .\templates\company\group_detail.html:84
+#: .\templates\company\group_detail.html:80
 #: .\templates\company\organization_detail.html:48
 msgid "Создана"
 msgstr "Created"
 
-#: .\templates\company\group_detail.html:90
+#: .\templates\company\group_detail.html:86
 #: .\templates\company\organization_detail.html:54
 msgid "Обновлена"
 msgstr "Updated"
 
-#: .\templates\company\group_detail.html:100
+#: .\templates\company\group_detail.html:96
 #: .\templates\company\organization_detail.html:64
 #: .\templates\tickets\ticket_detail.html:54
 msgid "Редактировать"
@@ -217,8 +214,8 @@ msgstr "Group description (optional)"
 
 #: .\templates\company\group_edit.html:103
 #: .\templates\company\organization_edit.html:58
-#: .\templates\tickets\ticket_manager_update.html:84
-#: .\templates\users\profile_edit.html:79
+#: .\templates\tickets\ticket_manager_update.html:94
+#: .\templates\users\profile_edit.html:95
 msgid "Сохранить_изменения"
 msgstr "Save changes"
 
@@ -235,6 +232,7 @@ msgid "Рабочие_группы"
 msgstr "Working groups"
 
 #: .\templates\company\group_list.html:30
+#: .\templates\tickets\ticket_manager_update.html:31
 #: .\templates\tickets\ticket_worker_update.html:20
 msgid "Название"
 msgstr "Name"
@@ -338,15 +336,17 @@ msgstr "About us"
 msgid ""
 "ServiceTrack_—"
 "_это_система_для_управления_рабочими_группами_и_заявками_в_организациях."
-msgstr "ServiceTrack — it is a system for managing working groups and tickets in organizations."
+msgstr ""
+"ServiceTrack — it is a system for managing working groups and tickets in "
+"organizations."
 
 #: .\templates\pages\about.html:10
 msgid "Позволяет_эффективно_распределять_задачи_и_отслеживать_их_выполнение."
 msgstr "Allows to efficiently distribute tasks and track their execution."
 
 #: .\templates\pages\contact.html:10 .\templates\users\profile.html:40
-#: .\templates\users\profile_edit.html:63 .\users\forms.py:14
-#: .\users\forms.py:205
+#: .\templates\users\profile_edit.html:79 .\users\forms.py:15
+#: .\users\forms.py:208
 msgid "Телефон"
 msgstr "Phone"
 
@@ -360,7 +360,9 @@ msgstr "Ticket and working group management system"
 
 #: .\templates\pages\home.html:10
 msgid "Платформа_для_организации_работы_с_заявками,_управления_группами_и_отслеживания_задач."
-msgstr "Platform for organizing work with tickets, managing groups and tracking tasks."
+msgstr ""
+"Platform for organizing work with tickets, managing groups and tracking "
+"tasks."
 
 #: .\templates\tickets\my_ticket_list.html:14
 #: .\templates\tickets\ticket_list.html:18
@@ -495,10 +497,12 @@ msgid "Изменить_статус"
 msgstr "Change status"
 
 #: .\templates\tickets\ticket_detail.html:79
+#: .\templates\tickets\ticket_detail.html:80
 msgid "Фото_до"
 msgstr "Photo before"
 
 #: .\templates\tickets\ticket_detail.html:86
+#: .\templates\tickets\ticket_detail.html:87
 msgid "Фото_после"
 msgstr "Photo after"
 
@@ -519,6 +523,7 @@ msgid "Рабочая_группа"
 msgstr "Working group"
 
 #: .\templates\tickets\ticket_detail.html:171
+#: .\templates\tickets\ticket_manager_update.html:21
 msgid "Создатель"
 msgstr "Creator"
 
@@ -568,26 +573,27 @@ msgid "Создать_первую_заявку"
 msgstr "Create first ticket"
 
 #: .\templates\tickets\ticket_manager_update.html:4
+#: .\templates\tickets\ticket_manager_update.html:10
 msgid "Управление_заявкой"
 msgstr "Ticket management"
 
-#: .\templates\tickets\ticket_manager_update.html:10
-msgid "Редактирование_заявки"
-msgstr "Ticket editing"
+#: .\templates\tickets\ticket_manager_update.html:17
+msgid "Информация_о_заявке"
+msgstr "Ticket information"
 
-#: .\templates\tickets\ticket_manager_update.html:42
-msgid "Активировать"
-msgstr "Activate"
+#: .\templates\tickets\ticket_manager_update.html:39
+msgid "Управление"
+msgstr "Management"
 
-#: .\templates\tickets\ticket_manager_update.html:56
-msgid "Текущий_файл"
-msgstr "Current file"
+#: .\templates\tickets\ticket_manager_update.html:89
+msgid "Ваш_комментарий_к_изменениям"
+msgstr "Your comment on changes"
 
-#: .\templates\tickets\ticket_manager_update.html:85
+#: .\templates\tickets\ticket_manager_update.html:95
 #: .\templates\tickets\ticket_worker_update.html:76
 #: .\templates\users\logout.html:14
 #: .\templates\users\password_reset_confirm.html:46
-#: .\templates\users\profile_edit.html:82
+#: .\templates\users\profile_edit.html:98
 msgid "Отмена"
 msgstr "Cancel"
 
@@ -620,18 +626,20 @@ msgid "Вход_в_систему"
 msgstr "Login to system"
 
 #: .\templates\users\login.html:17 .\templates\users\profile.html:15
-#: .\templates\users\register.html:17 .\templates\users\user_create.html:17
-#: .\templates\users\user_list.html:23 .\users\forms.py:40 .\users\forms.py:67
+#: .\templates\users\profile_edit.html:17 .\templates\users\register.html:17
+#: .\templates\users\user_create.html:17 .\templates\users\user_list.html:23
+#: .\users\forms.py:41 .\users\forms.py:69
 msgid "Имя_пользователя"
 msgstr "Username"
 
-#: .\templates\users\login.html:24 .\templates\users\user_create.html:24
+#: .\templates\users\login.html:24 .\templates\users\profile_edit.html:24
+#: .\templates\users\user_create.html:24
 msgid "Введите_имя_пользователя"
 msgstr "Enter username"
 
 #: .\templates\users\login.html:33 .\templates\users\register.html:109
-#: .\templates\users\user_create.html:97 .\users\forms.py:41
-#: .\users\forms.py:71 .\users\forms.py:138
+#: .\templates\users\user_create.html:97 .\users\forms.py:42
+#: .\users\forms.py:73 .\users\forms.py:140
 msgid "Пароль"
 msgstr "Password"
 
@@ -676,7 +684,7 @@ msgstr "Login again"
 msgid "Смена_пароля"
 msgstr "Password change"
 
-#: .\templates\users\password_change.html:17 .\users\forms.py:89
+#: .\templates\users\password_change.html:17 .\users\forms.py:91
 msgid "Старый_пароль"
 msgstr "Old password"
 
@@ -685,8 +693,8 @@ msgid "Введите_текущий_пароль"
 msgstr "Enter current password"
 
 #: .\templates\users\password_change.html:32
-#: .\templates\users\password_reset_confirm.html:19 .\users\forms.py:96
-#: .\users\forms.py:121
+#: .\templates\users\password_reset_confirm.html:19 .\users\forms.py:98
+#: .\users\forms.py:123
 msgid "Новый_пароль"
 msgstr "New password"
 
@@ -696,8 +704,8 @@ msgid "Введите_новый_пароль"
 msgstr "Enter new password"
 
 #: .\templates\users\password_change.html:50
-#: .\templates\users\password_reset_confirm.html:32 .\users\forms.py:103
-#: .\users\forms.py:128
+#: .\templates\users\password_reset_confirm.html:32 .\users\forms.py:105
+#: .\users\forms.py:130
 msgid "Подтверждение_нового_пароля"
 msgstr "Confirm new password"
 
@@ -734,11 +742,13 @@ msgstr "Password reset"
 
 #: .\templates\users\password_reset.html:13
 msgid "Введите_адрес_электронной_почты,_указанный_при_регистрации,_и_мы_вышлем_вам_инструкции_по_сбросу_пароля."
-msgstr "Enter the email address provided during registration, and we will send you instructions on how to reset your password."
+msgstr ""
+"Enter the email address provided during registration, and we will send you "
+"instructions on how to reset your password."
 
 #: .\templates\users\password_reset.html:20
-#: .\templates\users\profile_edit.html:47 .\templates\users\register.html:33
-#: .\templates\users\user_create.html:33 .\users\forms.py:113
+#: .\templates\users\profile_edit.html:63 .\templates\users\register.html:33
+#: .\templates\users\user_create.html:33 .\users\forms.py:115
 msgid "Электронная_почта"
 msgstr "Email"
 
@@ -761,7 +771,9 @@ msgstr "Password reset successfully"
 
 #: .\templates\users\password_reset_complete.html:14
 msgid "Ваш_пароль_был_успешно_изменён._Теперь_вы_можете_войти_с_новым_паролем."
-msgstr "Your password was changed successfully. Now you can log in with your new password."
+msgstr ""
+"Your password was changed successfully. Now you can log in with your new "
+"password."
 
 #: .\templates\users\password_reset_confirm.html:4
 #: .\templates\users\password_reset_confirm.html:10
@@ -778,7 +790,9 @@ msgstr "Change password"
 
 #: .\templates\users\password_reset_confirm.html:52
 msgid "Ссылка_для_сброса_пароля_недействительна,_возможно,_потому_что_она_уже_была_использована._Пожалуйста,_запросите_сброс_пароля_снова."
-msgstr "The password reset link is invalid, possibly because it has already been used. Please request a password reset again."
+msgstr ""
+"The password reset link is invalid, possibly because it has already been "
+"used. Please request a password reset again."
 
 #: .\templates\users\password_reset_confirm.html:57
 msgid "Запросить_сброс_пароля"
@@ -795,12 +809,16 @@ msgstr "We have sent you password reset instructions to your email."
 
 #: .\templates\users\password_reset_done.html:18
 msgid "Если_вы_не_получили_письмо,_пожалуйста,_убедитесь,_что_вы_ввели_адрес,_под_которым_регистрировались,_и_проверьте_папку_со_спамом."
-msgstr "If you did not receive the email, please make sure you entered the address you registered with and check your spam folder."
+msgstr ""
+"If you did not receive the email, please make sure you entered the address "
+"you registered with and check your spam folder."
 
 #: .\templates\users\password_reset_email.html:2
 #, python-format
 msgid "Вы_получили_это_письмо,_потому_что_запросили_сброс_пароля_для_вашей_учётной_записи_на_сайте_%(site_name)s."
-msgstr "You are receiving this email because you requested a password reset for your account on %(site_name)s."
+msgstr ""
+"You are receiving this email because you requested a password reset for your "
+"account on %(site_name)s."
 
 #: .\templates\users\password_reset_email.html:4
 msgid "Пожалуйста,_перейдите_по_следующей_ссылке_и_создайте_новый_пароль:"
@@ -828,18 +846,18 @@ msgstr "User profile"
 msgid "Email"
 msgstr "Email"
 
-#: .\templates\users\profile.html:25 .\templates\users\profile_edit.html:17
+#: .\templates\users\profile.html:25 .\templates\users\profile_edit.html:33
 #: .\templates\users\user_create.html:49 .\templates\users\user_list.html:25
 msgid "Имя"
 msgstr "First name"
 
-#: .\templates\users\profile.html:30 .\templates\users\profile_edit.html:32
+#: .\templates\users\profile.html:30 .\templates\users\profile_edit.html:48
 #: .\templates\users\user_create.html:64 .\templates\users\user_list.html:26
 msgid "Фамилия"
 msgstr "Last name"
 
 #: .\templates\users\profile.html:35 .\templates\users\user_create.html:79
-#: .\templates\users\user_list.html:27 .\users\forms.py:170
+#: .\templates\users\user_list.html:27 .\users\forms.py:172
 msgid "Роль"
 msgstr "Role"
 
@@ -855,17 +873,17 @@ msgstr "Edit profile"
 msgid "Редактирование_профиля"
 msgstr "Profile editing"
 
-#: .\templates\users\profile_edit.html:24 .\templates\users\register.html:71
+#: .\templates\users\profile_edit.html:40 .\templates\users\register.html:71
 msgid "Введите_ваше_имя"
 msgstr "Enter your first name"
 
-#: .\templates\users\profile_edit.html:39 .\templates\users\register.html:86
+#: .\templates\users\profile_edit.html:55 .\templates\users\register.html:86
 msgid "Введите_вашу_фамилию"
 msgstr "Enter your last name"
 
-#: .\templates\users\profile_edit.html:74
-msgid "Введите_номер_в_формате_+7_(XXX)_XXX-XX-XX"
-msgstr "Enter the number in +7 (XXX) XXX-XX-XX format"
+#: .\templates\users\profile_edit.html:90
+msgid "Введите_номер_в_формате_+7_XXX_XXX-XX-XX"
+msgstr "Enter the number in +7 XXX XXX-XX-XX format"
 
 #: .\templates\users\register.html:24
 msgid "Придумайте_имя_пользователя"
@@ -896,7 +914,7 @@ msgid "Пароль_должен_содержать_как_минимум_8_си
 msgstr "The password must contain at least 8 characters."
 
 #: .\templates\users\register.html:125 .\templates\users\user_create.html:112
-#: .\users\forms.py:42
+#: .\users\forms.py:43
 msgid "Подтверждение_пароля"
 msgstr "Password confirmation"
 
@@ -932,9 +950,17 @@ msgstr "User list"
 msgid "Директор"
 msgstr "Director"
 
+#: .\templates\users\user_list.html:51 .\users\forms.py:161
+msgid "Работник"
+msgstr "Worker"
+
 #: .\templates\users\user_list.html:60
 msgid "Пользователи_не_найдены"
 msgstr "Users not found"
+
+#: .\tickets\admin.py:20 .\tickets\admin.py:28
+msgid "фото"
+msgstr "photo"
 
 #: .\tickets\apps.py:10
 msgid "Заявки"
@@ -944,47 +970,47 @@ msgstr "Tickets"
 msgid "Недопустимый_переход_статуса."
 msgstr "Invalid status transition."
 
-#: .\tickets\models.py:118
+#: .\tickets\models.py:115
 msgid "открыта"
 msgstr "open"
 
-#: .\tickets\models.py:119
+#: .\tickets\models.py:116
 msgid "в_работе"
 msgstr "in progress"
 
-#: .\tickets\models.py:120
+#: .\tickets\models.py:117
 msgid "закрыта"
 msgstr "closed"
 
-#: .\tickets\models.py:121
+#: .\tickets\models.py:118
 msgid "отменена"
 msgstr "canceled"
 
-#: .\tickets\models.py:124
+#: .\tickets\models.py:121
 msgid "низкий"
 msgstr "low"
 
-#: .\tickets\models.py:125
+#: .\tickets\models.py:122
 msgid "средний"
 msgstr "medium"
 
-#: .\tickets\models.py:126
+#: .\tickets\models.py:123
 msgid "высокий"
 msgstr "high"
 
-#: .\tickets\models.py:127
+#: .\tickets\models.py:124
 msgid "критический"
 msgstr "critical"
 
-#: .\tickets\models.py:130
+#: .\tickets\models.py:127
 msgid "название"
 msgstr "name"
 
-#: .\tickets\models.py:138
+#: .\tickets\models.py:136
 msgid "статус"
 msgstr "status"
 
-#: .\tickets\models.py:144
+#: .\tickets\models.py:143
 msgid "приоритет"
 msgstr "priority"
 
@@ -1000,70 +1026,73 @@ msgstr "assignee"
 msgid "фото_до"
 msgstr "photo before"
 
-#: .\tickets\models.py:183
+#: .\tickets\models.py:185
 msgid "фото_после"
 msgstr "photo after"
 
-#: .\tickets\models.py:206 .\tickets\models.py:246
+#: .\tickets\models.py:210 .\tickets\models.py:242
 msgid "заявка"
 msgstr "ticket"
 
-#: .\tickets\models.py:207
+#: .\tickets\models.py:211
 msgid "заявки"
 msgstr "tickets"
 
-#: .\tickets\models.py:253 .\users\models.py:32
+#: .\tickets\models.py:249 .\users\models.py:32
 msgid "пользователь"
 msgstr "user"
 
-#: .\tickets\models.py:261
+#: .\tickets\models.py:257
 msgid "из_статуса"
 msgstr "from status"
 
-#: .\tickets\models.py:266
+#: .\tickets\models.py:263
 msgid "в_статус"
 msgstr "to status"
 
-#: .\tickets\models.py:271
+#: .\tickets\models.py:269
 msgid "время_изменения"
 msgstr "change time"
 
-#: .\tickets\models.py:276
+#: .\tickets\models.py:274
 msgid "комментарий"
 msgstr "comment"
 
-#: .\tickets\models.py:282
+#: .\tickets\models.py:280
 msgid "история_изменения_статуса"
 msgstr "status change history"
 
-#: .\tickets\models.py:283
+#: .\tickets\models.py:281
 msgid "истории_изменений_статусов"
 msgstr "status change histories"
 
 #: .\tickets\validators.py:12
 #, python-format
 msgid "Текущий_файл_%(size)s,_слишком_большой._Максимальный_размер_файла_%(allowed_size)s."
-msgstr "Current file %(size)s is too large. Maximum file size is %(allowed_size)s."
+msgstr ""
+"Current file %(size)s is too large. Maximum file size is %(allowed_size)s."
 
-#: .\users\forms.py:20
+#: .\users\forms.py:21
 msgid "Название организации"
 msgstr "Organization name"
 
-#: .\users\forms.py:80
+#: .\users\forms.py:82
 msgid ""
 "Пожалуйста,_введите_правильные "
 "имя_пользователя_и_пароль.Оба_поля_могут_быть_чувствительны_к_регистру."
-msgstr "Please enter a correct username and password. Both fields may be case-sensitive."
+msgstr ""
+"Please enter a correct username and password. Both fields may be case-"
+"sensitive."
 
-#: .\users\forms.py:83
+#: .\users\forms.py:85
 msgid "Этот_аккаунт_неактивен"
 msgstr "This account is inactive"
 
-#: .\users\forms.py:142
+#: .\users\forms.py:144
 msgid "Подтверждение пароля"
 msgstr "Password confirmation"
 
-#: .\users\forms.py:179
+#: .\users\forms.py:181
 msgid "Пароли_не_совпадают"
 msgstr "Passwords do not match"
 
@@ -1083,15 +1112,15 @@ msgstr "worker"
 msgid "роль"
 msgstr "role"
 
-#: .\users\models.py:42
+#: .\users\models.py:43
 msgid "телефон"
 msgstr "phone"
 
-#: .\users\models.py:58
+#: .\users\models.py:59
 msgid "данные_пользователя"
 msgstr "user data"
 
-#: .\users\models.py:59
+#: .\users\models.py:60
 msgid "данные_пользователей"
 msgstr "users data"
 
@@ -1102,3 +1131,12 @@ msgstr "User successfully created"
 #: .\users\views.py:163
 msgid "Профиль_успешно_обновлен"
 msgstr "Profile successfully updated"
+
+#~ msgid "Редактирование_заявки"
+#~ msgstr "Ticket editing"
+
+#~ msgid "Активировать"
+#~ msgstr "Activate"
+
+#~ msgid "Текущий_файл"
+#~ msgstr "Current file"

@@ -1,7 +1,7 @@
 __all__ = ()
 
 import django.contrib.auth.forms
-import django.db
+import django.db.transaction
 import django.forms
 from django.utils.translation import gettext_lazy as _
 import phonenumber_field.formfields

@@ -114,7 +114,14 @@ class TicketManagerForm(django.forms.ModelForm):
 
     class Meta:
         model = tickets.models.Ticket
-        fields = "__all__"
+        fields = (
+            tickets.models.Ticket.title.field.name,
+            tickets.models.Ticket.status.field.name,
+            tickets.models.Ticket.priority.field.name,
+            tickets.models.Ticket.group.field.name,
+            tickets.models.Ticket.assignee.field.name,
+            tickets.models.Ticket.creator.field.name,
+        )
 
     def __init__(self, *args, **kwargs):
         current_user = kwargs.pop("user", None)
@@ -123,9 +130,9 @@ class TicketManagerForm(django.forms.ModelForm):
 
         self.fields["creator"].disabled = True
 
-        user_organization = current_user.profile.organization
+        user_organization = current_user.profile.organization_id
         self.fields["group"].queryset = self.fields["group"].queryset.filter(
-            organization=user_organization,
+            organization_id=user_organization,
         )
 
         if self.instance and self.instance.pk:
@@ -135,7 +142,7 @@ class TicketManagerForm(django.forms.ModelForm):
             self.fields["assignee"].queryset = user_model.objects.filter(
                 django.db.models.Q(work_groups=group)
                 | django.db.models.Q(pk=group.manager_id),
-            )
+            ).distinct()
 
             if not current_user.profile.is_director:
                 self.fields["group"].disabled = True

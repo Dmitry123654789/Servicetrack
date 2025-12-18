@@ -3,6 +3,7 @@ __all__ = ()
 import collections
 
 import django.db.models
+import django.db.transaction
 import django.views.generic
 
 import company.models
@@ -222,18 +223,24 @@ class TicketManagerUpdateView(
 
     def test_func(self):
         user = self.request.user
-        return self.model.objects.filter(
-            django.db.models.Q(group__manager=user)
-            | django.db.models.Q(group__organization__main_manager=user),
-        ).exists()
+        ticket = self.get_object()
+        is_group_mgr = ticket.group.manager_id == user.id
+        is_org_mgr = ticket.group.organization.main_manager_id == user.id
+        return is_group_mgr or is_org_mgr
 
     def get_queryset(self):
-        user = self.request.user
+        user_id = self.request.user.id
 
         return self.model.objects.filter(
-            django.db.models.Q(group__manager=user)
-            | django.db.models.Q(group__organization__main_manager=user),
+            django.db.models.Q(group__manager_id=user_id)
+            | django.db.models.Q(group__organization__main_manager_id=user_id),
         )
+
+    def get_object(self, queryset=None):
+        if not hasattr(self, "object") or self.object is None:
+            self.object = super().get_object(queryset)
+
+        return self.object
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -241,19 +248,20 @@ class TicketManagerUpdateView(
         return kwargs
 
     def form_valid(self, form):
-        ticket = self.get_object()
-        old_status = ticket.status
+        with django.db.transaction.atomic():
+            ticket = self.get_object()
+            old_status = ticket.status
 
-        new_status = form.instance.status
-        comment = form.cleaned_data.get("comment")
+            new_status = form.instance.status
+            comment = form.cleaned_data.get("comment")
 
-        if old_status != new_status:
-            tickets.models.StatusLog.objects.create(
-                ticket=ticket,
-                user=self.request.user,
-                from_status=old_status,
-                to_status=new_status,
-                comment=comment,
-            )
+            if old_status != new_status:
+                tickets.models.StatusLog.objects.create(
+                    ticket=ticket,
+                    user=self.request.user,
+                    from_status=old_status,
+                    to_status=new_status,
+                    comment=comment,
+                )
 
-        return super().form_valid(form)
+            return super().form_valid(form)
