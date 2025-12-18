@@ -20,7 +20,7 @@ class CompanyViewsTest(django.test.TestCase):
         self.org_a = company.models.Organization.objects.get(pk=1)
         self.org_b = company.models.Organization.objects.get(pk=2)
         self.group_a1 = company.models.WorkerGroup.objects.get(pk=1)
-        self.group_a2 = company.models.WorkerGroup.objects.get(pk=2)
+        self.group_b1 = company.models.WorkerGroup.objects.get(pk=3)
 
     def test_org_detail_status_code_success(self):
         self.client.force_login(self.director)
@@ -140,7 +140,7 @@ class CompanyViewsTest(django.test.TestCase):
         self.client.force_login(self.director)
         url = django.urls.reverse(
             "company:group_detail",
-            kwargs={"pk": self.group_a2.pk},
+            kwargs={"pk": self.group_b1.pk},
         )
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)

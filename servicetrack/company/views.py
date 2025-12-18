@@ -92,13 +92,17 @@ class GroupDetailView(
         return user_org_id == organization.pk
 
     def get_queryset(self):
-        return company.models.WorkerGroup.objects.filter(
-            organization_id=self.request.user.profile.organization_id,
-        ).select_related(
-            "manager",
-            "organization",
-        ).prefetch_related(
-            "workers",
+        return (
+            company.models.WorkerGroup.objects.filter(
+                organization_id=self.request.user.profile.organization_id,
+            )
+            .select_related(
+                "manager",
+                "organization",
+            )
+            .prefetch_related(
+                "workers",
+            )
         )
 
     def get_object(self, queryset=None):

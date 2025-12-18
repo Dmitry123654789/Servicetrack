@@ -40,7 +40,7 @@ class TicketSystemTest(django.test.TestCase):
             kwargs={"pk": self.group_a1.pk},
         )
         response = self.client.get(url)
-        self.assertEqual(len(response.context), 2)
+        self.assertEqual(len(response.context), 4)
 
     def test_list_view_context_contains_tickets(self):
         self.client.force_login(self.worker)

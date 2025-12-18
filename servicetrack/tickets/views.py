@@ -83,16 +83,20 @@ class TicketDetailView(
         return target_group.workers.filter(pk=user.id).exists()
 
     def get_queryset(self):
-        return self.model.objects.select_related(
-            self.model.creator.field.name,
-            self.model.assignee.field.name,
-            self.model.group.field.name,
-        ).select_related(
-            "group__organization",
-        ).prefetch_related(
-            django.db.models.Prefetch(
-                self.model.status_logs.field._related_name,
-            ),
+        return (
+            self.model.objects.select_related(
+                self.model.creator.field.name,
+                self.model.assignee.field.name,
+                self.model.group.field.name,
+            )
+            .select_related(
+                "group__organization",
+            )
+            .prefetch_related(
+                django.db.models.Prefetch(
+                    self.model.status_logs.field._related_name,
+                ),
+            )
         )
 
     def get_object(self, queryset=None):
