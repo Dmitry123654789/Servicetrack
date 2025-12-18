@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 16:32+0300\n"
+"POT-Creation-Date: 2025-12-18 22:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,80 +89,81 @@ msgid "English"
 msgstr "English"
 
 #: .\templates\company\group_create.html:4
-#: .\templates\company\group_create.html:11
+#: .\templates\company\group_create.html:14
 msgid "Создание_группы"
 msgstr "Создание группы"
 
-#: .\templates\company\group_create.html:17
+#: .\templates\company\group_create.html:22
 #: .\templates\company\group_edit.html:22
 msgid "Название_группы"
 msgstr "Название группы"
 
-#: .\templates\company\group_create.html:24
-msgid "Например:_Электрики"
-msgstr "Например: Электрики"
+#: .\templates\company\group_create.html:29
+#: .\templates\company\group_edit.html:29
+msgid "Введите_название_группы"
+msgstr "Введите название группы"
 
-#: .\templates\company\group_create.html:33
+#: .\templates\company\group_create.html:38
 #: .\templates\company\group_detail.html:19
 #: .\templates\company\group_edit.html:38
 #: .\templates\company\organization_detail.html:19
 #: .\templates\company\organization_edit.html:37
-#: .\templates\tickets\ticket_detail.html:70
+#: .\templates\tickets\ticket_detail.html:56
 #: .\templates\tickets\ticket_worker_update.html:25
 msgid "Описание"
 msgstr "Описание"
 
-#: .\templates\company\group_create.html:39
-msgid "Описание_группы"
-msgstr "Описание группы"
+#: .\templates\company\group_create.html:44
+#: .\templates\company\group_edit.html:44
+msgid "Описание_группы_(необязательно)"
+msgstr "Описание группы (необязательно)"
 
-#: .\templates\company\group_create.html:47
+#: .\templates\company\group_create.html:52
 #: .\templates\company\group_detail.html:37
-#: .\templates\company\group_edit.html:52 .\templates\users\user_list.html:49
+#: .\templates\company\group_edit.html:52 .\templates\users\user_list.html:61
 #: .\users\forms.py:167
 msgid "Руководитель_группы"
 msgstr "Руководитель группы"
 
-#: .\templates\company\group_create.html:52
+#: .\templates\company\group_create.html:58
 #: .\templates\company\group_edit.html:58
 #: .\templates\company\group_list.html:44
 #: .\templates\tickets\my_ticket_list.html:81
-#: .\templates\tickets\ticket_detail.html:200
+#: .\templates\tickets\ticket_detail.html:186
 #: .\templates\tickets\ticket_list.html:83
 msgid "Не_назначен"
 msgstr "Не назначен"
 
-#: .\templates\company\group_create.html:70
+#: .\templates\company\group_create.html:72
 #: .\templates\company\group_detail.html:53
 #: .\templates\company\group_edit.html:72
 msgid "Работники_группы"
 msgstr "Работники группы"
 
-#: .\templates\company\group_create.html:92
+#: .\templates\company\group_create.html:91
 #: .\templates\company\group_edit.html:91
 msgid "Нет_доступных_работников"
 msgstr "Нет доступных работников"
 
-#: .\templates\company\group_create.html:102
+#: .\templates\company\group_create.html:103
 #: .\templates\company\group_list.html:18
 msgid "Создать_группу"
 msgstr "Создать группу"
 
-#: .\templates\company\group_create.html:105
+#: .\templates\company\group_create.html:108
 #: .\templates\tickets\ticket_create.html:99
 #: .\templates\users\user_create.html:130
 msgid "Назад_к_списку"
 msgstr "Назад к списку"
 
 #: .\templates\company\group_detail.html:4
-#: .\templates\tickets\ticket_manager_update.html:25
 msgid "Группа"
 msgstr "Группа"
 
 #: .\templates\company\group_detail.html:15
 #: .\templates\company\organization_detail.html:15
 #: .\templates\includes\header.html:46
-#: .\templates\tickets\ticket_detail.html:159
+#: .\templates\tickets\ticket_detail.html:145
 msgid "Информация"
 msgstr "Информация"
 
@@ -198,7 +199,6 @@ msgstr "Обновлена"
 
 #: .\templates\company\group_detail.html:96
 #: .\templates\company\organization_detail.html:64
-#: .\templates\tickets\ticket_detail.html:54
 msgid "Редактировать"
 msgstr "Редактировать"
 
@@ -206,17 +206,9 @@ msgstr "Редактировать"
 msgid "Редактирование_группы"
 msgstr "Редактирование группы"
 
-#: .\templates\company\group_edit.html:29
-msgid "Введите_название_группы"
-msgstr "Введите название группы"
-
-#: .\templates\company\group_edit.html:44
-msgid "Описание_группы_(необязательно)"
-msgstr "Описание группы (необязательно)"
-
 #: .\templates\company\group_edit.html:103
 #: .\templates\company\organization_edit.html:58
-#: .\templates\tickets\ticket_manager_update.html:94
+#: .\templates\tickets\ticket_manager_update.html:84
 #: .\templates\users\profile_edit.html:95
 msgid "Сохранить_изменения"
 msgstr "Сохранить изменения"
@@ -234,7 +226,6 @@ msgid "Рабочие_группы"
 msgstr "Рабочие группы"
 
 #: .\templates\company\group_list.html:30
-#: .\templates\tickets\ticket_manager_update.html:31
 #: .\templates\tickets\ticket_worker_update.html:20
 msgid "Название"
 msgstr "Название"
@@ -395,7 +386,7 @@ msgid "Создано"
 msgstr "Создано"
 
 #: .\templates\tickets\my_ticket_list.html:31
-#: .\templates\tickets\ticket_detail.html:186
+#: .\templates\tickets\ticket_detail.html:172
 #: .\templates\tickets\ticket_list.html:35
 msgid "Исполнитель"
 msgstr "Исполнитель"
@@ -495,62 +486,57 @@ msgstr "Высокий"
 msgid "Критический"
 msgstr "Критический"
 
-#: .\templates\tickets\ticket_detail.html:60
-msgid "Изменить_статус"
-msgstr "Изменить статус"
-
-#: .\templates\tickets\ticket_detail.html:79
-#: .\templates\tickets\ticket_detail.html:80
+#: .\templates\tickets\ticket_detail.html:65
+#: .\templates\tickets\ticket_detail.html:66
 msgid "Фото_до"
 msgstr "Фото до"
 
-#: .\templates\tickets\ticket_detail.html:86
-#: .\templates\tickets\ticket_detail.html:87
+#: .\templates\tickets\ticket_detail.html:72
+#: .\templates\tickets\ticket_detail.html:73
 msgid "Фото_после"
 msgstr "Фото после"
 
-#: .\templates\tickets\ticket_detail.html:97
+#: .\templates\tickets\ticket_detail.html:83
 msgid "История_изменений"
 msgstr "История изменений"
 
-#: .\templates\tickets\ticket_detail.html:113
+#: .\templates\tickets\ticket_detail.html:99
 msgid "Система"
 msgstr "Система"
 
-#: .\templates\tickets\ticket_detail.html:149
+#: .\templates\tickets\ticket_detail.html:135
 msgid "История_изменений_отсутствует"
 msgstr "История изменений отсутствует"
 
-#: .\templates\tickets\ticket_detail.html:163
+#: .\templates\tickets\ticket_detail.html:149
 msgid "Рабочая_группа"
 msgstr "Рабочая группа"
 
-#: .\templates\tickets\ticket_detail.html:171
-#: .\templates\tickets\ticket_manager_update.html:21
+#: .\templates\tickets\ticket_detail.html:157
 msgid "Создатель"
 msgstr "Создатель"
 
-#: .\templates\tickets\ticket_detail.html:207
+#: .\templates\tickets\ticket_detail.html:193
 msgid "Дата_создания"
 msgstr "Дата создания"
 
-#: .\templates\tickets\ticket_detail.html:215
+#: .\templates\tickets\ticket_detail.html:201
 msgid "Последнее_обновление"
 msgstr "Последнее обновление"
 
-#: .\templates\tickets\ticket_detail.html:226
+#: .\templates\tickets\ticket_detail.html:212
 msgid "Быстрые_действия"
 msgstr "Быстрые действия"
 
-#: .\templates\tickets\ticket_detail.html:233
+#: .\templates\tickets\ticket_detail.html:219
 msgid "Обновить_статус"
 msgstr "Обновить статус"
 
-#: .\templates\tickets\ticket_detail.html:239
+#: .\templates\tickets\ticket_detail.html:225
 msgid "Редактировать_заявку"
 msgstr "Редактировать заявку"
 
-#: .\templates\tickets\ticket_detail.html:244
+#: .\templates\tickets\ticket_detail.html:230
 msgid "Вернуться_к_списку"
 msgstr "Вернуться к списку"
 
@@ -576,23 +562,22 @@ msgid "Создать_первую_заявку"
 msgstr "Создать первую заявку"
 
 #: .\templates\tickets\ticket_manager_update.html:4
-#: .\templates\tickets\ticket_manager_update.html:10
 msgid "Управление_заявкой"
 msgstr "Управление заявкой"
 
-#: .\templates\tickets\ticket_manager_update.html:17
-msgid "Информация_о_заявке"
-msgstr "Информация о заявке"
+#: .\templates\tickets\ticket_manager_update.html:10
+msgid "Редактирование_заявки"
+msgstr "Редактирование заявки"
 
-#: .\templates\tickets\ticket_manager_update.html:39
-msgid "Управление"
-msgstr "Управление"
+#: .\templates\tickets\ticket_manager_update.html:42
+msgid "Активировать"
+msgstr "Активировать"
 
-#: .\templates\tickets\ticket_manager_update.html:89
-msgid "Ваш_комментарий_к_изменениям"
-msgstr "Ваш комментарий к изменениям"
+#: .\templates\tickets\ticket_manager_update.html:56
+msgid "Текущий_файл"
+msgstr "Текущий файл"
 
-#: .\templates\tickets\ticket_manager_update.html:95
+#: .\templates\tickets\ticket_manager_update.html:85
 #: .\templates\tickets\ticket_worker_update.html:76
 #: .\templates\users\logout.html:14
 #: .\templates\users\password_reset_confirm.html:46
@@ -617,8 +602,8 @@ msgid "Ваш_комментарий_о_проделанной_работе"
 msgstr "Ваш комментарий о проделанной работе"
 
 #: .\templates\tickets\ticket_worker_update.html:75
-msgid "Сохранить_отчет"
-msgstr "Сохранить отчет"
+msgid "Сохранить"
+msgstr "Сохранить"
 
 #: .\templates\users\login.html:4
 msgid "Вход"
@@ -630,7 +615,7 @@ msgstr "Вход в систему"
 
 #: .\templates\users\login.html:17 .\templates\users\profile.html:15
 #: .\templates\users\profile_edit.html:17 .\templates\users\register.html:17
-#: .\templates\users\user_create.html:17 .\templates\users\user_list.html:23
+#: .\templates\users\user_create.html:17 .\templates\users\user_list.html:35
 #: .\users\forms.py:41 .\users\forms.py:69
 msgid "Имя_пользователя"
 msgstr "Имя пользователя"
@@ -842,26 +827,26 @@ msgstr "Сброс пароля на сайте %(site_name)s"
 msgid "Профиль_пользователя"
 msgstr "Профиль пользователя"
 
-#: .\templates\users\profile.html:20 .\templates\users\user_list.html:24
+#: .\templates\users\profile.html:20 .\templates\users\user_list.html:36
 msgid "Email"
 msgstr "Email"
 
 #: .\templates\users\profile.html:25 .\templates\users\profile_edit.html:33
-#: .\templates\users\user_create.html:49 .\templates\users\user_list.html:25
+#: .\templates\users\user_create.html:49 .\templates\users\user_list.html:37
 msgid "Имя"
 msgstr "Имя"
 
 #: .\templates\users\profile.html:30 .\templates\users\profile_edit.html:48
-#: .\templates\users\user_create.html:64 .\templates\users\user_list.html:26
+#: .\templates\users\user_create.html:64 .\templates\users\user_list.html:38
 msgid "Фамилия"
 msgstr "Фамилия"
 
 #: .\templates\users\profile.html:35 .\templates\users\user_create.html:79
-#: .\templates\users\user_list.html:27 .\users\forms.py:172
+#: .\templates\users\user_list.html:39 .\users\forms.py:172
 msgid "Роль"
 msgstr "Роль"
 
-#: .\templates\users\profile.html:45 .\templates\users\user_list.html:28
+#: .\templates\users\profile.html:45 .\templates\users\user_list.html:40
 msgid "Дата_регистрации"
 msgstr "Дата регистрации"
 
@@ -938,7 +923,7 @@ msgstr "Введите имя"
 msgid "Введите_фамилию"
 msgstr "Введите фамилию"
 
-#: .\templates\users\user_create.html:127 .\templates\users\user_list.html:12
+#: .\templates\users\user_create.html:127 .\templates\users\user_list.html:13
 msgid "Создать_пользователя"
 msgstr "Создать пользователя"
 
@@ -946,15 +931,19 @@ msgstr "Создать пользователя"
 msgid "Список_пользователей"
 msgstr "Список пользователей"
 
-#: .\templates\users\user_list.html:47
+#: .\templates\users\user_list.html:23
+msgid "Без_группы"
+msgstr "Без группы"
+
+#: .\templates\users\user_list.html:59
 msgid "Директор"
 msgstr "Директор"
 
-#: .\templates\users\user_list.html:51 .\users\forms.py:161
+#: .\templates\users\user_list.html:63 .\users\forms.py:161
 msgid "Работник"
 msgstr "Работник"
 
-#: .\templates\users\user_list.html:60
+#: .\templates\users\user_list.html:79
 msgid "Пользователи_не_найдены"
 msgstr "Пользователи не найдены"
 
@@ -1125,22 +1114,31 @@ msgstr "данные пользователя"
 msgid "данные_пользователей"
 msgstr "данные пользователей"
 
-#: .\users\views.py:111
+#: .\users\views.py:113
 msgid "Пользователь_успешно_создан"
 msgstr "Пользователь успешно создан"
 
-#: .\users\views.py:163
+#: .\users\views.py:197
 msgid "Профиль_успешно_обновлен"
 msgstr "Профиль успешно обновлен"
 
-#~ msgid "Редактирование_заявки"
-#~ msgstr "Редактирование заявки"
+#~ msgid "Например:_Электрики"
+#~ msgstr "Например: Электрики"
 
-#~ msgid "Активировать"
-#~ msgstr "Активировать"
+#~ msgid "Описание_группы"
+#~ msgstr "Описание группы"
 
-#~ msgid "Текущий_файл"
-#~ msgstr "Текущий файл"
+#~ msgid "Изменить_статус"
+#~ msgstr "Изменить статус"
+
+#~ msgid "Информация_о_заявке"
+#~ msgstr "Информация о заявке"
+
+#~ msgid "Управление"
+#~ msgstr "Управление"
+
+#~ msgid "Ваш_комментарий_к_изменениям"
+#~ msgstr "Ваш комментарий к изменениям"
 
 #~ msgid "If_you_did_not_receive_the_email,_please_make_sure_you_entered_the_address_you_registered_with_and_check_your_spam_folder."
 #~ msgstr ""
