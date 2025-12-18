@@ -87,9 +87,9 @@ class GroupDetailView(
     context_object_name = "group"
 
     def test_func(self):
-        organization = self.get_object()
+        group = self.get_object()
         user_org_id = self.request.user.profile.organization_id
-        return user_org_id == organization.pk
+        return user_org_id == group.organization.pk
 
     def get_queryset(self):
         return (
