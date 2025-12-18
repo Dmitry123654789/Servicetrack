@@ -142,6 +142,12 @@ LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
 
+# 10 MB
+MAX_IMAGE_UPLOAD_SIZE = env.int(
+    "DJANGO_MAX_IMAGE_UPLOAD_SIZE",
+    default=10485760,
+)
+
 if DEBUG:
     INSTALLED_APPS = [
         *INSTALLED_APPS,

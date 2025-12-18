@@ -33,7 +33,7 @@
 
                     <div class="mb-3">
                         <label class="form-label text-muted small mb-1">{% trans "Роль" %}</label>
-                        <p class="form-control-plaintext">{{ profile.get_role_display }}</p>
+                        <p class="form-control-plaintext">{{ profile.get_role_display|capfirst }}</p>
                     </div>
 
                     <div class="mb-3">

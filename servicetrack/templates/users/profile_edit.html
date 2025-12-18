@@ -11,7 +11,23 @@
             
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
-                
+
+                 <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">
+                        {% trans "Имя_пользователя" %}
+                    </label>
+                    <input type="text"
+                           name="{{ form.username.name }}"
+                           id="{{ form.username.id_for_label }}"
+                           class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                           value="{{ form.username.value|default:'' }}"
+                           placeholder="{% trans 'Введите_имя_пользователя' %}"
+                           required>
+                    {% for error in form.username.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
                 <div class="mb-3">
                     <label for="{{ form.first_name.id_for_label }}" class="form-label">
                         {% trans "Имя" %}

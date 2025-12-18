@@ -88,7 +88,7 @@
 
             <div class="d-flex flex-column flex-lg-row align-items-center">
 
-                <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                <form action="{% url 'set_language' %}" method="post" class="d-inline me-lg-3">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
                     <select name="language"

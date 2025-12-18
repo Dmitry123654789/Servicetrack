@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.contrib.auth.forms
+import django.db
 import django.forms
 from django.utils.translation import gettext_lazy as _
 import phonenumber_field.formfields
@@ -25,11 +26,11 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
     class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
         model = users.models.CustomUser
         fields = (
-            "username",
-            "email",
-            "first_name",
-            "last_name",
-            "phone",
+            users.models.CustomUser.username.field.name,
+            users.models.CustomUser.email.field.name,
+            users.models.CustomUser.first_name.field.name,
+            users.models.CustomUser.last_name.field.name,
+            users.models.Profile.phone.field.name,
             "organization_name",
             "password1",
             "password2",
@@ -42,24 +43,25 @@ class CustomUserCreationForm(django.contrib.auth.forms.UserCreationForm):
         self.fields["password2"].label = _("Подтверждение_пароля")
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.save()
+        with django.db.transaction.atomic():
+            user = super().save(commit=False)
+            user.save()
 
-        if commit:
-            organization = company.models.Organization.objects.create(
-                name=self.cleaned_data["organization_name"],
-                main_manager=user,
-            )
+            if commit:
+                organization = company.models.Organization.objects.create(
+                    name=self.cleaned_data["organization_name"],
+                    main_manager=user,
+                )
 
-            user.refresh_from_db()
-            profile = user.profile
+                user.refresh_from_db()
+                profile = user.profile
 
-            profile.phone = self.cleaned_data.get("phone", None)
-            profile.organization = organization
-            profile.role = users.models.Profile.Role.MAIN_MANAGER
-            profile.save()
+                profile.phone = self.cleaned_data.get("phone", None)
+                profile.organization = organization
+                profile.role = users.models.Profile.Role.MAIN_MANAGER
+                profile.save()
 
-        return user
+            return user
 
 
 class CustomAuthenticationForm(django.contrib.auth.forms.AuthenticationForm):
@@ -146,10 +148,10 @@ class UserCreateForm(django.forms.ModelForm):
     class Meta:
         model = users.models.CustomUser
         fields = (
-            "username",
-            "email",
-            "first_name",
-            "last_name",
+            users.models.CustomUser.username.field.name,
+            users.models.CustomUser.email.field.name,
+            users.models.CustomUser.first_name.field.name,
+            users.models.CustomUser.last_name.field.name,
         )
 
     def __init__(self, *args, **kwargs):
@@ -181,23 +183,24 @@ class UserCreateForm(django.forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        creator = self.creator
+        with django.db.transaction.atomic():
+            creator = self.creator
 
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        user.save()
+            user = super().save(commit=False)
+            user.set_password(self.cleaned_data["password1"])
+            user.save()
 
-        user.refresh_from_db()
-        user.profile.organization_id = creator.profile.organization_id
-        user.profile.role = self.cleaned_data["role"]
-        user.profile.save()
+            user.refresh_from_db()
+            user.profile.organization_id = creator.profile.organization_id
+            user.profile.role = self.cleaned_data["role"]
+            user.profile.save()
 
-        if creator.profile.is_manager:
-            group = creator.managed_groups.first()
-            if group:
-                group.workers.add(user)
+            if creator.profile.is_manager:
+                group = creator.managed_groups.first()
+                if group:
+                    group.workers.add(user)
 
-        return user
+            return user
 
 
 class UserProfileUpdateForm(django.forms.ModelForm):
@@ -210,9 +213,11 @@ class UserProfileUpdateForm(django.forms.ModelForm):
     class Meta:
         model = users.models.CustomUser
         fields = (
-            "first_name",
-            "last_name",
-            "email",
+            users.models.CustomUser.username.field.name,
+            users.models.CustomUser.email.field.name,
+            users.models.CustomUser.first_name.field.name,
+            users.models.CustomUser.last_name.field.name,
+            users.models.Profile.phone.field.name,
         )
 
     def __init__(self, *args, **kwargs):
@@ -221,12 +226,13 @@ class UserProfileUpdateForm(django.forms.ModelForm):
             self.fields["phone"].initial = self.instance.profile.phone
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        with django.db.transaction.atomic():
+            user = super().save(commit=False)
 
-        if commit:
-            user.save()
-            if hasattr(user, "profile"):
-                user.profile.phone = self.cleaned_data.get("phone")
-                user.profile.save()
+            if commit:
+                user.save()
+                if hasattr(user, "profile"):
+                    user.profile.phone = self.cleaned_data.get("phone")
+                    user.profile.save()
 
-        return user
+            return user
