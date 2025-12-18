@@ -20,9 +20,17 @@ class OrganizationView(
 
     def test_func(self):
         organization = self.get_object()
-        user_profile = self.request.user.profile
+        user_org_id = self.request.user.profile.organization_id
+        return user_org_id == organization.pk
 
-        return user_profile.organization.pk == organization.pk
+    def get_queryset(self):
+        return super().get_queryset().select_related("main_manager")
+
+    def get_object(self, queryset=None):
+        if not hasattr(self, "object") or self.object is None:
+            self.object = super().get_object(queryset)
+
+        return self.object
 
 
 class OrganizationEditView(
@@ -56,12 +64,17 @@ class GroupListView(
     context_object_name = "groups"
 
     def get_queryset(self):
-        return company.models.WorkerGroup.objects.filter(
-            organization=self.request.user.profile.organization,
-        ).select_related(
-            "manager",
-        ).annotate(
-            workers_count=django.db.models.Count("workers"),
+        return (
+            company.models.WorkerGroup.objects.filter(
+                organization_id=self.request.user.profile.organization_id,
+            )
+            .select_related(
+                "manager",
+            )
+            .annotate(
+                workers_count=django.db.models.Count("workers"),
+                org_name=django.db.models.F("organization__name"),
+            )
         )
 
 
@@ -74,14 +87,25 @@ class GroupDetailView(
     context_object_name = "group"
 
     def test_func(self):
-        group = self.get_object()
-        profile = self.request.user.profile
-        return profile.organization == group.organization
+        organization = self.get_object()
+        user_org_id = self.request.user.profile.organization_id
+        return user_org_id == organization.pk
 
     def get_queryset(self):
         return company.models.WorkerGroup.objects.filter(
-            organization=self.request.user.profile.organization,
-        ).select_related("manager")
+            organization_id=self.request.user.profile.organization_id,
+        ).select_related(
+            "manager",
+            "organization",
+        ).prefetch_related(
+            "workers",
+        )
+
+    def get_object(self, queryset=None):
+        if not hasattr(self, "object") or self.object is None:
+            self.object = super().get_object(queryset)
+
+        return self.object
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -135,7 +135,7 @@ class UserListView(
             super()
             .get_queryset()
             .select_related("profile")
-            .filter(profile__organization=user.profile.organization)
+            .filter(profile__organization_id=user.profile.organization_id)
         )
 
         if user.profile.is_manager:

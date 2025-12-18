@@ -53,7 +53,7 @@
         <i class="bi bi-people me-2"></i>{% trans "Работники_группы" %}
     </h5>
 
-    {% if group.workers.count %}
+    {% if group.workers.all|length %}
         <ul class="list-group">
             {% for worker in group.workers.all %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -63,10 +63,6 @@
                         </strong>
                         <div class="text-muted small">@{{ worker.username }}</div>
                     </div>
-
-                    <span class="badge bg-secondary">
-                        {% trans "Работник" %}
-                    </span>
                 </li>
             {% endfor %}
         </ul>

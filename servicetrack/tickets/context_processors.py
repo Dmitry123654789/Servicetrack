@@ -10,14 +10,13 @@ def user_groups(request):
         return {}
 
     user = request.user
+    organization_id = user.profile.organization_id
 
-    if not user.profile.organization:
+    if not organization_id:
         return {"menu_groups": []}
 
-    organization = user.profile.organization
-
     user_groups = company.models.WorkerGroup.objects.filter(
-        organization=organization,
+        organization_id=organization_id,
     )
     if not user.profile.is_director:
         user_groups = user_groups.filter(
@@ -25,8 +24,6 @@ def user_groups(request):
             | django.db.models.Q(manager=user),
         )
 
-    groups = user_groups.select_related("manager").distinct()
-
     return {
-        "menu_groups": groups,
+        "menu_groups": user_groups.distinct(),
     }

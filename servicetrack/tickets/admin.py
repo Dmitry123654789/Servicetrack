@@ -16,6 +16,7 @@ class TicketAdmin(django.contrib.admin.ModelAdmin):
             f'<img src="{obj.url_photo_before()}"'
             'width="400" height="300" class="img-fluid rounded shadow-sm">',
         )
+
     show_photo_before.short_description = _("фото")
 
     def show_photo_after(self, obj):
@@ -23,6 +24,7 @@ class TicketAdmin(django.contrib.admin.ModelAdmin):
             f'<img src="{obj.url_photo_after()}"'
             'width="400" height="300" class="img-fluid rounded shadow-sm">',
         )
+
     show_photo_after.short_description = _("фото")
 
     fields = (

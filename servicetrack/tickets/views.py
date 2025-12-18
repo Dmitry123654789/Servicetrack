@@ -26,32 +26,35 @@ class TicketListView(
         group_pk = self.kwargs.get("pk")
 
         try:
-            target_group = company.models.WorkerGroup.objects.get(pk=group_pk)
+            group = company.models.WorkerGroup.objects.get(
+                pk=group_pk,
+                organization_id=user.profile.organization_id,
+            )
+            self.group = group
         except company.models.WorkerGroup.DoesNotExist:
             return False
 
-        if user.profile.organization != target_group.organization:
+        if user.profile.organization_id != group.organization_id:
             return False
 
-        is_manager = target_group.manager == user
-        is_worker = target_group.workers.filter(pk=user.pk).exists()
-        return is_manager or is_worker or user.profile.is_director
+        if user.profile.is_director or group.manager_id == user.id:
+            return True
+
+        return group.workers.filter(pk=user.id).exists()
 
     def get_queryset(self):
-        group_id = self.kwargs["pk"]
-
-        qs = tickets.models.Ticket.objects.get_list().filter(group_id=group_id)
         return (
-            qs.with_priority_weight()
+            tickets.models.Ticket.objects.get_list()
+            .filter(group_id=self.kwargs["pk"])
+            .select_related("assignee")
+            .with_priority_weight()
             .with_status_weight()
             .sort(status="asc", priority="asc", created="asc")
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["group"] = company.models.WorkerGroup.objects.get(
-            pk=self.kwargs["pk"],
-        )
+        context["group"] = self.group
         return context
 
 
@@ -65,25 +68,37 @@ class TicketDetailView(
 
     def test_func(self):
         user = self.request.user
-        target_group = self.get_object().group
+        profile = user.profile
 
-        if user.profile.organization != target_group.organization:
+        ticket = self.get_object()
+        target_group = ticket.group
+
+        if profile.organization_id != target_group.organization_id:
             return False
 
-        is_manager = target_group.manager == user
-        is_worker = target_group.workers.filter(pk=user.pk).exists()
-        return is_manager or is_worker or user.profile.is_director
+        if profile.is_director or target_group.manager_id == user.id:
+            return True
+
+        return target_group.workers.filter(pk=user.id).exists()
 
     def get_queryset(self):
         return self.model.objects.select_related(
             self.model.creator.field.name,
             self.model.assignee.field.name,
             self.model.group.field.name,
+        ).select_related(
+            "group__organization",
         ).prefetch_related(
             django.db.models.Prefetch(
                 self.model.status_logs.field._related_name,
             ),
         )
+
+    def get_object(self, queryset=None):
+        if not hasattr(self, "object") or self.object is None:
+            self.object = super().get_object(queryset)
+
+        return self.object
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
