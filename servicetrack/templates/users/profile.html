@@ -21,16 +21,20 @@
                         <p class="form-control-plaintext">{{ user.email }}</p>
                     </div>
 
+                    {% translate "Не_указано" as not_specified %}
                     <div class="mb-3">
                         <label class="form-label text-muted small mb-1">{% trans "Имя" %}</label>
-                        <p class="form-control-plaintext">{{ user.first_name|default:"Не указано" }}</p>
+                        <p class="form-control-plaintext">
+                            {{ user.first_name|default:not_specified }}
+                        </p>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label text-muted small mb-1">{% trans "Фамилия" %}</label>
-                        <p class="form-control-plaintext">{{ user.last_name|default:"Не указано" }}</p>
+                        <p class="form-control-plaintext">
+                            {{ user.last_name|default:not_specified }}
+                        </p>
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label text-muted small mb-1">{% trans "Роль" %}</label>
                         <p class="form-control-plaintext">{{ profile.get_role_display|capfirst }}</p>
@@ -38,7 +42,7 @@
 
                     <div class="mb-3">
                         <label class="form-label text-muted small mb-1">{% trans "Телефон" %}</label>
-                        <p class="form-control-plaintext">{{ profile.phone.as_international|default:"Не указан" }}</p>
+                        <p class="form-control-plaintext">{{ profile.phone.as_international|default:not_specified }}</p>
                     </div>
 
                     <div class="mb-3">

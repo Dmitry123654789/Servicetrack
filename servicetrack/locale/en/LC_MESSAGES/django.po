@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-20 10:40+0300\n"
+"POT-Creation-Date: 2025-12-21 00:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -345,8 +345,9 @@ msgid "Надежность:"
 msgstr "Reliability:"
 
 #: .\templates\pages\about.html:30
-msgid "99,9%_времени_безотказной_работы_системы"
-msgstr "99.9% system uptime"
+#, python-format
+msgid "99,9%%_времени_безотказной_работы_системы"
+msgstr "99.9%% system uptime"
 
 #: .\templates\pages\about.html:34
 msgid "Поддержка:"
@@ -392,93 +393,90 @@ msgstr "Responsibility:"
 msgid "Выполнение_обязательств_в_срок"
 msgstr "Timely fulfillment of obligations"
 
-#: .\templates\pages\about.html:81
-msgid "Наша_команда"
-msgstr "Our Team"
-
-#: .\templates\pages\about.html:84 .\templates\pages\home.html:75
-msgid "Мы_лучшие_в_своём_деле"
-msgstr "We are the best in our field"
-
-#: .\templates\pages\about.html:86
-msgid "Наша_команда_профессионалов_всегда_готова_помочь_вам_в_решении_задач"
-msgstr "Our team of professionals is always ready to help you solve problems"
-
-#: .\templates\pages\about.html:101
+#: .\templates\pages\about.html:82
 msgid "Контактная_информация"
 msgstr "Contact Information"
 
-#: .\templates\pages\about.html:109
+#: .\templates\pages\about.html:90
 msgid "Наш_адрес"
 msgstr "Our Address"
 
-#: .\templates\pages\about.html:112
+#: .\templates\pages\about.html:93
 msgid "г._Москва,_ул._Тверская,_д._7"
 msgstr "Moscow, Tverskaya St., 7"
 
-#: .\templates\pages\about.html:113
+#: .\templates\pages\about.html:94
 msgid "Бизнес-центр_«Престиж»,_офис_401"
 msgstr "Prestige Business Center, office 401"
 
-#: .\templates\pages\about.html:119
+#: .\templates\pages\about.html:100
 msgid "Телефоны"
 msgstr "Phone"
 
-#: .\templates\pages\about.html:122
+#: .\templates\pages\about.html:103
 msgid "Отдел_продаж:"
 msgstr "Sales Department:"
 
-#: .\templates\pages\about.html:123
+#: .\templates\pages\about.html:104
 msgid "Техподдержка:"
 msgstr "Technical Support:"
 
-#: .\templates\pages\about.html:132 .\templates\users\password_reset.html:20
+#: .\templates\pages\about.html:113 .\templates\users\password_reset.html:20
 #: .\templates\users\profile_edit.html:63 .\templates\users\register.html:33
 #: .\templates\users\user_create.html:33 .\users\forms.py:115
 msgid "Электронная_почта"
 msgstr "Email"
 
-#: .\templates\pages\about.html:135
+#: .\templates\pages\about.html:116
 msgid "Общие_вопросы:"
 msgstr "General Questions:"
 
-#: .\templates\pages\about.html:142
+#: .\templates\pages\about.html:123
 msgid "Режим_работы"
 msgstr "Working Hours"
 
-#: .\templates\pages\about.html:145
+#: .\templates\pages\about.html:126
 msgid "Пн-Пт:"
 msgstr "Mon-Fri:"
 
-#: .\templates\pages\about.html:146
+#: .\templates\pages\about.html:127
 msgid "Сб-Вс:"
 msgstr "Sat-Sun:"
 
-#: .\templates\pages\about.html:146
+#: .\templates\pages\about.html:127
 msgid "выходной"
 msgstr "day off"
 
-#: .\templates\pages\about.html:154
+#: .\templates\pages\about.html:135
 msgid "Написать_нам"
 msgstr "Write to Us"
 
-#: .\templates\pages\about.html:158
+#: .\templates\pages\about.html:139
 msgid "Позвонить"
 msgstr "Call"
 
-#: .\templates\pages\about.html:172
+#: .\templates\pages\about.html:153
 msgid "Дополнительная_информация"
 msgstr "Additional Information"
 
-#: .\templates\pages\about.html:175
-msgid "ServiceTrack_—_это_современная_платформа_для_управления_рабочими_процессами,_заявками_и_командами._Наша_система_помогает_организациям_любого_размера_оптимизировать_внутренние_процессы,_повысить_эффективность_работы_сотрудников_и_улучшить_взаимодействие_между_отделами."
-msgstr "ServiceTrack is a modern platform for managing workflows, tickets and teams. Our system helps organizations of any size optimize internal processes, improve employee efficiency and enhance interdepartmental collaboration."
+#: .\templates\pages\about.html:156
+msgid ""
+"ServiceTrack_—"
+"_это_современная_платформа_для_управления_рабочими_процессами,_заявками_и_командами._Наша_система_помогает_организациям_любого_размера_оптимизировать_внутренние_процессы,_повысить_эффективность_работы_сотрудников_и_улучшить_взаимодействие_между_отделами."
+msgstr ""
+"ServiceTrack is a modern platform for managing workflows, tickets and teams. "
+"Our system helps organizations of any size optimize internal processes, "
+"improve employee efficiency and enhance interdepartmental collaboration."
 
-#: .\templates\pages\about.html:178
+#: .\templates\pages\about.html:159
 msgid ""
 "Мы_предлагаем_гибкие_решения,_которые_легко_адаптируются_под_конкретные_нужды_вашего_бизнеса._Наша_команда_постоянно_работает_над_улучшением_функционала_и_добавлением_новых_возможностей,_чтобы_вы_всегда_получали_самые_современные_инструменты_для_управления_вашими_бизнес-"
 "процессами."
-msgstr "We offer flexible solutions that easily adapt to your specific business needs. Our team is constantly working on improving functionality and adding new features so you always get the most modern tools to manage your business processes."
+msgstr ""
+"We offer flexible solutions that easily adapt to your specific business "
+"needs. Our team is constantly working on improving functionality and adding "
+"new features so you always get the most modern tools to manage your business "
+"processes."
 
 #: .\templates\pages\home.html:4
 msgid "Главная_страница"
@@ -488,7 +486,8 @@ msgstr "Home Page"
 msgid ""
 "Передовая_платформа_для_управления_заявками,_рабочими_группами_и_бизнес-"
 "процессами"
-msgstr "Advanced platform for ticket management, work groups and business processes"
+msgstr ""
+"Advanced platform for ticket management, work groups and business processes"
 
 #: .\templates\pages\home.html:17
 msgid "Начать_бесплатно"
@@ -499,6 +498,8 @@ msgid "Высокая_эффективность"
 msgstr "High Efficiency"
 
 #: .\templates\pages\home.html:35
+#, fuzzy, python-format
+#| msgid "Увеличьте_производительность_вашей_команды_на_40%%_с_помощью_наших_инструментов"
 msgid "Увеличьте_производительность_вашей_команды_на_40%%_с_помощью_наших_инструментов"
 msgstr "Increase your team productivity by 40% with our tools"
 
@@ -508,7 +509,8 @@ msgstr "Reliable Protection"
 
 #: .\templates\pages\home.html:47
 msgid "Ваши_данные_под_максимальной_защитой_с_использованием_современных_технологий_шифрования"
-msgstr "Your data is under maximum protection using modern encryption technologies"
+msgstr ""
+"Your data is under maximum protection using modern encryption technologies"
 
 #: .\templates\pages\home.html:57
 msgid "Поддержка_24/7"
@@ -522,9 +524,15 @@ msgstr "Our support team is ready to help you at any time of the day"
 msgid "Лучшая_команда"
 msgstr "Best Team"
 
+#: .\templates\pages\home.html:75
+msgid "Мы_лучшие_в_своём_деле"
+msgstr "We are the best in our field"
+
 #: .\templates\pages\home.html:78
 msgid "Наша_экспертиза_и_профессионализм_позволяют_нам_предлагать_решения,_которые_действительно_работают"
-msgstr "Our expertise and professionalism allow us to offer solutions that really work"
+msgstr ""
+"Our expertise and professionalism allow us to offer solutions that really "
+"work"
 
 #: .\templates\pages\home.html:88
 msgid "Удобный_интерфейс"
@@ -895,7 +903,7 @@ msgstr "Confirm New Password"
 msgid "Повторите_новый_пароль"
 msgstr "Repeat new password"
 
-#: .\templates\users\password_change.html:73 .\templates\users\profile.html:56
+#: .\templates\users\password_change.html:73 .\templates\users\profile.html:60
 msgid "Сменить_пароль"
 msgstr "Change Password"
 
@@ -923,7 +931,9 @@ msgstr "Password Reset"
 
 #: .\templates\users\password_reset.html:13
 msgid "Введите_адрес_электронной_почты,_указанный_при_регистрации,_и_мы_вышлем_вам_инструкции_по_сбросу_пароля."
-msgstr "Enter the email address you used during registration and we'll send you password reset instructions."
+msgstr ""
+"Enter the email address you used during registration and we'll send you "
+"password reset instructions."
 
 #: .\templates\users\password_reset.html:34
 msgid "Отправить_инструкции"
@@ -944,7 +954,9 @@ msgstr "Password Successfully Reset"
 
 #: .\templates\users\password_reset_complete.html:14
 msgid "Ваш_пароль_был_успешно_изменён._Теперь_вы_можете_войти_с_новым_паролем."
-msgstr "Your password has been successfully changed. You can now login with your new password."
+msgstr ""
+"Your password has been successfully changed. You can now login with your new "
+"password."
 
 #: .\templates\users\password_reset_confirm.html:4
 #: .\templates\users\password_reset_confirm.html:10
@@ -961,7 +973,9 @@ msgstr "Change Password"
 
 #: .\templates\users\password_reset_confirm.html:52
 msgid "Ссылка_для_сброса_пароля_недействительна,_возможно,_потому_что_она_уже_была_использована._Пожалуйста,_запросите_сброс_пароля_снова."
-msgstr "The password reset link is invalid, possibly because it has already been used. Please request a new password reset."
+msgstr ""
+"The password reset link is invalid, possibly because it has already been "
+"used. Please request a new password reset."
 
 #: .\templates\users\password_reset_confirm.html:57
 msgid "Запросить_сброс_пароля"
@@ -978,12 +992,16 @@ msgstr "We've emailed you instructions for setting your password."
 
 #: .\templates\users\password_reset_done.html:18
 msgid "Если_вы_не_получили_письмо,_пожалуйста,_убедитесь,_что_вы_ввели_адрес,_под_которым_регистрировались,_и_проверьте_папку_со_спамом."
-msgstr "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
+msgstr ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
 
 #: .\templates\users\password_reset_email.html:2
 #, python-format
 msgid "Вы_получили_это_письмо,_потому_что_запросили_сброс_пароля_для_вашей_учётной_записи_на_сайте_%(site_name)s."
-msgstr "You're receiving this email because you requested a password reset for your user account at %(site_name)s."
+msgstr ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
 
 #: .\templates\users\password_reset_email.html:4
 msgid "Пожалуйста,_перейдите_по_следующей_ссылке_и_создайте_новый_пароль:"
@@ -996,7 +1014,8 @@ msgstr "Your username: %(username)s"
 
 #: .\templates\users\password_reset_email.html:11
 msgid "Если_вы_не_запрашивали_сброс_пароля, просто_проигнорируйте_это_письмо."
-msgstr "If you didn't request a password reset, you can safely ignore this email."
+msgstr ""
+"If you didn't request a password reset, you can safely ignore this email."
 
 #: .\templates\users\password_reset_subject.txt:2
 #, python-format
@@ -1011,31 +1030,35 @@ msgstr "User Profile"
 msgid "Email"
 msgstr "Email"
 
-#: .\templates\users\profile.html:25 .\templates\users\profile_edit.html:33
+#: .\templates\users\profile.html:24
+msgid "Не_указано"
+msgstr "Not specified"
+
+#: .\templates\users\profile.html:26 .\templates\users\profile_edit.html:33
 #: .\templates\users\user_create.html:49 .\templates\users\user_list.html:37
 msgid "Имя"
 msgstr "First Name"
 
-#: .\templates\users\profile.html:30 .\templates\users\profile_edit.html:48
+#: .\templates\users\profile.html:33 .\templates\users\profile_edit.html:48
 #: .\templates\users\user_create.html:64 .\templates\users\user_list.html:38
 msgid "Фамилия"
 msgstr "Last Name"
 
-#: .\templates\users\profile.html:35 .\templates\users\user_create.html:79
+#: .\templates\users\profile.html:39 .\templates\users\user_create.html:79
 #: .\templates\users\user_list.html:39 .\users\forms.py:172
 msgid "Роль"
 msgstr "Role"
 
-#: .\templates\users\profile.html:40 .\templates\users\profile_edit.html:79
+#: .\templates\users\profile.html:44 .\templates\users\profile_edit.html:79
 #: .\users\forms.py:15 .\users\forms.py:208
 msgid "Телефон"
 msgstr "Phone"
 
-#: .\templates\users\profile.html:45 .\templates\users\user_list.html:40
+#: .\templates\users\profile.html:49 .\templates\users\user_list.html:40
 msgid "Дата_регистрации"
 msgstr "Registration Date"
 
-#: .\templates\users\profile.html:53
+#: .\templates\users\profile.html:57
 msgid "Редактировать_профиль"
 msgstr "Edit Profile"
 
@@ -1243,7 +1266,8 @@ msgstr "status change histories"
 #: .\tickets\validators.py:12
 #, python-format
 msgid "Текущий_файл_%(size)s,_слишком_большой._Максимальный_размер_файла_%(allowed_size)s."
-msgstr "Current file %(size)s is too large. Maximum file size is %(allowed_size)s."
+msgstr ""
+"Current file %(size)s is too large. Maximum file size is %(allowed_size)s."
 
 #: .\users\forms.py:21
 msgid "Название организации"
@@ -1253,7 +1277,9 @@ msgstr "Organization Name"
 msgid ""
 "Пожалуйста,_введите_правильные "
 "имя_пользователя_и_пароль.Оба_поля_могут_быть_чувствительны_к_регистру."
-msgstr "Please enter a correct username and password. Note that both fields may be case-sensitive."
+msgstr ""
+"Please enter a correct username and password. Note that both fields may be "
+"case-sensitive."
 
 #: .\users\forms.py:85
 msgid "Этот_аккаунт_неактивен"
@@ -1302,3 +1328,10 @@ msgstr "User successfully created"
 #: .\users\views.py:202
 msgid "Профиль_успешно_обновлен"
 msgstr "Profile successfully updated"
+
+#~ msgid "Наша_команда"
+#~ msgstr "Our Team"
+
+#~ msgid "Наша_команда_профессионалов_всегда_готова_помочь_вам_в_решении_задач"
+#~ msgstr ""
+#~ "Our team of professionals is always ready to help you solve problems"
