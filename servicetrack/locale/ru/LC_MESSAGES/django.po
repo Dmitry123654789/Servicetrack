@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 22:04+0300\n"
+"POT-Creation-Date: 2025-12-20 10:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,7 +162,7 @@ msgstr "Группа"
 
 #: .\templates\company\group_detail.html:15
 #: .\templates\company\organization_detail.html:15
-#: .\templates\includes\header.html:46
+#: .\templates\includes\header.html:42
 #: .\templates\tickets\ticket_detail.html:145
 msgid "Информация"
 msgstr "Информация"
@@ -175,7 +175,7 @@ msgstr "Описание не указано"
 #: .\templates\company\group_detail.html:28
 #: .\templates\company\organization_detail.html:4
 #: .\templates\company\organization_edit.html:4
-#: .\templates\includes\header.html:65
+#: .\templates\includes\header.html:61
 msgid "Организация"
 msgstr "Организация"
 
@@ -192,13 +192,18 @@ msgstr "В группе пока нет работников"
 msgid "Создана"
 msgstr "Создана"
 
-#: .\templates\company\group_detail.html:86
-#: .\templates\company\organization_detail.html:54
+#: .\templates\company\group_detail.html:87
+#: .\templates\company\organization_detail.html:55
+msgid "Не_изменялась"
+msgstr "Не изменялась"
+
+#: .\templates\company\group_detail.html:89
+#: .\templates\company\organization_detail.html:57
 msgid "Обновлена"
 msgstr "Обновлена"
 
-#: .\templates\company\group_detail.html:96
-#: .\templates\company\organization_detail.html:64
+#: .\templates\company\group_detail.html:99
+#: .\templates\company\organization_detail.html:68
 msgid "Редактировать"
 msgstr "Редактировать"
 
@@ -217,11 +222,11 @@ msgstr "Сохранить изменения"
 msgid "Назад_к_группе"
 msgstr "Назад к группе"
 
-#: .\templates\company\group_list.html:4 .\templates\includes\header.html:40
+#: .\templates\company\group_list.html:4 .\templates\includes\header.html:36
 msgid "Группы"
 msgstr "Группы"
 
-#: .\templates\company\group_list.html:10
+#: .\templates\company\group_list.html:10 .\templates\pages\home.html:124
 msgid "Рабочие_группы"
 msgstr "Рабочие группы"
 
@@ -279,83 +284,286 @@ msgstr "Главная"
 msgid "О_проекте"
 msgstr "О&nbsp;проекте"
 
-#: .\templates\includes\header.html:24 .\templates\pages\contact.html:4
-#: .\templates\pages\contact.html:8
-msgid "Контакты"
-msgstr "Контакты"
-
-#: .\templates\includes\header.html:31
+#: .\templates\includes\header.html:27 .\templates\pages\home.html:121
 #: .\templates\tickets\my_ticket_list.html:4
 msgid "Мои_заявки"
 msgstr "Мои&nbsp;заявки"
 
-#: .\templates\includes\header.html:73 .\users\apps.py:11
+#: .\templates\includes\header.html:69 .\users\apps.py:11
 msgid "Пользователи"
 msgstr "Пользователи"
 
-#: .\templates\includes\header.html:79 .\templates\users\profile.html:4
+#: .\templates\includes\header.html:75 .\templates\users\profile.html:4
 msgid "Профиль"
 msgstr "Профиль"
 
-#: .\templates\includes\header.html:83
+#: .\templates\includes\header.html:79
 msgid "Админка"
 msgstr "Админка"
 
-#: .\templates\includes\header.html:110
+#: .\templates\includes\header.html:124
 msgid "Привет,"
 msgstr "Привет,"
 
-#: .\templates\includes\header.html:113 .\templates\users\logout.html:13
+#: .\templates\includes\header.html:127 .\templates\users\logout.html:13
 msgid "Выйти"
 msgstr "Выйти"
 
-#: .\templates\includes\header.html:116 .\templates\pages\home.html:15
+#: .\templates\includes\header.html:132 .\templates\pages\home.html:20
 #: .\templates\users\login.html:56
 #: .\templates\users\password_reset_complete.html:19
 #: .\templates\users\register.html:147
 msgid "Войти"
 msgstr "Войти"
 
-#: .\templates\includes\header.html:117 .\templates\pages\home.html:14
-#: .\templates\users\register.html:4 .\templates\users\register.html:10
+#: .\templates\includes\header.html:133 .\templates\users\register.html:4
+#: .\templates\users\register.html:10
 msgid "Регистрация"
 msgstr "Регистрация"
 
-#: .\templates\pages\about.html:4 .\templates\pages\about.html:8
-msgid "О_нас"
-msgstr "О нас"
-
-#: .\templates\pages\about.html:9
-msgid ""
-"ServiceTrack_—"
-"_это_система_для_управления_рабочими_группами_и_заявками_в_организациях."
-msgstr ""
-"ServiceTrack — это система для управления рабочими группами и заявками в "
-"организациях."
+#: .\templates\pages\about.html:4 .\templates\pages\about.html:9
+msgid "О_компании"
+msgstr "О компании"
 
 #: .\templates\pages\about.html:10
-msgid "Позволяет_эффективно_распределять_задачи_и_отслеживать_их_выполнение."
-msgstr "Позволяет эффективно распределять задачи и отслеживать их выполнение."
+msgid ""
+"ServiceTrack_—_лидер_в_области_управления_заявками_и_рабочими_процессами"
+msgstr "ServiceTrack - лидер в области управления заявками и рабочими процессами"
 
-#: .\templates\pages\contact.html:10 .\templates\users\profile.html:40
-#: .\templates\users\profile_edit.html:79 .\users\forms.py:15
-#: .\users\forms.py:208
-msgid "Телефон"
+#: .\templates\pages\about.html:19
+msgid "Почему_мы_лучшие"
+msgstr "Почему мы лучше?"
+
+#: .\templates\pages\about.html:24
+msgid "Профессионализм:"
+msgstr "Профессионализм:"
+
+#: .\templates\pages\about.html:25
+msgid "Более_10_лет_опыта_в_автоматизации_бизнес-процессов"
+msgstr "Более 10 лет опыта в автоматизации бизнес-процессов"
+
+#: .\templates\pages\about.html:29
+msgid "Надежность:"
+msgstr "Надежность:"
+
+#: .\templates\pages\about.html:30
+#, python-format
+msgid "99,9%%_времени_безотказной_работы_системы"
+msgstr "99,9%% времени безотказной работы системы"
+
+#: .\templates\pages\about.html:34
+msgid "Поддержка:"
+msgstr "Поддержка:"
+
+#: .\templates\pages\about.html:35
+msgid "Круглосуточная_техническая_поддержка_для_наших_клиентов"
+msgstr "Круглосуточная техническая поддержка для наших клиентов"
+
+#: .\templates\pages\about.html:47
+msgid "Наши_ценности"
+msgstr "Наши ценности"
+
+#: .\templates\pages\about.html:52
+msgid "Инновации:"
+msgstr "Инновации:"
+
+#: .\templates\pages\about.html:53
+msgid "Постоянное_совершенствование_продукта"
+msgstr "Постоянное совершенствование продукта"
+
+#: .\templates\pages\about.html:57
+msgid "Клиентоориентированность:"
+msgstr "Клиентоориентированность:"
+
+#: .\templates\pages\about.html:58
+msgid "Индивидуальный_подход_к_каждому_клиенту"
+msgstr "Индивидуальный подход к каждому клиенту"
+
+#: .\templates\pages\about.html:62
+msgid "Качество:"
+msgstr "Качество:"
+
+#: .\templates\pages\about.html:63
+msgid "Строгий_контроль_качества_на_всех_этапах"
+msgstr "Строгий контроль качества на всех этапах"
+
+#: .\templates\pages\about.html:67
+msgid "Ответственность:"
+msgstr "Ответственность:"
+
+#: .\templates\pages\about.html:68
+msgid "Выполнение_обязательств_в_срок"
+msgstr "Выполнение обязательств в срок"
+
+#: .\templates\pages\about.html:81
+msgid "Наша_команда"
+msgstr "Наша команда"
+
+#: .\templates\pages\about.html:84 .\templates\pages\home.html:75
+msgid "Мы_лучшие_в_своём_деле"
+msgstr "Мы лучшие в своём деле"
+
+#: .\templates\pages\about.html:86
+msgid "Наша_команда_профессионалов_всегда_готова_помочь_вам_в_решении_задач"
+msgstr "Наша команда профессионалов всегда готова помочь вам в решении задач"
+
+#: .\templates\pages\about.html:101
+msgid "Контактная_информация"
+msgstr "Контактная информация"
+
+#: .\templates\pages\about.html:109
+msgid "Наш_адрес"
+msgstr "Наш адрес"
+
+#: .\templates\pages\about.html:112
+msgid "г._Москва,_ул._Тверская,_д._7"
+msgstr "г. Москва, ул. Тверская, д. 7"
+
+#: .\templates\pages\about.html:113
+msgid "Бизнес-центр_«Престиж»,_офис_401"
+msgstr "Бизнес-центр «Престиж», офис 401"
+
+#: .\templates\pages\about.html:119
+msgid "Телефоны"
 msgstr "Телефон"
+
+#: .\templates\pages\about.html:122
+msgid "Отдел_продаж:"
+msgstr "Отдел продаж:"
+
+#: .\templates\pages\about.html:123
+msgid "Техподдержка:"
+msgstr "Техподдержка:"
+
+#: .\templates\pages\about.html:132 .\templates\users\password_reset.html:20
+#: .\templates\users\profile_edit.html:63 .\templates\users\register.html:33
+#: .\templates\users\user_create.html:33 .\users\forms.py:115
+msgid "Электронная_почта"
+msgstr "Электронная почта"
+
+#: .\templates\pages\about.html:135
+msgid "Общие_вопросы:"
+msgstr "Общие вопросы:"
+
+#: .\templates\pages\about.html:142
+msgid "Режим_работы"
+msgstr "Режим работы"
+
+#: .\templates\pages\about.html:145
+msgid "Пн-Пт:"
+msgstr "Пн-Пт:"
+
+#: .\templates\pages\about.html:146
+msgid "Сб-Вс:"
+msgstr "Сб-Вс:"
+
+#: .\templates\pages\about.html:146
+msgid "выходной"
+msgstr "выходной"
+
+#: .\templates\pages\about.html:154
+msgid "Написать_нам"
+msgstr "Написать нам"
+
+#: .\templates\pages\about.html:158
+msgid "Позвонить"
+msgstr "Позвонить"
+
+#: .\templates\pages\about.html:172
+msgid "Дополнительная_информация"
+msgstr "Дополнительная информация"
+
+#: .\templates\pages\about.html:175
+msgid "ServiceTrack_—_это_современная_платформа_для_управления_рабочими_процессами,_заявками_и_командами._Наша_система_помогает_организациям_любого_размера_оптимизировать_внутренние_процессы,_повысить_эффективность_работы_сотрудников_и_улучшить_взаимодействие_между_отделами."
+msgstr "ServiceTrack — это современная платформа для управления рабочими процессами, заявками и командами. Наша система помогает организациям любого размера оптимизировать внутренние процессы, повысить эффективность работы сотрудников и улучшить взаимодействие между отделами."
+
+#: .\templates\pages\about.html:178
+msgid ""
+"Мы_предлагаем_гибкие_решения,_которые_легко_адаптируются_под_конкретные_нужды_вашего_бизнеса._Наша_команда_постоянно_работает_над_улучшением_функционала_и_добавлением_новых_возможностей,_чтобы_вы_всегда_получали_самые_современные_инструменты_для_управления_вашими_бизнес-"
+"процессами."
+msgstr ""
+"Мы предлагаем гибкие решения, которые легко адаптируются под конкретные нужды вашего бизнеса. Наша команда постоянно работает над улучшением функционала и добавлением новых возможностей, чтобы вы всегда получали самые современные инструменты для управления вашими бизнес-процессами."
 
 #: .\templates\pages\home.html:4
 msgid "Главная_страница"
 msgstr "Главная страница"
 
-#: .\templates\pages\home.html:9
-msgid "Система_управления_заявками_и_рабочими_группами"
+#: .\templates\pages\home.html:11
+msgid ""
+"Передовая_платформа_для_управления_заявками,_рабочими_группами_и_бизнес-"
+"процессами"
 msgstr "Система управления заявками и рабочими группами"
 
-#: .\templates\pages\home.html:10
-msgid "Платформа_для_организации_работы_с_заявками,_управления_группами_и_отслеживания_задач."
+#: .\templates\pages\home.html:17
+msgid "Начать_бесплатно"
+msgstr "Начать бесплатно"
+
+#: .\templates\pages\home.html:33
+msgid "Высокая_эффективность"
+msgstr "Высокая эффективность"
+
+#: .\templates\pages\home.html:35
+msgid "Увеличьте_производительность_вашей_команды_на_40%%_с_помощью_наших_инструментов"
+msgstr "Увеличьте производительность вашей команды на 40% с помощью наших инструментов"
+
+#: .\templates\pages\home.html:45
+msgid "Надежная_защита"
+msgstr "Надежная защита"
+
+#: .\templates\pages\home.html:47
+msgid "Ваши_данные_под_максимальной_защитой_с_использованием_современных_технологий_шифрования"
 msgstr ""
-"Платформа для организации работы с заявками, управления группами и "
-"отслеживания задач."
+"Ваши данные под максимальной защитой с использованием современных технологий "
+"шифрования"
+
+#: .\templates\pages\home.html:57
+msgid "Поддержка_24/7"
+msgstr "Техподдержка 24/7"
+
+#: .\templates\pages\home.html:59
+msgid "Наша_команда_поддержки_готова_помочь_вам_в_любое_время_суток"
+msgstr "Наша команда поддержки готова помочь вам в любое время суток"
+
+#: .\templates\pages\home.html:70
+msgid "Лучшая_команда"
+msgstr "Лучшая команда"
+
+#: .\templates\pages\home.html:78
+msgid "Наша_экспертиза_и_профессионализм_позволяют_нам_предлагать_решения,_которые_действительно_работают"
+msgstr "Наша экспертиза и профессионализм позволяют нам предлагать решения, которые "
+"действительно работают"
+
+#: .\templates\pages\home.html:88
+msgid "Удобный_интерфейс"
+msgstr "Удобный интерфейс"
+
+#: .\templates\pages\home.html:93
+msgid "Удобный_и_понятный_интерфейс"
+msgstr "Удобный и понятный интерфейс"
+
+#: .\templates\pages\home.html:96
+msgid "Интуитивно_понятный_дизайн_позволяет_сократить_время_обучения_и_повысить_удобство_использования"
+msgstr ""
+"Интуитивно понятный дизайн позволяет сократить время обучения и повысить "
+"удобство использования"
+
+#: .\templates\pages\home.html:104
+msgid "Готовы_начать?"
+msgstr "Готовы начать?"
+
+#: .\templates\pages\home.html:106
+msgid "Присоединяйтесь_к_тысячам_компаний,_которые_уже_используют_ServiceTrack"
+msgstr ""
+"Присоединяйтесь к тысячам компаний, которые уже используют ServiceTrack"
+
+#: .\templates\pages\home.html:112 .\templates\users\login.html:68
+#: .\templates\users\register.html:140
+msgid "Зарегистрироваться"
+msgstr "Зарегистрироваться"
+
+#: .\templates\pages\home.html:115
+msgid "Узнать_больше"
+msgstr "Узнать больше"
 
 #: .\templates\tickets\my_ticket_list.html:14
 #: .\templates\tickets\ticket_list.html:18
@@ -635,17 +843,13 @@ msgstr "Пароль"
 msgid "Введите_пароль"
 msgstr "Введите пароль"
 
-#: .\templates\users\login.html:62
+#: .\templates\users\login.html:63
 msgid "Забыли_пароль?"
 msgstr "Забыли пароль?"
 
-#: .\templates\users\login.html:65
+#: .\templates\users\login.html:66
 msgid "Нет_аккаунта?"
 msgstr "Нет аккаунта?"
-
-#: .\templates\users\login.html:67 .\templates\users\register.html:140
-msgid "Зарегистрироваться"
-msgstr "Зарегистрироваться"
 
 #: .\templates\users\logout.html:4
 msgid "Выход"
@@ -733,12 +937,6 @@ msgid "Введите_адрес_электронной_почты,_указан
 msgstr ""
 "Введите адрес электронной почты, указанный при регистрации, и мы вышлем вам "
 "инструкции по сбросу пароля."
-
-#: .\templates\users\password_reset.html:20
-#: .\templates\users\profile_edit.html:63 .\templates\users\register.html:33
-#: .\templates\users\user_create.html:33 .\users\forms.py:115
-msgid "Электронная_почта"
-msgstr "Электронная почта"
 
 #: .\templates\users\password_reset.html:34
 msgid "Отправить_инструкции"
@@ -845,6 +1043,11 @@ msgstr "Фамилия"
 #: .\templates\users\user_list.html:39 .\users\forms.py:172
 msgid "Роль"
 msgstr "Роль"
+
+#: .\templates\users\profile.html:40 .\templates\users\profile_edit.html:79
+#: .\users\forms.py:15 .\users\forms.py:208
+msgid "Телефон"
+msgstr "Телефон"
 
 #: .\templates\users\profile.html:45 .\templates\users\user_list.html:40
 msgid "Дата_регистрации"
@@ -1114,33 +1317,11 @@ msgstr "данные пользователя"
 msgid "данные_пользователей"
 msgstr "данные пользователей"
 
-#: .\users\views.py:113
+#: .\users\views.py:114
 msgid "Пользователь_успешно_создан"
 msgstr "Пользователь успешно создан"
 
-#: .\users\views.py:197
+#: .\users\views.py:202
 msgid "Профиль_успешно_обновлен"
 msgstr "Профиль успешно обновлен"
 
-#~ msgid "Например:_Электрики"
-#~ msgstr "Например: Электрики"
-
-#~ msgid "Описание_группы"
-#~ msgstr "Описание группы"
-
-#~ msgid "Изменить_статус"
-#~ msgstr "Изменить статус"
-
-#~ msgid "Информация_о_заявке"
-#~ msgstr "Информация о заявке"
-
-#~ msgid "Управление"
-#~ msgstr "Управление"
-
-#~ msgid "Ваш_комментарий_к_изменениям"
-#~ msgstr "Ваш комментарий к изменениям"
-
-#~ msgid "If_you_did_not_receive_the_email,_please_make_sure_you_entered_the_address_you_registered_with_and_check_your_spam_folder."
-#~ msgstr ""
-#~ "Если вы не получили письмо, пожалуйста, убедитесь, что вы ввели адрес, "
-#~ "под которым регистрировались, и проверьте папку со спамом."
