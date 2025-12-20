@@ -51,7 +51,11 @@
     <div class="col-md-6 text-md-end">
         <small class="text-muted">
             <i class="bi bi-calendar-check me-1"></i>
-            {% trans "Обновлена" %}: {{ organization.updated_at|date:"d.m.Y H:i" }}
+            {% if organization.created_at == organization.updated_at %}
+                {% trans "Не_изменялась" %}
+            {% else %}
+                {% trans "Обновлена" %}: {{ organization.updated_at|date:"d.m.Y H:i" }}
+            {% endif %}
         </small>
     </div>
 </div>

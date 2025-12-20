@@ -17,9 +17,4 @@ urlpatterns = [
         pages.views.AboutPageView.as_view(),
         name="about",
     ),
-    django.urls.path(
-        "contact/",
-        pages.views.ContactPageView.as_view(),
-        name="contact",
-    ),
 ]

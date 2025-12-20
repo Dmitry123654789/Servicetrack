@@ -1,12 +1,175 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "О_нас" %} - ServiceTrack{% endblock %}
+{% block title %}{% trans "О_компании" %} - ServiceTrack{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1>{% trans "О_нас" %}</h1>
-    <p>{% trans "ServiceTrack_—_это_система_для_управления_рабочими_группами_и_заявками_в_организациях." %}</p>
-    <p>{% trans "Позволяет_эффективно_распределять_задачи_и_отслеживать_их_выполнение." %}</p>
+<div class="about-container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-4">{% trans "О_компании" %}</h1>
+        <p class="lead text-muted">{% trans "ServiceTrack_—_лидер_в_области_управления_заявками_и_рабочими_процессами" %}</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3">
+                        <i class="bi bi-trophy-fill text-warning me-2"></i>
+                        {% trans "Почему_мы_лучшие" %}
+                    </h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>{% trans "Профессионализм:" %}</strong>
+                            {% trans "Более_10_лет_опыта_в_автоматизации_бизнес-процессов" %}
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>{% trans "Надежность:" %}</strong>
+                            {% trans "99,9%_времени_безотказной_работы_системы" %}
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>{% trans "Поддержка:" %}</strong>
+                            {% trans "Круглосуточная_техническая_поддержка_для_наших_клиентов" %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3">
+                        <i class="bi bi-award-fill text-primary me-2"></i>
+                        {% trans "Наши_ценности" %}
+                    </h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            <strong>{% trans "Инновации:" %}</strong>
+                            {% trans "Постоянное_совершенствование_продукта" %}
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            <strong>{% trans "Клиентоориентированность:" %}</strong>
+                            {% trans "Индивидуальный_подход_к_каждому_клиенту" %}
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            <strong>{% trans "Качество:" %}</strong>
+                            {% trans "Строгий_контроль_качества_на_всех_этапах" %}
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            <strong>{% trans "Ответственность:" %}</strong>
+                            {% trans "Выполнение_обязательств_в_срок" %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        {% trans "Контактная_информация" %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="bi bi-geo-alt-fill me-2"></i>
+                                {% trans "Наш_адрес" %}
+                            </h5>
+                            <p class="mb-0">
+                                {% trans "г._Москва,_ул._Тверская,_д._7" %}<br>
+                                {% trans "Бизнес-центр_«Престиж»,_офис_401" %}
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="bi bi-telephone-fill me-2"></i>
+                                {% trans "Телефоны" %}
+                            </h5>
+                            <p class="mb-0">
+                                <strong>{% trans "Отдел_продаж:" %}</strong> +7 (495) 123-45-67<br>
+                                <strong>{% trans "Техподдержка:" %}</strong> +7 (800) 123-45-68
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="bi bi-envelope me-2"></i>
+                                {% trans "Электронная_почта" %}
+                            </h5>
+                            <p class="mb-0">
+                                <strong>{% trans "Общие_вопросы:" %}</strong><br>
+                                <a href="mailto:info@servicetrack.ru">info@servicetrack.ru</a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="bi bi-clock-fill me-2"></i>
+                                {% trans "Режим_работы" %}
+                            </h5>
+                            <p class="mb-0">
+                                <strong>{% trans "Пн-Пт:" %}</strong> 9:00 - 18:00<br>
+                                <strong>{% trans "Сб-Вс:" %}</strong> {% trans "выходной" %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="mailto:support@servicetrack.ru" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-envelope-paper me-2"></i>
+                            {% trans "Написать_нам" %}
+                        </a>
+                        <a href="tel:+74951234567" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-telephone-outbound me-2"></i>
+                            {% trans "Позвонить" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 bg-light">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        {% trans "Дополнительная_информация" %}
+                    </h4>
+                    <p class="card-text">
+                        {% trans "ServiceTrack_—_это_современная_платформа_для_управления_рабочими_процессами,_заявками_и_командами._Наша_система_помогает_организациям_любого_размера_оптимизировать_внутренние_процессы,_повысить_эффективность_работы_сотрудников_и_улучшить_взаимодействие_между_отделами." %}
+                    </p>
+                    <p class="card-text">
+                        {% trans "Мы_предлагаем_гибкие_решения,_которые_легко_адаптируются_под_конкретные_нужды_вашего_бизнеса._Наша_команда_постоянно_работает_над_улучшением_функционала_и_добавлением_новых_возможностей,_чтобы_вы_всегда_получали_самые_современные_инструменты_для_управления_вашими_бизнес-процессами." %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .about-container .card {
+        transition: transform 0.3s ease;
+    }
+    .about-container .card:hover {
+        transform: translateY(-3px);
+    }
+</style>
 {% endblock %}

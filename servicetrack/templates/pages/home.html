@@ -1,19 +1,142 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Главная_страница" %} - ServiceTrack{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1>ServiceTrack</h1>
-    <p class="lead">{% trans "Система_управления_заявками_и_рабочими_группами" %}</p>
-    <p>{% trans "Платформа_для_организации_работы_с_заявками,_управления_группами_и_отслеживания_задач." %}</p>
+<div class="hero-section text-center py-5 mb-5 rounded-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <h1 class="display-4 fw-bold text-white mb-4">ServiceTrack</h1>
+        <p class="lead text-white mb-4">
+            {% trans "Передовая_платформа_для_управления_заявками,_рабочими_группами_и_бизнес-процессами" %}
+        </p>
+
+        {% if not user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{% url 'users:register' %}" class="btn btn-light btn-lg me-3 px-4">
+                <i class="bi bi-rocket-takeoff me-2"></i>{% trans "Начать_бесплатно" %}
+            </a>
+            <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right me-2"></i>{% trans "Войти" %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-4 mb-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="card-icon mb-3" style="font-size: 3rem; color: #667eea;">
+                <i class="bi bi-speedometer2"></i>
+            </div>
+            <h3 class="card-title">{% trans "Высокая_эффективность" %}</h3>
+            <p class="card-text">
+                {% trans "Увеличьте_производительность_вашей_команды_на_40%_с_помощью_наших_инструментов" %}
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="card-icon mb-3" style="font-size: 3rem; color: #764ba2;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h3 class="card-title">{% trans "Надежная_защита" %}</h3>
+            <p class="card-text">
+                {% trans "Ваши_данные_под_максимальной_защитой_с_использованием_современных_технологий_шифрования" %}
+            </p>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="card-icon mb-3" style="font-size: 3rem; color: #f56565;">
+                <i class="bi bi-headset"></i>
+            </div>
+            <h3 class="card-title">{% trans "Поддержка_24/7" %}</h3>
+            <p class="card-text">
+                {% trans "Наша_команда_поддержки_готова_помочь_вам_в_любое_время_суток" %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="card border-0 shadow-lg overflow-hidden">
+            <img src="https://img.freepik.com/free-photo/side-view-man-with-tablet_23-2148560449.jpg?semt=ais_hybrid&w=740&q=80"
+                 class="card-img-top"
+                 alt="{% trans 'Лучшая_команда' %}"
+                 style="height: 300px; object-fit: cover;">
+            <div class="card-body bg-primary text-white">
+                <h3 class="card-title">
+                    <i class="bi bi-trophy-fill me-2"></i>
+                    {% trans "Мы_лучшие_в_своём_деле" %}
+                </h3>
+                <p class="card-text">
+                    {% trans "Наша_экспертиза_и_профессионализм_позволяют_нам_предлагать_решения,_которые_действительно_работают" %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-lg overflow-hidden">
+            <img src="https://06f3557d98f44a6c9896014c980c5b74-ds1.s3.itgstore.io/growth-driver/public/simpleone/ux_460x320_615a4537b1.png"
+                 class="card-img-top"
+                 alt="{% trans 'Удобный_интерфейс' %}"
+                 style="height: 300px; object-fit: cover;">
+            <div class="card-body bg-success text-white">
+                <h3 class="card-title">
+                    <i class="bi bi-magic me-2"></i>
+                    {% trans "Удобный_и_понятный_интерфейс" %}
+                </h3>
+                <p class="card-text">
+                    {% trans "Интуитивно_понятный_дизайн_позволяет_сократить_время_обучения_и_повысить_удобство_использования" %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center py-5">
+    <h2 class="mb-4">{% trans "Готовы_начать?" %}</h2>
+    <p class="lead text-muted mb-4">
+        {% trans "Присоединяйтесь_к_тысячам_компаний,_которые_уже_используют_ServiceTrack" %}
+    </p>
 
     {% if not user.is_authenticated %}
     <div class="mt-4">
-        <a href="{% url 'users:register' %}" class="btn btn-primary me-2">{% trans "Регистрация" %}</a>
-        <a href="{% url 'users:login' %}" class="btn btn-outline-primary">{% trans "Войти" %}</a>
+        <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg me-3 px-5">
+            <i class="bi bi-person-plus-fill me-2"></i>{% trans "Зарегистрироваться" %}
+        </a>
+        <a href="{% url 'pages:about' %}" class="btn btn-outline-primary btn-lg px-5">
+            <i class="bi bi-info-circle me-2"></i>{% trans "Узнать_больше" %}
+        </a>
+    </div>
+    {% else %}
+    <div class="mt-4">
+        <a href="{% url 'tickets:my_tickets' %}" class="btn btn-primary btn-lg me-3">
+            <i class="bi bi-inbox-fill me-2"></i>{% trans "Мои_заявки" %}
+        </a>
+        <a href="{% url 'company:group_list' %}" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-people-fill me-2"></i>{% trans "Рабочие_группы" %}
+        </a>
     </div>
     {% endif %}
 </div>
+
+<style>
+.hero-section {
+    background-size: cover;
+    background-position: center;
+}
+.card {
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-2px);
+}
+</style>
 {% endblock %}
