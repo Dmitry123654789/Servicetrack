@@ -85,6 +85,12 @@ DATABASES = {
     },
 }
 
+CSRF_TRUSTED_ORIGINS = env.list(
+    "CSRF_TRUSTED_ORIGINS",
+    default=[],
+)
+
+
 _base = "django.contrib.auth.password_validation"
 AUTH_PASSWORD_VALIDATORS = [
     {
