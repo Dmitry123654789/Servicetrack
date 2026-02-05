@@ -3,5 +3,5 @@ builder = "nixpacks"
 buildCommand = "pip install -r requirements/prod.txt && cd servicetrack && python manage.py migrate && python manage.py collectstatic --noinput"
 
 [deploy]
-startCommand = "python manage.py loaddata fixtures/data.json && python manage.py runserver 0.0.0.0:8000"
+startCommand = "cd servicetrack && python manage.py loaddata fixtures/data.json && python manage.py runserver 0.0.0.0:8000"
 restartPolicyType = "ON_FAILURE"
