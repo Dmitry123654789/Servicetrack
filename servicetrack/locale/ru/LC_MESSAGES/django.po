@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-21 00:10+0300\n"
+"POT-Creation-Date: 2026-02-12 15:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,11 +80,11 @@ msgstr "Вспомогательно приложение"
 msgid "Страницы"
 msgstr "Страницы"
 
-#: .\servicetrack\settings.py:137
+#: .\servicetrack\settings.py:143
 msgid "Русский"
 msgstr "Русский"
 
-#: .\servicetrack\settings.py:138
+#: .\servicetrack\settings.py:144
 msgid "English"
 msgstr "English"
 
@@ -501,12 +501,8 @@ msgid "Высокая_эффективность"
 msgstr "Высокая эффективность"
 
 #: .\templates\pages\home.html:35
-#, fuzzy, python-format
-#| msgid "Увеличьте_производительность_вашей_команды_на_40%%_с_помощью_наших_инструментов"
 msgid "Увеличьте_производительность_вашей_команды_на_40%%_с_помощью_наших_инструментов"
-msgstr ""
-"Увеличьте производительность вашей команды на 40% с помощью наших "
-"инструментов"
+msgstr "Увеличьте производительность вашей команды на 40% с помощью наших инструментов"
 
 #: .\templates\pages\home.html:45
 msgid "Надежная_защита"
@@ -1328,11 +1324,11 @@ msgstr "данные пользователя"
 msgid "данные_пользователей"
 msgstr "данные пользователей"
 
-#: .\users\views.py:114
+#: .\users\views.py:131
 msgid "Пользователь_успешно_создан"
 msgstr "Пользователь успешно создан"
 
-#: .\users\views.py:202
+#: .\users\views.py:219
 msgid "Профиль_успешно_обновлен"
 msgstr "Профиль успешно обновлен"
 

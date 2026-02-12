@@ -105,13 +105,13 @@
                                     <button type="submit" name="language" value="ru"
                                             class="dropdown-item {% if LANGUAGE_CODE == 'ru' %}active{% endif %}">
                                         <span class="me-2">🇷🇺</span> Русский
-                                        {% if LANGUAGE_CODE == 'ru' %}<i class="bi bi-check2 ms-auto"></i>{% endif %}
+                                        {% if LANGUAGE_CODE == 'ru' %}{% endif %}
                                     </button>
 
                                     <button type="submit" name="language" value="en"
                                             class="dropdown-item {% if LANGUAGE_CODE == 'en' %}active{% endif %}">
                                         <span class="me-2">🇺🇸</span> English
-                                        {% if LANGUAGE_CODE == 'en' %}<i class="bi bi-check2 ms-auto"></i>{% endif %}
+                                        {% if LANGUAGE_CODE == 'en' %}{% endif %}
                                     </button>
                                 </form>
                             </li>

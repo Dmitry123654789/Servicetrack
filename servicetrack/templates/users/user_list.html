@@ -4,13 +4,13 @@
 {% block title %}{% trans "Список_пользователей" %} - ServiceTrack{% endblock %}
 
 {% block content %}
-<div class="content-container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-4" style="flex-flow: row wrap;">
         <h2>{% trans "Список_пользователей" %}</h2>
 
         {% if user.profile.is_manager or user.profile.is_director %}
         <a href="{% url 'users:user_create' %}" class="btn btn-primary">
-            <i class="bi bi-person-plus me-2"></i>{% trans "Создать_пользователя" %}
+            {% trans "Создать_пользователя" %}
         </a>
         {% endif %}
     </div>
@@ -18,7 +18,7 @@
     {% for group_item in groups %}
         <div class="group-section mb-5">
             <h4 class="mb-3 text-muted">
-                <i class="bi bi-collection me-2"></i>
+                
                 {% if group_item.group == "_no_group" %}
                     {% trans "Без_группы" %}
                 {% else %}
@@ -75,7 +75,7 @@
     {% empty %}
         <div class="card border-0 shadow-sm py-5">
             <div class="text-center">
-                <i class="bi bi-people display-4 text-muted mb-3"></i>
+                
                 <p class="text-muted">{% trans "Пользователи_не_найдены" %}</p>
             </div>
         </div>

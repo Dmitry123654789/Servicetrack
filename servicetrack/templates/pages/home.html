@@ -13,11 +13,11 @@
 
         {% if not user.is_authenticated %}
         <div class="mt-4">
-            <a href="{% url 'users:register' %}" class="btn btn-light btn-lg me-3 px-4">
-                <i class="bi bi-rocket-takeoff me-2"></i>{% trans "Начать_бесплатно" %}
+            <a href="{% url 'users:register' %}" class="btn btn-light btn-lg m-3 px-4">
+                {% trans "Начать_бесплатно" %}
             </a>
             <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg px-4">
-                <i class="bi bi-box-arrow-in-right me-2"></i>{% trans "Войти" %}
+                {% trans "Войти" %}
             </a>
         </div>
         {% endif %}
@@ -28,7 +28,7 @@
     <div class="col-lg-4 mb-4">
         <div class="card border-0 shadow-sm h-100 text-center p-4">
             <div class="card-icon mb-3" style="font-size: 3rem; color: #667eea;">
-                <i class="bi bi-speedometer2"></i>
+                
             </div>
             <h3 class="card-title">{% trans "Высокая_эффективность" %}</h3>
             <p class="card-text">
@@ -40,7 +40,7 @@
     <div class="col-lg-4 mb-4">
         <div class="card border-0 shadow-sm h-100 text-center p-4">
             <div class="card-icon mb-3" style="font-size: 3rem; color: #764ba2;">
-                <i class="bi bi-shield-check"></i>
+                
             </div>
             <h3 class="card-title">{% trans "Надежная_защита" %}</h3>
             <p class="card-text">
@@ -52,7 +52,7 @@
     <div class="col-lg-4 mb-4">
         <div class="card border-0 shadow-sm h-100 text-center p-4">
             <div class="card-icon mb-3" style="font-size: 3rem; color: #f56565;">
-                <i class="bi bi-headset"></i>
+                
             </div>
             <h3 class="card-title">{% trans "Поддержка_24/7" %}</h3>
             <p class="card-text">
@@ -71,7 +71,7 @@
                  style="height: 300px; object-fit: cover;">
             <div class="card-body bg-primary text-white">
                 <h3 class="card-title">
-                    <i class="bi bi-trophy-fill me-2"></i>
+                    
                     {% trans "Мы_лучшие_в_своём_деле" %}
                 </h3>
                 <p class="card-text">
@@ -89,7 +89,7 @@
                  style="height: 300px; object-fit: cover;">
             <div class="card-body bg-success text-white">
                 <h3 class="card-title">
-                    <i class="bi bi-magic me-2"></i>
+                    
                     {% trans "Удобный_и_понятный_интерфейс" %}
                 </h3>
                 <p class="card-text">
@@ -108,20 +108,20 @@
 
     {% if not user.is_authenticated %}
     <div class="mt-4">
-        <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg me-3 px-5">
-            <i class="bi bi-person-plus-fill me-2"></i>{% trans "Зарегистрироваться" %}
+        <a href="{% url 'users:register' %}" class="btn btn-primary btn-lg m-3 px-5">
+            {% trans "Зарегистрироваться" %}
         </a>
         <a href="{% url 'pages:about' %}" class="btn btn-outline-primary btn-lg px-5">
-            <i class="bi bi-info-circle me-2"></i>{% trans "Узнать_больше" %}
+            {% trans "Узнать_больше" %}
         </a>
     </div>
     {% else %}
     <div class="mt-4">
-        <a href="{% url 'tickets:my_tickets' %}" class="btn btn-primary btn-lg me-3">
-            <i class="bi bi-inbox-fill me-2"></i>{% trans "Мои_заявки" %}
+        <a href="{% url 'tickets:my_tickets' %}" class="btn btn-primary btn-lg m-3">
+            {% trans "Мои_заявки" %}
         </a>
         <a href="{% url 'company:group_list' %}" class="btn btn-outline-primary btn-lg">
-            <i class="bi bi-people-fill me-2"></i>{% trans "Рабочие_группы" %}
+            {% trans "Рабочие_группы" %}
         </a>
     </div>
     {% endif %}

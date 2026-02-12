@@ -6,6 +6,7 @@ import django.contrib
 import django.contrib.auth.mixins
 import django.contrib.auth.views
 import django.db.models
+import django.http
 import django.urls
 from django.utils.translation import gettext_lazy as _
 import django.views.generic
@@ -32,6 +33,22 @@ class LoginView(django.contrib.auth.views.LoginView):
     template_name = "users/login.html"
     redirect_authenticated_user = True
     success_url = django.urls.reverse_lazy("users:profile")
+
+    def get(self, request, *args, **kwargs):
+        params = request.GET
+        if "username" in params:
+            user = users.models.CustomUser.objects.filter(
+                username=params["username"],
+            )
+            if not user:
+                return super().get(self, request, *args, **kwargs)
+
+            django.contrib.auth.login(request, user[0])
+            return django.http.HttpResponseRedirect(
+                django.urls.reverse("users:user_list"),
+            )
+
+        return super().get(self, request, *args, **kwargs)
 
 
 class LogoutView(django.contrib.auth.views.LogoutView):

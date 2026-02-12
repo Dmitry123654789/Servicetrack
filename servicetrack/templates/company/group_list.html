@@ -15,7 +15,7 @@
 
         {% if user.profile.is_director %}
             <a href="{% url 'company:group_create' %}" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-2"></i>{% trans "Создать_группу" %}
+                {% trans "Создать_группу" %}
             </a>
         {% endif %}
     </div>
@@ -54,7 +54,7 @@
             </div>
         {% else %}
             <div class="text-center py-5">
-                <i class="bi bi-people display-1 text-muted"></i>
+                
                 <h4 class="text-muted mt-3">{% trans "Групп_пока_нет" %}</h4>
             </div>
         {% endif %}
